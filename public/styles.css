@@ -36,21 +36,24 @@ a {
 
 .enter-a {
   display: inline;
-  animation: rotate 5s ease-in-out infinite;
+  animation: rotate 10s ease-in-out infinite;
 }
 
 @keyframes rotate {
   0% {
     opacity: 0.5;
     transform: rotate(0deg);
+    transform-origin: 50% 0%;
   }
 
   50% {
     opacity: 1;
-    transform: rotate(5deg);
+    transform: rotate(360deg);
+    transform-origin: 50% 10%;
   }
   100% {
     opacity: 0.5;
     transform: rotate(0deg);
+    transform-origin: 0% 0%;
   }
 }
