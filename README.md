@@ -1,3 +1,3 @@
-# deuxp.github.io
+# Learning Wiki
 
-deuxp†qwp™
+## Gottfried Kleinberger: deuxp†qwp™

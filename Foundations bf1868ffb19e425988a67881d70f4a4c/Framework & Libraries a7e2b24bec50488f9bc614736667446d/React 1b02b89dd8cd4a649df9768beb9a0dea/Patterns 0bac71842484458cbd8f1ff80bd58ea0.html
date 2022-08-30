@@ -1,0 +1,788 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Patterns</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0bac7184-2484-458c-bd8f-1ff80bd58ea0" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🧃</span></div><h1 class="page-title">Patterns</h1></header><div class="page-body"><p id="329030e7-e9a8-4a36-b82c-c26ffb64d24c" class="">
+</p><nav id="ec758994-6075-4b4d-8df5-f89501650a3e" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4a1832f2-7d36-40d0-8219-4264e6cd0d3e">Controlled Components</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e25685d9-9726-4674-853e-e2c220dc294d">Controlled List</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dcc27715-9f8c-454c-af26-c5a21f3992f1">Naming convention</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6145c9d4-b163-4120-bd16-95faf976a15f">Immutable Update Patterns — hotfix</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#25d0e25a-21f6-46c6-b4f0-036231e8af7b">The {...} spread operator</a></div></nav><p id="b5b5cb92-b70b-4a8a-8f6f-7031f76e5f07" class="">
+</p><p id="b6e6ab66-6ba6-47c7-8156-7682524fa563" class="">
+</p><p id="02eb3897-dbbf-470d-b5aa-3700c35a8bec" class="">
+</p><h1 id="4a1832f2-7d36-40d0-8219-4264e6cd0d3e" class="">Controlled Components</h1><hr id="435a8e5f-19c1-428e-9a69-4232c177f6be"/><p id="e2a0d1da-8f20-4339-9622-c84c46303742" class="">
+</p><p id="88107f50-732c-4b98-b84d-5196d6bc3e16" class="">HTML form elements that keep track of their own state need to be controlled in React in order to have only one source of truth/state.</p><p id="2f4958fd-9cf6-4955-8522-0e2ba40409ed" class="">
+</p><p id="278528d0-eaf3-4bc3-ab35-cfb582aff18a" class="">The pattern for this consists of the following:</p><ol type="1" id="122e1325-d5d9-45b8-9aa5-554bb9feccb7" class="numbered-list" start="1"><li>Setting the <code>value</code> attribute on the form element with a variable that is stored in state.</li></ol><ol type="1" id="2537d9c7-b6f5-4f7d-bebb-41041c5a1479" class="numbered-list" start="2"><li>Using an <code>onChange</code> (camelCase, because it&#x27;s React!) event that fires the setter function set a new <code>value</code> when the input changes.</li></ol><p id="4d7797ac-191e-40c7-a764-128fb16f8325" class="">
+</p><ul id="7c303dc8-b1bf-4def-9fd2-ca9ae1227ec4" class="bulleted-list"><li style="list-style-type:disc">this pattern relies on the event object to grab the HTML form state <code>event.target.value</code> is used for this.</li></ul><p id="240c7197-9044-44c8-b2ce-abef21bfe2d8" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="48c41a91-3496-4600-938c-350056bbc834"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">HTML form elements are designed to receive user input, and so they have certain attributes that make it easy for developers to get the data stored in them and detect if the data has changed. In particular, note that HTML form elements have an attribute called <code>value</code> and support an event called <code>onchange</code>
+ that fires if the value changes.</div></figure><p id="5c42b6f3-c279-4c0f-a791-d2ff53fa9166" class="">
+</p><p id="cb17b60e-44e5-4f93-a6ee-422fb457c4ff" class="">
+</p><h1 id="e25685d9-9726-4674-853e-e2c220dc294d" class="">Controlled List</h1><hr id="aed39de2-630a-4354-a4dd-b21c01347b1d"/><p id="de2c3453-4309-4fb8-881a-a963256aae2c" class="">
+</p><p id="3f595add-7e05-4e7d-8006-ec149225878f" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="51694b35-9eae-48a9-9fa6-39db2cda85ed"><div style="font-size:1.5em"><span class="icon">🔥</span></div><div style="width:100%">Resolve and pass by reference: setState()
+
+pass the arg to the onChange func in the parent and pass down the resolved anonymous func by reference. pass anonymously</div></figure><pre id="cc001289-e012-4217-9f41-77ee1b300195" class="code"><code>
+
+&lt;DayList
+          days={days}
+          value={day}
+          onChange={setDay}
+        /&gt;
+
+export default function DayList({days, value, onChange}) {
+
+  // array of the component
+  const renderDayListItem = days.map(dayo =&gt; {
+    const { id, name, spots } = dayo;
+
+    return &lt;DayListItem 
+      key={id} 
+      name={name} 
+      spots={spots} 
+      selected={name === value} 
+      setDay={() =&gt; onChange(name)} 
+      /&gt;
+  })
+  
+  return (
+    &lt;ul&gt;
+      {renderDayListItem}
+    &lt;/ul&gt;
+  )
+}
+
+
+// ... gets passed by reference
+
+return (
+        &lt;li className={dayClass} onClick={setDay}&gt;
+          &lt;h2 className=&quot;text--regular&quot;&gt;{name}&lt;/h2&gt; 
+          &lt;h3 className=&quot;text--light&quot;&gt;{formatSpots()}&lt;/h3&gt;
+        &lt;/li&gt;
+      );</code></pre><p id="d3411aa8-62c7-4b6c-9323-9dc8ff1e4571" class="">
+</p><p id="18d0d4e7-af2d-4978-9975-276ade56b9be" class="">Ypu pass it to the DayList Comapojnent as onChange={() ⇒ {}} however once it is processed in the Daylist, you pass it down to the daylistitem back as setDay again. Its only named like that there for the dayList, since that is the elment that is mimiking a select list. freedom fires</p><ul id="66192d99-2db3-41f6-a5a4-8ec41f529c89" class="bulleted-list"><li style="list-style-type:disc">By changing a couple of prop names, you have made an input component that is intuitive to use for other developers.</li></ul><p id="35fa51b7-555d-4f08-b340-ee6a3837b45f" class="">
+</p><p id="98acfc0f-3acf-426a-8964-9f855f453d2c" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="aa3543cf-b27c-43ee-bb74-87620ea48e10"><div style="font-size:1.5em"><span class="icon">🧽</span></div><div style="width:100%">like a &lt;select/&gt; list, which, like other HTML form elements keep track of their own state, So that needs to be controlled by the React state in order to have one source of truth</div></figure><p id="1115343b-6b6b-4a97-a457-009139cec813" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="6274a712-7442-4917-bfcc-931bedde3d7a"><div style="font-size:1.5em"><span class="icon">🔥</span></div><div style="width:100%">using &lt;ul&gt; and &lt;li&gt; to create select lists is a  common pattern in React</div></figure><p id="90312922-53f8-4a87-afc4-2c5923a63e49" class="">
+</p><p id="a30bf067-26c0-4943-bfbf-125b3f299a39" class=""><em>(Refer to the interviewer Project for React: the </em><code><em>&lt;DayList/&gt;</em></code><em> and </em><code><em>&lt;InterviewerList&gt;</em></code><em> components are examples of this pattern)</em><div class="indented"><p id="88fafa1b-1c65-4595-a43c-8efe9f215c9c" class="">
+</p></div></p><p id="204250f2-3089-46c0-8214-6031e254f34c" class="">For our purposes, we will define a <strong>Controlled List</strong> as a select list that takes user input, but is built <em>without</em> using any type of HTML form input (no <code>&lt;input&gt;</code>tags, no <code>&lt;select&gt;</code> tags). Both the <code>&lt;DayList&gt;</code> and the <code>&lt;InterviewerList&gt;</code> were built this way.</p><p id="42be6492-d566-493e-bec4-cd312c92669b" class="">
+</p><p id="8758351a-a0f9-4dac-bb71-33eb0e8d3feb" class="">The thing to note here is that because these lists are built without HTML form inputs, the lists do not have built-in <code>value</code> or <code>onChange</code> attributes.<div class="indented"><p id="0052eca0-fa3e-4eca-b96c-7060963b5f1b" class="">which is baked into the value attribute as its own state monitor.</p></div></p><p id="aba4cf00-d963-448e-b5e7-5bf3124e3157" class="">Also html lists &lt;ul&gt; and &lt;li&gt; tags are easy to style, however they don’t come with a built-in value attribute or onChange event handler.</p><p id="3d5eb9f4-7132-4e0a-8a6a-7e5716dd2daf" class="">
+</p><h2 id="dcc27715-9f8c-454c-af26-c5a21f3992f1" class="">Naming convention</h2><hr id="1f8bab19-fe87-4f81-abc6-49b921703a69"/><p id="269ea033-4511-440f-b99b-40b4c4ce7d29" class="">
+</p><p id="a322e71d-2159-4573-abc8-cfda9208d6f5" class="">Rename the Props</p><p id="b34d1855-1305-4f52-802d-bbc322e0f54d" class="">from this:</p><pre id="06f28140-6f3e-401d-af73-750dfce350e8" class="code"><code>const [day, setDay] = useState(&quot;Monday&quot;);
+//...
+&lt;DayList 
+  days={days} 
+  day={day} 
+  setDay={setDay} 
+/&gt;</code></pre><p id="a0f3ff12-806a-44ed-8f70-b4103632922e" class="">
+</p><p id="4ffa1412-5ffe-4998-8b41-ac51211f49c2" class="">to:</p><pre id="310c3d39-2a15-415f-99c3-730dd92d6d50" class="code"><code>&lt;DayList 
+  days={days} 
+  value={day} 
+  onChange={setDay} 
+/&gt;</code></pre><p id="94ecea0e-912f-4626-936a-11386096cba4" class="">
+</p><p id="151e5b6b-27f0-430c-a885-5823907f51ce" class="">... which more acurately reflects the HTML select attributes. So any Developer will know right away what this is for. The purpose.</p><p id="e2decaf7-ccdb-4f38-8b8c-3a730eba8a40" class="">
+</p><p id="99335d63-bdc8-445b-928d-175bb723a6ba" class="">HTML select example:</p><pre id="34a3a6f5-2ac9-4ab1-b761-6a517140697a" class="code"><code>&lt;select id=&quot;interviewer-list&quot; onchange=&quot;displayInterviewer()&quot;&gt;
+  &lt;option value=&quot;Sylvia Palmer&quot;&gt;Sylvia Palmer&lt;/option&gt;
+  &lt;option value=&quot;Tori Malcolm&quot;&gt;Tori Malcolm&lt;/option&gt;
+    ...</code></pre><p id="31225bbd-0e50-4741-9bce-3f5c2a7d8b6d" class="">This is basically what you are building with this React pattern.. but more flexible.</p><p id="06ddb4b5-d9b3-44c7-bca6-965a03241f60" class="">
+</p><p id="c75e2bfb-8238-4b15-98c5-7ebb6ba3f651" class="">
+</p><p id="901afa2d-d5c2-43e6-bcc9-c4b9613d6e1b" class="">
+</p><h1 id="6145c9d4-b163-4120-bd16-95faf976a15f" class="">Immutable Update Patterns — hotfix</h1><hr id="aa7f23b9-519d-4867-ab4e-14de562ce2b0"/><p id="2fc4ba72-eb3f-484f-9353-00fbdf08e5f3" class="">
+</p><p id="e912db93-2781-4c11-a099-32b55f097838" class="">Problem:</p><ul id="7b3420eb-c821-4b40-b38a-cd0ba8e93819" class="bulleted-list"><li style="list-style-type:disc">If you are updating a state that is an array, Ie adding to the array, then useState actually won’t detect the change, resulting in no rendering.. this is a bug.</li></ul><p id="4a98e4e2-8a3b-4978-933e-56a40b09f771" class="">
+</p><p id="6ee921ab-98a6-4877-a095-c71bc5511ecf" class="">Solution:</p><ul id="2e167a26-5ad7-4f87-9d9f-df66544ea088" class="bulleted-list"><li style="list-style-type:disc">The immutable Update Pattern is where you <ol type="1" id="c71111e8-4c31-4037-8e46-22ee67efa97e" class="numbered-list" start="1"><li>make a duplicate of the state</li></ol><ol type="1" id="167f2179-b6a5-417b-b46c-163123223766" class="numbered-list" start="2"><li>add your item to it</li></ol><ol type="1" id="7e9a50f1-b3d1-4824-aafd-1e053be50a40" class="numbered-list" start="3"><li>setState to the new freshly created copy <ol type="a" id="23c2da22-3e81-4857-a312-4a388f296913" class="numbered-list" start="1"><li>use the spread operator for more elegant code:</li></ol><pre id="e3ecfc28-0ffa-445b-99d7-0058c9715c7d" class="code"><code>import React, { useState } from &#x27;react&#x27;;
+import logo from &#x27;./logo.svg&#x27;;
+import &#x27;./App.css&#x27;;
+
+function App() {
+  const [items, addItem] = useState([&#x27;one&#x27;, &#x27;two&#x27;]);
+
+	// old-fashioned
+  const handleAddItem = () =&gt; {
+    const cloneItems = items.slice(); // COPY
+    cloneItems.push(&#x27;three&#x27;);
+    addItem(cloneItems);
+  }
+
+// const handleAddItem = () =&gt; addItem([...items, &#x27;three&#x27;])
+
+  return (
+    &lt;div className=&quot;App&quot;&gt;
+    {items.map( item =&gt; &lt;li&gt;{item}&lt;/li&gt;)}
+    &lt;button onClick={handleAddItem}&gt;ADD ME&lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre><p id="0f10cd9c-a19b-43ea-afbe-fcbd2dd207af" class="">
+</p><p id="c2d3dd39-8c97-4c15-b5df-0ebe243358ec" class="">
+</p><p id="97e0faf1-9f39-4365-b139-ddaf12855bb3" class="">
+</p></li></ol></li></ul><p id="6823cee8-1457-4856-925d-7663ea5d8566" class="">
+</p><h1 id="25d0e25a-21f6-46c6-b4f0-036231e8af7b" class="">The {...} spread operator</h1><hr id="92f68553-50a2-4956-b909-a9d15840a930"/><p id="eb740fb4-ccfc-42d1-9da9-4ade6b3118a2" class="">
+</p><figure id="230afe80-b133-4fd2-b1b3-5eabfabaea52"><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Spread syntax (...) - JavaScript | MDN</div><div class="bookmark-description">Spread syntax (...) allows an iterable such as an array expression or string to be expanded in places where zero or more arguments (for function calls) or elements (for array literals) are expected, or an object expression to be expanded in places where zero or more key-value pairs (for object literals) are expected.</div></div><div class="bookmark-href"><img src="https://developer.mozilla.org/favicon-48x48.97046865.png" class="icon bookmark-icon"/>https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax</div></div><img src="https://developer.mozilla.org/mdn-social-share.0ca9dbda.png" class="bookmark-image"/></a></figure><p id="9496c1af-3a92-4b9b-9747-99aab1fac46c" class="">
+</p><pre id="21a11ad9-bccc-4768-8016-f637c4c59324" class="code"><code>// making a copy for arrays 
+const array = [1,2,3,4,5];
+const copyArr = [...array];
+
+// making a copy for objects
+const obj = {a:1, b:2};
+const copyObj = {...obj};</code></pre><p id="79c476ff-13d7-445d-bf0e-9b5406bb5e28" class="">
+</p><p id="5c68a297-8705-4825-bc75-a50a79295f4e" class="">the handleItem from the example above becomes:</p><pre id="e4831f16-5bb9-448e-88a8-19593d2a62f6" class="code"><code>const handleAddItem = () =&gt; addItem([...items, &#x27;three&#x27;])</code></pre><p id="f6ebd108-aec6-44af-bf95-c7f9ef62e0b0" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="405d6899-d50f-4edf-a1cd-1b29cf5eac6d"><div style="font-size:1.5em"><span class="icon">🧅</span></div><div style="width:100%">hot tip: you can use the spread for passing params for a function, OR components!</div></figure></div></article></body></html>

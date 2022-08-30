@@ -1,0 +1,785 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Promises</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e8d0de52-a89f-4914-b595-204688f6062a" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">💬</span></div><h1 class="page-title">Promises</h1></header><div class="page-body"><p id="c4e785da-919b-46ea-92a0-b9bd516bbb05" class="">
+</p><nav id="2e7f9c12-8a94-494c-9cf0-2e7acbd4509c" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d3bb9b4f-7407-4286-8c9d-145e5c5b11cb">Promises</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#60434182-bb2e-455b-b8f3-5045b0210c8c">Intro</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#19daa001-2ec9-4848-9f66-cbf7304dd7aa">Areas to explore if you&#x27;re curious</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#7966b51d-3ab2-4e14-b6d3-4cfb53262ec5">Creating Promises</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#17f44476-8c43-47be-a0f7-bbfc1b6c5dd1"><code>Promise.all()</code> and <code>Promise.race()</code></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d0f53c6d-0d35-4f81-9538-4d7d614001aa">Using promises to make multiple API calls</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7b70c0d7-a07e-41bb-84d8-ef9098c8430f">Creating a new Promise</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#36126e0e-6eb3-4e96-8266-3f933239df39">Passing a Promise within Function</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#97173e92-440c-4d8b-b2f2-9d73fc9a6ca1">Refactor function to Return a Promise</a></div></nav><h1 id="d3bb9b4f-7407-4286-8c9d-145e5c5b11cb" class="">Promises</h1><p id="bd863c12-7463-4613-97b1-1848d4d7c081" class=""><strong>An official introductory description:</strong> A promise represents the eventual result of an asynchronous operation. The primary way of interaction with a promise is through its <code>then</code> method, which registers callbacks to receive either a promise’s eventual value or the reason why the promise cannot be fulfilled.</p><p id="49f5d6b3-5fcd-4679-9071-2cf37d9fd362" class="">
+</p><ul id="55b9652a-2435-465d-a2e2-4a407c711571" class="bulleted-list"><li style="list-style-type:disc">A promise is an object</li></ul><ul id="69141c41-0dc7-4517-90e3-95aa1628f4f8" class="bulleted-list"><li style="list-style-type:disc">Promises do not rely on anything other than basic JavaScript</li></ul><ul id="8c153371-6d07-4067-a4e9-a38e14411917" class="bulleted-list"><li style="list-style-type:disc">As of ES6, JavaScript has promises supported natively in its code. In other words, they are built into the language (via <code>Promise</code>)</li></ul><ul id="202839eb-cb91-42e8-91bf-071d6da60349" class="bulleted-list"><li style="list-style-type:disc">it fixes callback hell</li></ul><p id="bbaf8a2e-880f-4ea5-b112-aca855e36291" class="">
+</p><h2 id="60434182-bb2e-455b-b8f3-5045b0210c8c" class="">Intro</h2><p id="ac928223-ddb4-4749-a32c-59d584720a2d" class="">Promises give us another way to interact with asynchronous code. Many of the asynchronous functions that you use on a day-to-day basis will use the Promise syntax that we covered today.</p><p id="46f1b916-f28a-4545-b3bd-a237c2d37896" class="">Promises let us handle values whose final value is uncertain or takes time to calculate. When a Promise is returned it&#x27;s immediate value is <code>pending</code>. A pending value will eventually either <code>resolve</code> or <code>reject</code> depending on whether it was successful or not.</p><p id="0470ba91-999d-4550-b7be-aaf76ce2e9f0" class="">A function that returns a Promise gives us three standard functions that we can use to interact with it:</p><ul id="e8bacaaa-3e8c-4c64-b42b-c207c76ad0a9" class="bulleted-list"><li style="list-style-type:disc"><code>.then()</code> -&gt; waits for the promise to <code>resolve</code> and gives us access to the returned value</li></ul><ul id="97c3b39d-2744-4549-a2e3-7891e65ee02e" class="bulleted-list"><li style="list-style-type:disc"><code>.catch()</code> -&gt;if our Promise <code>rejects</code>, lets us handle any errors thrown by our promise immediately</li></ul><ul id="84530941-1a29-423a-8476-09320d7c48da" class="bulleted-list"><li style="list-style-type:disc"><code>.finally()</code> -&gt; lets us run code after all of our <code>.then</code> and <code>.catch</code> functions are complete</li></ul><pre id="8d39ade3-5be3-4dde-9dac-83c74a2e6772" class="code code-wrap"><code>promiseFunc()
+  .then(response =&gt; {
+    // do something with the response from our Promise
+  })
+  .catch(error =&gt; {
+    // handle any errors from our Promise (including any errors from a .then())
+  })
+  .finally(() =&gt; {
+    // will run after every .then() or .catch() is complete
+		// usually want to manually close out the func if using streams etc
+  })
+</code></pre><h2 id="19daa001-2ec9-4848-9f66-cbf7304dd7aa" class="">Areas to explore if you&#x27;re curious</h2><p id="4dc4b3cb-7729-41b8-8806-a350fdfb015d" class="">Promises give us access to some other interesting functionality that you might want to explore once you get a better handle on using promises as we&#x27;ve discussed.</p><h3 id="7966b51d-3ab2-4e14-b6d3-4cfb53262ec5" class="">Creating Promises</h3><p id="45dfabe1-b19f-4bc8-b8bb-0927d886c4d5" class="">We can create our own Promises using the <code>Promise()</code> constructor.</p><pre id="b2ba0172-5538-4f68-a3c7-f972e65b5b76" class="code code-wrap"><code>// this example promise will resolve with the value &quot;Example value&quot; after 1s
+const examplePromise = new Promise((resolve, reject) =&gt; {
+  setTime(() =&gt; {
+    resolve(&quot;Example value&quot;)
+  }, 1000)
+})
+</code></pre><p id="b2bd3097-0e8f-46f2-bd21-250056092d87" class=""><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/Promise">Read more about the </a><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/Promise"><code>Promise()</code></a><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/Promise"> constructor on MDN</a></p><h3 id="17f44476-8c43-47be-a0f7-bbfc1b6c5dd1" class=""><code>Promise.all()</code> and <code>Promise.race()</code></h3><p id="15d15186-cd1a-4d24-b9ac-bdbf306d5d7a" class=""><code>Promise.all()</code> lets us wait for multiple Promises to finish and then gives us access to all of their responses.</p><pre id="d84e163c-5634-49ea-9a01-d8928d5619a1" class="code code-wrap"><code>const promises = [promise1, promise2, promise3]
+Promise.all(promises).then((values) =&gt; {
+  // now we can access the values of the promises in the order we passed them into Promise.all
+  // eg. the result of promise1 can be accessed as values[0], etc.
+})
+</code></pre><p id="1904ca17-7155-421b-b48b-ebf4581326de" class=""><code>Promise.race()</code> lets us run multiple Promises at the same time and returns the value of whichever Promise finished first.</p><pre id="a151b323-5ceb-4762-9f7a-9859b44a64d5" class="code code-wrap"><code>const promises = [promise1, promise2, promise3]
+Promise.all(promises).then((value) =&gt; {
+  // now we can access the value of whichever Promise resolved first
+})
+</code></pre><p id="b5baea91-1473-4db7-ab6d-ff4f34c53f13" class=""><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all">Read more about </a><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all"><code>Promise.all()</code></a><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race">Read more about </a><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race"><code>Promise.race()</code></a></p><p id="2fcbdb74-5287-47af-81a1-85bb2de6ec05" class="">
+</p><p id="5418135b-212f-4a35-a263-135f7a3cebad" class="">
+</p><p id="1795efaf-bd14-4752-b347-3d0526bb3735" class="">
+</p><h1 id="d0f53c6d-0d35-4f81-9538-4d7d614001aa" class="">Using promises to make multiple API calls</h1><ol type="1" id="6bf4258f-f947-4d2b-86f0-8b48aae8df6e" class="numbered-list" start="1"><li>return a promise</li></ol><ol type="1" id="e4f919b8-9d10-47fa-84c9-4722402dbcbc" class="numbered-list" start="2"><li>.then parse() and deconstruct<ol type="a" id="aafc8895-ca3b-44b9-9f1e-09e153271e56" class="numbered-list" start="1"><li>use the resolved promise</li></ol></li></ol><ol type="1" id="ff64dfd7-f967-431c-8d58-9b24a637c606" class="numbered-list" start="3"><li>.then repeat</li></ol><p id="d0395a50-f574-42b8-bef0-97d6680084c7" class="">
+</p><p id="696c9018-a864-465f-a90e-d02f7d8e009b" class="">
+</p><h1 id="7b70c0d7-a07e-41bb-84d8-ef9098c8430f" class="">Creating a new Promise</h1><p id="71f77fa5-5a66-4aac-bb90-110e25f8d202" class="">The guts of the machine ..</p><p id="180cd161-f1c6-4ce5-9632-3e27a65c8197" class="">
+</p><p id="0fa1329c-21b6-41f2-9555-d9d1ddb225aa" class="">A promise needs two callback functions</p><ol type="1" id="a6b9a3d6-1786-4b22-a13d-6cdc4e0ad2d8" class="numbered-list" start="1"><li>for success (resolve) and</li></ol><ol type="1" id="fcd97aea-55d3-41ef-b4c7-c6caa0eea0d8" class="numbered-list" start="2"><li>for failure (reject)</li></ol><p id="8ddab822-f269-446a-8d2e-65891321b326" class="">
+</p><p id="74af4120-dd21-49cf-b105-92adee346472" class="">Functions can create and return promises:</p><pre id="dfdda8d8-f867-4539-a081-fb3690f38016" class="code"><code>/** CREATING A PROMISE **\
+ * Input   -&gt; number of dollars to loan out
+ * Returns -&gt; Promise of loan which may not fulfill, based on remaining credit
+ *
+ *    [] If creditLimit is less than the requested amount, only the reamaining limit is loaned out,
+ *    [] otherwise the full amount is loaned out.
+ *    [] If $0 remain in the limit, the loan request is rejected (error)
+ */
+let creditLimit = 485;
+
+const loanOut = function(amount) {
+  
+  return new Promise((resolve, reject) =&gt; { // without a resolve, the script runs, but does not resolve with any money.
+
+    if (!creditLimit) reject(&#x27;insufficient funds&#x27;);
+    
+    if (amount &gt; creditLimit) {
+      amount = creditLimit;
+      creditLimit = 0;
+    } else {
+      creditLimit -= amount;
+    }
+    resolve(amount);
+  });
+};
+
+
+// Driver Code
+console.log(&#x27;asking for $400, which should be okay ...&#x27;);
+loanOut(400)
+  .then(amountRecieved =&gt; {
+    console.log(`\t-&gt; I got $${amountRecieved} loan from the bank!! Remaining Credit Limit: $${creditLimit}`);
+  })
+  .catch(err =&gt; {
+    console.log(`\t-&gt; Error: ${err}!`);
+  });</code></pre><p id="0b99ae79-33e1-409b-a59c-966e245e634b" class="">
+</p><p id="8373b11f-f1df-4c2f-bbb0-ea90887247c4" class="">These promises can have logic which then decides how to resolve or reject.. calling the appropriate callback, .then or .catch, and passing in the relevant data to these callbacks.</p><p id="4c9bb3ef-9656-4106-9bd4-6a3f1340dda5" class="">
+</p><p id="5621dfc7-0142-4e6d-8d6c-cb5569d74032" class="">The caller can then handle these situations and the data that comes back from the promise.</p><p id="e709f3ca-d655-4c5d-938a-98942be65b40" class="">
+</p><p id="7c6668d0-eb8a-40b3-b167-1077854d4f85" class="">
+</p><h1 id="36126e0e-6eb3-4e96-8266-3f933239df39" class="">Passing a Promise within Function</h1><hr id="e26ab979-9815-418e-b763-40f89b7b208e"/><p id="0bbbf54c-e682-4c11-9d50-91f19b8348b3" class="">
+</p><p id="7c68e47b-5b80-4bba-b1f9-a17eb2d26fcd" class=""><strong>Method 1:</strong></p><pre id="b24df88d-6dcb-4915-9402-ea56d2985ea6" class="code"><code>const getAllProperties = (options, limit = 10) =&gt; {
+  return pool
+    .query(`SELECT * FROM properties LIMIT $1`, [limit])
+    .then((result) =&gt; {
+      console.log(result.rows);
+      return result.rows;
+    })
+    .catch((err) =&gt; {
+      console.log(err.message);
+    });
+};</code></pre><p id="39d20271-599d-4b12-9dd2-d0818a17087f" class="">
+</p><ul id="2d9acd09-ca10-4a3d-b145-158d56c01220" class="bulleted-list"><li style="list-style-type:disc">first thing you do is <code>return</code> <code>pool</code> <em>query</em> , &lt;— database object<ul id="e06b31f4-39d1-47c3-b7fb-f7c5bdb9c508" class="bulleted-list"><li style="list-style-type:circle">then! if you simply return the result from a .<code>then</code> <ul id="845c6f0e-d46a-46af-8c4b-b49b4f4c331f" class="bulleted-list"><li style="list-style-type:square"><code>.then</code> always returns a promise even though we are just <code>return</code>ing a value<ul id="0746d463-d222-4123-8e8e-b75d9b6c291a" class="bulleted-list"><li style="list-style-type:disc">the function call is now a promise, <ul id="1aa9cc2d-668d-4513-9ffa-1ef16e60a15e" class="bulleted-list"><li style="list-style-type:circle">which is ‘thennable’ from here on out</li></ul></li></ul></li></ul></li></ul></li></ul><p id="f92b851f-a030-434d-94ab-f5a1c4e0b604" class="">
+</p><p id="d9662161-a8f0-4cb6-ab8b-2d90fd66b666" class="">
+</p><p id="c3b39afe-3a25-42fb-8e38-d6caa305c4df" class="">
+</p><p id="9a0ed25a-c3f5-4ea7-bcab-20591c7625e0" class="">so Im kind of testing whether or not there are dead keys on this keyboard</p><ul id="5f2a1d2f-cbde-4958-baff-82a3b5c4798d" class="bulleted-list"><li style="list-style-type:disc">so far “so good”<ul id="a704b25d-029a-4715-b677-8cc26bd034c9" class="bulleted-list"><li style="list-style-type:circle">I can’t see that this is not working like it should<ul id="c9eed523-bbea-446c-81f1-2d8ebe77f778" class="bulleted-list"><li style="list-style-type:square">ok, so ther is some wierd behaviour.. So I think I’ll just monitor this for now and see what happens the longer I play around with it.. <ul id="43bcd167-dd16-481e-9c9a-b60e33abe3ab" class="bulleted-list"><li style="list-style-type:disc">I don’t particularly like the behaviour of the function keys so far.```````~~~~~~~~</li></ul><p id="a0a4dc8f-7c35-49ec-8e78-53d3bd41dbf1" class="">
+</p></li></ul></li></ul></li></ul><p id="59ee1576-1cb4-4ea3-88a0-7c643a0139d5" class="">
+</p><p id="c670f157-4965-4fc8-b919-f3b307d9c4d5" class="">
+</p><h1 id="97173e92-440c-4d8b-b2f2-9d73fc9a6ca1" class="">Refactor function to Return a Promise</h1><hr id="f87921ae-28dd-48a7-8566-2c5474520a9e"/><p id="76a727f9-2503-4f9b-8ac4-f8a90837e9d1" class="">
+</p><figure id="39e0ed24-c1e0-4520-8a7d-fd682ebb1485"><a href="https://stackoverflow.com/questions/47608317/javascript-write-function-that-returns-a-promise" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Javascript: write function that returns a promise</div><div class="bookmark-description">I&#x27;m trying to create a function in Firebase Functions that returns a promise (or returns synchronously, I don&#x27;t mind), but with no success. Here&#x27;s the function that I wrote: function doSomethingLong(param) { https.get(&#x27;http://www.myurl.com?param=&#x27; + param, (resp) =&gt; { let data = &#x27;&#x27;; // A chunk of data has been recieved.</div></div><div class="bookmark-href"><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/favicon.ico?v=ec617d715196" class="icon bookmark-icon"/>https://stackoverflow.com/questions/47608317/javascript-write-function-that-returns-a-promise</div></div><img src="https://cdn.sstatic.net/Sites/stackoverflow/Img/apple-touch-icon@2.png?v=73d79a89bded" class="bookmark-image"/></a></figure><p id="52337fac-888e-4443-b3ba-8a7f2df968a6" class="">
+</p><pre id="7f75e45f-73ad-4128-b39a-c235c6f256d9" class="code"><code>export default {
+  get: jest.fn(url =&gt; {
+    if (url === &quot;/api/days&quot;) {
+      return Promise.resolve({
+        status: 200,
+        statusText: &quot;OK&quot;,
+        data: fixtures.days
+      });
+    }
+
+    if (url === &quot;/api/appointments&quot;) {
+      /* Resolve appointments data */
+    }
+
+    if (url === &quot;/api/interviewers&quot;) {
+      /* Resolve interviewers data */
+    }
+  })
+return Promis.reject(`Error: ${url} is not a valid endpoint`)
+}</code></pre><p id="982c3eb5-ca06-4973-b7b4-4ba244390739" class="">
+</p><p id="57836d35-feae-4567-9357-62ca6bb6fc67" class="">
+</p></div></article></body></html>

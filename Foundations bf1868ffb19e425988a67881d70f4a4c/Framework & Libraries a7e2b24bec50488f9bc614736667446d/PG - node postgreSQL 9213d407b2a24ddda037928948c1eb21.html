@@ -1,0 +1,740 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>PG - node postgreSQL</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="9213d407-b2a2-4ddd-a037-928948c1eb21" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🐜</span></div><h1 class="page-title">PG - node postgreSQL</h1></header><div class="page-body"><p id="f5c25d78-c3a8-4865-bca0-d37f370ebfe6" class="">
+</p><p id="30e950bd-6c19-4e09-966d-49940ec80b21" class="">
+</p><nav id="da61dd26-dfae-4621-85ea-05fa8d05b3df" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#83182b92-a43d-49ec-a6e5-e708b97c4379">COnneciton Pool</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b02fb7eb-68a1-46b1-8e35-18fe632628f9">pool.query</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8e494ff2-7c96-493d-8457-775edc735808">SQL injection → Sanitization</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#0dfeaf63-00ce-40c1-aee1-3b48be79bdf7">Parameterized query</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c00f9ec0-2a70-4c85-878d-6d6d74403f87">Query Config object</a></div></nav><p id="198cde76-b5a0-4b56-ac5f-9fe5f9e4223d" class="">
+</p><p id="6045facc-45e4-415c-b029-24cffdf6c20a" class="">
+</p><p id="6c57ed44-4499-450f-8d1c-30672d3a6cbc" class="">
+</p><figure id="e42a6722-e7fb-4af5-8f78-de7f7c83a928"><a href="https://node-postgres.com/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Welcome</div><div class="bookmark-description">node-postgres is a collection of node.js modules for interfacing with your PostgreSQL database. It has support for callbacks, promises, async/await, connection pooling, prepared statements, cursors, streaming results, C/C++ bindings, rich type parsing, and more! Just like PostgreSQL itself there are a lot of features: this documentation aims to get you up and running quickly and in the right direction.</div></div><div class="bookmark-href"><img src="https://node-postgres.com/favicon.ico" class="icon bookmark-icon"/>https://node-postgres.com/</div></div><img src="https://node-postgres.com/eaze.png" class="bookmark-image"/></a></figure><p id="b1027898-c5fe-4c67-85de-ee96a11a2d96" class="">.then(able → {})</p><p id="78cd585c-ad88-477c-a1c0-9d0c3c4c14f4" class="">
+</p><p id="b1c57637-625a-4e4e-8a96-64bbcbe724a1" class="">
+</p><p id="a7ee8f58-50ed-4bef-b106-d6e11c734562" class="">good way to create defaults. This is Javascript common practice. If no one enters an arg, there is a default.. and you dont have to set it in the parameter=default  of a funtion.. because many times there are variables declared throughout a program that arent explicitly set parameteres of a function.</p><pre id="f653e5ee-7fdf-4c1a-a670-47b677e652fe" class="code"><code>LIMIT ${limit || 5};</code></pre><p id="08ed7435-04fc-4e2b-b2c0-f234b64b5cf1" class="">
+</p><h1 id="83182b92-a43d-49ec-a6e5-e708b97c4379" class="">COnneciton Pool</h1><hr id="7368ee08-0f3e-4e43-a6f3-a9a695cd0e34"/><p id="304ce2f9-f513-4ef9-bd6c-f8068d9d974c" class="">
+</p><p id="2be04634-aa35-4263-b603-cd89b291989a" class="">If you&#x27;re working on a web application or other software which makes frequent queries you&#x27;ll want to use a connection pool.</p><p id="e850de18-5c48-40f3-9a58-817cbe6586e1" class="">The easiest and by far most common way to use node-postgres is through a connection pool.</p><p id="c96e90ad-c1d5-4903-abc4-1b6a3618370f" class="">
+</p><blockquote id="ec4874ba-ea58-441e-88c8-3ce859519221" class="">Pooling is the preferred way  </blockquote><p id="64833206-c44b-4d7f-bd07-4478e76a01cf" class=""> </p><h1 id="b02fb7eb-68a1-46b1-8e35-18fe632628f9" class="">pool.query</h1><hr id="259ea202-e650-4815-8b14-87d59ab78aa8"/><p id="947a8bd2-4627-464f-ae3d-5cfdc31b6b11" class="">
+</p><blockquote id="3f6aec02-6060-4857-84df-8f91e18f4b78" class="">“Write powerful queries using SQL, to get humble JavaScript objects in return of a promise”</blockquote><p id="29283b13-90d7-425e-9a41-85fa52af60d9" class="">
+</p><p id="05a4c2aa-f6a2-4d8b-a7f2-d3306b452bd6" class="">is a funciton that accepts an SQL query as a JS string. Using th backtick we can write a multi line string to make our sql look nicer.</p><p id="6688d4c8-4a53-401f-9354-fdfc8008ed71" class="">The funciton then returns a promise that contains our result when the query is successful.<div class="indented"><ul id="c5560bca-3488-48de-b2c7-1394e44d110d" class="bulleted-list"><li style="list-style-type:disc">did you hear that it returns a promise with the result of the query.</li></ul></div></p><p id="8df9d5c7-fee5-46d6-9834-b4c4b53d69a9" class="">
+</p><ul id="b0314ebd-5f51-4c8e-a43f-709846734c04" class="bulleted-list"><li style="list-style-type:disc">what you get back is an object with mucho information<ul id="e76b60a2-afee-40ad-ae12-d70bbcd2d8c3" class="bulleted-list"><li style="list-style-type:circle">upon closer inspection of this, the property ‘rows’ looks like the info that you want<ul id="8685450d-3a8f-4a3e-9403-f670bfab2e03" class="bulleted-list"><li style="list-style-type:square">it is in the form of an array of objects which are entities where each key represents a column or attribute of said entity<ul id="42bb0c5a-dafd-4bde-8c81-b345436b48aa" class="bulleted-list"><li style="list-style-type:disc">once the .then(res ⇒ {}) comes back, we are dealing with a javascript obeject, not SQL anymore.</li></ul></li></ul></li></ul></li></ul><p id="1763827d-f4b6-470d-b90a-20f7d59d5223" class="">
+</p><h1 id="8e494ff2-7c96-493d-8457-775edc735808" class="">SQL injection → Sanitization</h1><hr id="e3428f17-da32-4803-ba4a-ad0596d466bf"/><p id="2a328468-ef65-4618-9a16-added118487c" class="">
+</p><figure id="9b7a4221-b2e8-4b02-a580-1eb6f63f5b0a"><a href="https://node-postgres.com/features/queries" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Queries</div></div><div class="bookmark-href"><img src="https://node-postgres.com/favicon.ico" class="icon bookmark-icon"/>https://node-postgres.com/features/queries</div></div></a></figure><p id="49da37d9-4a69-48ae-b65c-02069ebbd59a" class="">sql injection test as an arg where 2 is the arg and then  ‘;’ then your injection:</p><pre id="2f25d11a-bcb6-471f-addd-63ad1c53dc62" class="code"><code>&quot;2; UPDATE students SET email = &#x27;badboy@baddies.com&#x27; WHERE id = 1;&quot;</code></pre><p id="87d20b6f-d953-4d36-8919-5a6d828fb410" class="">
+</p><p id="8ec00a72-27fe-4850-8103-e9a4ad07639b" class="">
+</p><h2 id="0dfeaf63-00ce-40c1-aee1-3b48be79bdf7" class="">Parameterized query</h2><hr id="3669d65c-8099-4380-ad16-fe072099058c"/><p id="e5281548-5d37-4914-9374-dedd0a65489d" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="41cf2525-a90d-435b-b4bb-df98c93fd5e1"><div style="font-size:1.5em"><span class="icon">❗</span></div><div style="width:100%">Always use parameterized queries when you have data that comes from an untrusted source, which is pretty much every source.</div></figure><p id="be11fc23-95fb-4e2e-95b5-d4311c73a28c" class="">
+</p><p id="30313857-38a0-4e5b-80ef-40bc4e3c8e9c" class="">PostgreSQL receives these two pieces of information separately. It knows that the first part is a safe query that it can run and that the second part is data that may be malicious. It will use the values as data within the query but it will not run the values as part of the query. This protects us from SQL injection.</p><p id="7a02685f-8f6d-4b2f-a64c-9c114601f3bb" class="">
+</p><p id="10a4930b-d070-433f-85b4-d5c178fd1bef" class="">If you are passing parameters to your queries you will want to avoid string concatenating parameters into the query text directly. This can (and often does) lead to sql injection vulnerabilities. node-postgres supports parameterized queries, passing your query text <em>unaltered</em> as well as your parameters to the PostgreSQL server where the parameters are safely substituted into the query with battle-tested parameter substitution code within the server itself.</p><p id="18edc1f0-26cf-4a93-9132-da8f455ee5b2" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="27a4cb70-1adb-423a-a417-006eb2a220d0"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">The <code>$1</code> and <code>$2</code> placeholders will eventually get replaced with the actual data from the values array. The numbering starts at 1 instead of 0, so the first value in the query <code>$1</code> corresponds to the first value in the array <code>values[0]</code>.</div></figure><p id="dd549f72-8917-44b2-b274-c0e7017f461d" class="">
+</p><pre id="9ab45e84-e7eb-4886-99f8-e62909754ecb" class="code"><code>const text = &#x27;INSERT INTO users(name, email) VALUES($1, $2) RETURNING *&#x27;
+const values = [&#x27;brianc&#x27;, &#x27;brian.m.carlson@gmail.com&#x27;]
+// callback
+client.query(text, values, (err, res) =&gt; {
+  if (err) {
+    console.log(err.stack)
+  } else {
+    console.log(res.rows[0])
+    // { name: &#x27;brianc&#x27;, email: &#x27;brian.m.carlson@gmail.com&#x27; }
+  }
+})
+// promise
+client
+  .query(text, values)
+  .then(res =&gt; {
+    console.log(res.rows[0])
+    // { name: &#x27;brianc&#x27;, email: &#x27;brian.m.carlson@gmail.com&#x27; }
+  })
+  .catch(e =&gt; console.error(e.stack))
+// async/await
+try {
+  const res = await client.query(text, values)
+  console.log(res.rows[0])
+  // { name: &#x27;brianc&#x27;, email: &#x27;brian.m.carlson@gmail.com&#x27; }
+} catch (err) {
+  console.log(err.stack)
+}</code></pre><p id="fc92a406-eb43-479e-b6e9-ffc8a4792869" class="">
+</p><ul id="db3c026f-d1d0-49f5-bf80-748eaccb4525" class="bulleted-list"><li style="list-style-type:disc">The second parameter in the queries is an array of values to be used by the alias set in the text query $1, $2, etc they are positional and remind me of pythons string formatting.</li></ul><p id="df5c184c-1471-492f-8afa-8aa9ca0bfff3" class="">
+</p><ul id="8d7ba39b-ce03-4cec-8b67-f68fbf7fe1af" class="bulleted-list"><li style="list-style-type:disc">Each <code>$</code>s in our query is a placeholder that represents where a value should go but can&#x27;t because it&#x27;s coming from somewhere else, so it might be malicious. For most of our applications, this data will come from an under user using an HTML form. For this example, it&#x27;s coming from <code>process.argv</code>.</li></ul><p id="e5834185-b1d8-4a83-b244-ecc2707845a8" class="">
+</p><h2 id="c00f9ec0-2a70-4c85-878d-6d6d74403f87" class="">Query Config object</h2><hr id="ff74d044-1f89-4c07-a216-a1f97604bf8f"/><p id="be5356a9-1d98-4f62-8409-fa387261dee9" class="">
+</p><p id="f6841eb2-5edc-45b3-b893-d4751d9ff192" class="">
+</p><p id="63f9625f-27bf-444e-8a84-8b4c17cb5bc4" class="">
+</p><pre id="fbe2a24a-33f9-482f-9cc5-623d78e2db35" class="code"><code>const query = {
+  text: &#x27;INSERT INTO users(name, email) VALUES($1, $2)&#x27;,
+  values: [&#x27;brianc&#x27;, &#x27;brian.m.carlson@gmail.com&#x27;],
+}
+// callback
+client.query(query, (err, res) =&gt; {
+  if (err) {
+    console.log(err.stack)
+  } else {
+    console.log(res.rows[0])
+  }
+})
+// promise
+client
+  .query(query)
+  .then(res =&gt; console.log(res.rows[0]))
+  .catch(e =&gt; console.error(e.stack))</code></pre><p id="1deaa92b-502d-4296-8a91-b3927c5647cb" class="">
+</p><p id="96a48a15-b959-4cec-9a72-b51fd8f00712" class="">It appears as if you use an object with the keys text and values</p><p id="14c5155a-6e64-488e-88eb-c49e88bd4f45" class=""><code>pool.query</code> and <code>client.query</code> both support taking a config object as an argument instead of taking a string and optional array of parameters</p><p id="5347b1d3-2907-4ef5-a7fb-44ac3e27850d" class="">text: the SQL language string of the query where (in SQL) $1 is an alias in SQL</p><p id="f00ef1dc-9e2d-4e7c-bbcd-6fc05d8c3e21" class="">values: this is where you can use your template literals and the query will sub in the alias’ in sql.. presumably sanitized.</p></div></article></body></html>

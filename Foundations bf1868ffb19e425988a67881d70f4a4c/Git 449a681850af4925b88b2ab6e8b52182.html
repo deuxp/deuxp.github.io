@@ -1,0 +1,774 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Git</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="449a6818-50af-4925-b88b-2ab6e8b52182" class="page mono"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/met_vincent_van_gogh_ginoux.jpg" style="object-position:center 70%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="data:image/png;base64,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"/></div><h1 class="page-title">Git</h1></header><div class="page-body"><nav id="c3dbd430-bce1-44d3-ae85-0d9234262800" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#42c59948-af1a-4e29-998b-13dac7d900d9">Chown</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#40e86ab7-5965-40aa-a922-a70108140f11">Clone Repo</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9d9ca6c5-0758-4a47-b71c-29810d23af3f">Init Repo Locally</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1d74c0bd-fd3b-4f7d-bc0f-2ac769f7aa53">git reset → removes file from staging area</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#67fdf983-1528-416d-92a8-8bd9f77ffc09">Fork</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#19497c13-d6ea-457e-b86c-59cc90c8ad01">Branch</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f8fde8fc-8f62-4112-98a8-d79b11cb0ab3">Create</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#807a7878-da57-4441-ad34-29e4e00acb65">Delete</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8792d088-4dd0-4c85-9f77-c344c5e6b01b">Pull Branch from Remote</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d4fe3140-c909-4d95-9045-eb75b002a60e">Rename</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#b9c14f51-99cf-404e-a008-f27219ee488c"><strong>Rename your local master branch into main</strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#586c8300-80a6-4645-83e6-5e4fbee0d82c">Merge</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cc64f4e6-73d7-47df-846e-1d754631779a">Rollback</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#efcc1052-b405-46e5-b403-4d96517fc71f">stash</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b178ba52-ab73-4f9d-96eb-3f7f7cad715b">Pull</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#66a0d9bb-512c-4f4a-88d8-9d60cec8433f">Pull requests</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#6499c90a-890f-4648-98f9-9eb46f58a123">Pull from upstream</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7a6f4c9b-9e92-4929-abb6-95dd6515c347">Github pages</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#d4e3e449-2eb5-4fd1-a282-615ce8341a31">Collaborators</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e4e1d73b-d09c-4164-9541-ef5ad28c20ff">links</a></div></nav><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a2df2d61-2a94-4ec2-9404-330d2e2abc8d"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">Adding ssh key, do once per machine with default user info</div></figure><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a7549e56-7932-4ea9-93e1-29526fb7dcf1"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">you may have to change ownership of the file folder</div></figure><p id="d70d0edd-38a5-4a6c-8425-ef95a1d36465" class="">
+</p><h1 id="42c59948-af1a-4e29-998b-13dac7d900d9" class="">Chown</h1><pre id="86f93776-bf78-4565-bc61-3ee0e5cf793b" class="code"><code>$ sudo chown -R user $PATH</code></pre><p id="628c694e-1db6-4c70-bcb8-c1ef48551e8b" class="">
+</p><h1 id="40e86ab7-5965-40aa-a922-a70108140f11" class="">Clone Repo</h1><p id="4552c46f-78c9-4881-99ff-f58190cfa292" class="">
+</p><ol type="1" id="f97508c4-4412-45c1-8b89-8868238956d8" class="numbered-list" start="1"><li>Clone or create the <strong>repo</strong> online.<ol type="a" id="c7c8eca1-e988-4c50-8cb5-1a42e5d72edc" class="numbered-list" start="1"><li>copy the <code>url</code> next to the option that you want ie., SSH</li></ol><p id="ec8e3c7b-adff-49df-980e-69609ba05d29" class="">Commands related to a remote repository:</p><pre id="08ce6d7e-9c1f-4efa-b6bd-03bd568e2c7c" class="code"><code>$ git clone git@github.com:USER-NAME/REPOSITORY-NAME.git </code></pre><p id="ee0e3f45-f580-4178-bfe8-66ffb6e330ef" class="">or </p><pre id="531fa7be-5424-45c8-9581-474ab72a90d0" class="code"><code>$ git clone https://github.com/user-name/repository-name.git</code></pre><p id="2fa95111-4cea-414b-95c2-f395eb200734" class="">or </p><p id="ffd32b99-0398-4fdf-9ca3-a3e9cfabe3aa" class="">starting locally, you want to (a) init, (b) connect, (c) select branch and (d) push upstream.</p><p id="27f13c72-4fae-4942-8eef-fb7f15ec3131" class="">
+</p></li></ol><h1 id="9d9ca6c5-0758-4a47-b71c-29810d23af3f" class="">Init Repo Locally</h1><pre id="56beb590-6192-456b-a0f5-4827ec96b218" class="code"><code>$ git init
+$ git remote add origin git@github.com:username/new_repo
+$ git branch -M main
+$ git push -u origin main</code></pre><p id="33f25438-7991-4c8b-966c-7250b5a3f54c" class="">
+</p><p id="f303957e-7b46-4cb1-a634-1cf13b4ad59f" class="">
+</p><p id="073100a6-a2c5-4ac5-a71e-d0009da742ac" class=""><span style="border-bottom:0.05em solid"><strong>Viewing the changes</strong></span></p><pre id="10ce1944-a0af-491f-95ba-fb3227b4d4e3" class="code"><code>$ git diff</code></pre><p id="8331f35b-0a6e-45c1-8823-ce701b45572a" class="">
+</p><h3 id="1d74c0bd-fd3b-4f7d-bc0f-2ac769f7aa53" class="">git reset → removes file from staging area</h3><p id="22f557ff-353a-45b2-85d7-92cfc36d2c2c" class="">
+</p><p id="658c4748-2a12-4737-8fb7-78f936640993" class=""><span style="border-bottom:0.05em solid"><strong>Remove repo</strong></span></p><p id="33b49c6e-031e-4041-a777-75bb1b8a6f1d" class=""> </p><pre id="8b8ac671-40c7-45c6-a179-41655e28facb" class="code"><code>$ git remote remove origin
+$ git remote add orign &quot;url&quot;</code></pre><p id="8d635be9-6399-4b17-ab42-35cfb36156b6" class="">
+</p><p id="6feb4109-65bc-4f24-befe-6c901de6816f" class="">
+</p><h1 id="67fdf983-1528-416d-92a8-8bd9f77ffc09" class="">Fork</h1><p id="9982f001-457a-4153-89b8-cf4a57b63cf7" class="">
+</p><ol type="1" id="aebec87e-53bd-4948-915c-2e67fc548f05" class="numbered-list" start="1"><li>first fork the repo on the repo page → use the fork button on the top right<ol type="a" id="25c95c10-b669-4bdc-8b0f-f369daf1be93" class="numbered-list" start="1"><li>This fork will show up in your github page.</li></ol></li></ol><ol type="1" id="97c3bcb7-983a-457c-8591-7f4666d73859" class="numbered-list" start="2"><li>next clone your forked copy into your computer. <ol type="a" id="0907d0e8-4a54-46fe-ad63-ab0cc74307c9" class="numbered-list" start="1"><li>it will make its own file</li></ol><ol type="a" id="3e8b8a32-5224-4ca5-8347-9b4fe76a548a" class="numbered-list" start="2"><li>Please do not copy into a folder that already has a git initialized</li></ol></li></ol><p id="719e5f1d-a618-43be-a72e-4c5e633094aa" class="">
+</p><pre id="0f58f2c4-58b1-4dcb-8f46-a96ccc487a7b" class="code"><code>$ git clone &lt;yer forked repo&#x27;s url&gt;</code></pre><p id="f05218f2-2554-4ddf-b689-c174551d4f7a" class="">
+</p><ul id="d825df3c-d9c7-49d6-914d-39f0b1d6b494" class="bulleted-list"><li style="list-style-type:disc">now you have your own forked version to play with.</li></ul><p id="b77015e8-c1c6-4782-aea0-04e3c01eeb1f" class="">
+</p><p id="9de4d032-592b-4e5c-9538-6a6402a6679d" class="">
+</p><blockquote id="f6f46a6d-6348-47b9-a930-ec7f12f5debb" class="">You can have more than one stream → repo location (1) your fork, to work on, and (2) the original repo for pulling the latest version to work with, and to eventually push your finished feature to be reviewed or merged. 
+
+Be sure to give them different names. The convention are (a) origin for your fork or your repo, and (b) upstream, for the original.  </blockquote><p id="9564c8e1-242e-4b45-afcf-6047f33eb27c" class="">
+</p><p id="050eab93-2383-4c9f-9c81-e1fcb428a117" class=""><span style="border-bottom:0.05em solid"><strong>Adding the upstream remote</strong></span></p><p id="17c88f78-a63c-4138-8030-2b171e591874" class="">You will typically do this once you&#x27;ve clone your fork to your local. You are adding another remote connection; the upstream (original) version.<div class="indented"><p id="182369bc-88e7-48e7-9092-a873544c9350" class="">This way if the original changes or is updated, then you can pull that code and start working with the new code.<div class="indented"><p id="e3f1432d-c0f5-4d79-a107-e49cad69ec49" class="">This way you are sure to make your feature work with the most recent version.<div class="indented"><p id="6bcb7f23-3a0e-47af-b663-42573ee3f715" class="">Also if you&#x27;re working on a bug; maybe the updated version has already fixed it.<div class="indented"><p id="d0171270-3f61-4d5b-afed-73b9a7dc8e35" class="">etc.</p></div></p></div></p></div></p></div></p><p id="6260ce77-61d9-41c0-9c5a-b0ab4b52d7a8" class="">In your forked repo folder:</p><pre id="24b1b2de-c4f0-49c2-82b9-b6dda4f46489" class="code"><code>$ git remote add upstream &lt;original repo&#x27;s url&gt;</code></pre><p id="64c3b7fc-5e40-412d-a5d8-ec6dccbde6a3" class="">
+</p><p id="add713d5-344e-4809-8392-6ce6c29eb86d" class="">
+</p><h1 id="19497c13-d6ea-457e-b86c-59cc90c8ad01" class="">Branch</h1><p id="abe57788-6be0-4368-9e2c-1df09690d9ad" class="">
+</p><figure id="42c4fad8-bed4-4cef-a1d3-5ea5d1aabb1f" class="image"><a href="Git%20449a681850af4925b88b2ab6e8b52182/Screen_Shot_2021-08-27_at_8.56.46_PM.png"><img style="width:636px" src="Git%20449a681850af4925b88b2ab6e8b52182/Screen_Shot_2021-08-27_at_8.56.46_PM.png"/></a></figure><p id="a3bc01c8-2f72-4910-be6d-3ce766a40da1" class="">
+</p><p id="903beec2-2785-4d6a-9144-ff4ac25114a7" class="">While you are working on your feature with your forked version of the project; you push your changes up to a BRANCH of the original. You keep your changes there until they are ready and can be reviewed before they are merged into the MAIN branch. <div class="indented"><p id="d08937f9-a22b-4d48-8f0c-edf88f10d14a" class="">This keeps the main stable until yours is ready to be merged.</p><p id="9e94edd2-e283-47f8-a513-50f76513ede0" class="">
+</p></div></p><h2 id="f8fde8fc-8f62-4112-98a8-d79b11cb0ab3" class="">Create</h2><p id="65a6e4aa-b107-4bb6-8397-33b34124e235" class="">When you create a branch git copies everything from the current branch and places it in the branch that you have requested.</p><pre id="0459e885-a850-4c43-a3af-8680c7552535" class="code"><code>$ git branch &lt;BRANCHname&gt;
+$ git checkout &lt;BRANCHname&gt;
+
+$ git branch  # this lists the branches
+
+# real-world shortcut to create a branch and switch to it
+</code></pre><p id="d75cfb7e-40db-4686-a9ae-1462a6ed0804" class="">
+</p><h2 id="807a7878-da57-4441-ad34-29e4e00acb65" class="">Delete</h2><hr id="2aa3eebc-12fd-4b51-a5cd-f391c1c18851"/><p id="bf6e909f-51e0-4084-865f-cd581092e871" class="">
+</p><figure id="6a4cadb8-d8ad-4abd-aca7-192c8d371f9d"><a href="https://www.freecodecamp.org/news/git-delete-branch-how-to-remove-a-local-or-remote-branch/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Git Delete Branch - How to Remove a Local or Remote Branch</div><div class="bookmark-description">Git is a popular version control system and an essential tool in a web developer&#x27;s toolkit. Branches are a powerful and integral part of working with Git. In this article, you will learn the basics about how to remove local and remote branches in Git. What are Branches in Git?</div></div><div class="bookmark-href"><img src="https://www.freecodecamp.org/news/favicon.png" class="icon bookmark-icon"/>https://www.freecodecamp.org/news/git-delete-branch-how-to-remove-a-local-or-remote-branch/</div></div><img src="https://www.freecodecamp.org/news/content/images/2021/08/elaine-alex-OFMEk4ar9RA-unsplash--1-.jpg" class="bookmark-image"/></a></figure><p id="863f624f-e2b6-4fc9-b226-fb0d452647ae" class="">
+</p><p id="74aa555c-105b-49a6-8e72-9d8cd60b7503" class=""><span style="border-bottom:0.05em solid"><strong>Local</strong></span></p><pre id="2b9a6293-4160-4f8a-aaec-e039cd9e2a3b" class="code"><code>git branch -d  local_branch_name</code></pre><p id="d14fcd82-d5d2-4f3f-9815-f410b61d2871" class="">
+</p><p id="64d4bb44-53b9-4aed-b306-7b51300323fc" class=""><span style="border-bottom:0.05em solid"><strong>Remote</strong></span></p><pre id="5d34dfb7-6e1a-444c-9a36-1668c6692808" class="code"><code>git push remote_name -d remote_branch_nameb</code></pre><p id="cdbc6e4d-d8ff-45fa-aee6-0c973b34279c" class="">
+</p><p id="b03444fe-5bd3-4261-b018-8108b5d5d064" class="">
+</p><h2 id="8792d088-4dd0-4c85-9f77-c344c5e6b01b" class="">Pull Branch from Remote</h2><hr id="2f20f6e6-6b17-4215-b484-12c1b0e4f8e6"/><p id="b2971078-7e74-4652-8ed1-e90e52f6e9ab" class="">
+</p><pre id="c08ffcf4-d6c2-4515-ac5c-e69793591718" class="code"><code>$ git checkout --track origin/[branch_name]</code></pre><p id="4760df04-69fe-47bc-a393-fb4f077c9cf9" class="">
+</p><h2 id="d4fe3140-c909-4d95-9045-eb75b002a60e" class="">Rename</h2><hr id="bd4346fc-6b89-4390-b912-ca90eb770897"/><p id="64159276-2e76-4716-b190-2852524ab163" class="">
+</p><pre id="2e53c3f0-04cc-43c8-8c45-d1dec1460129" class="code"><code>$ git branch -m &lt;newBranchName&gt;</code></pre><p id="542334dd-bfab-4e92-afb1-12cff79dbb7a" class="">
+</p><h3 id="b9c14f51-99cf-404e-a008-f27219ee488c" class=""><strong>Rename your local master branch into main</strong></h3><pre id="15324970-cc87-48f6-aa18-cfd091ab8453" class="code"><code>git branch --move master main.
+git push --set-upstream origin main.
+git branch --all * 
+# main 
+# remotes/origin/HEAD -&gt; origin/master 
+# remotes/origin/main 
+# remotes/origin/master.
+git push origin --delete master</code></pre><p id="c702fe62-df9f-4fd4-b980-385a34db8961" class="">
+</p><p id="ac4583f9-6566-4c59-95d5-5468ef3e182a" class="">
+</p><h1 id="586c8300-80a6-4645-83e6-5e4fbee0d82c" class="">Merge</h1><hr id="562d3f51-a0e2-4031-8e0d-2c75d8a2471c"/><p id="0ca0282a-a5ac-41da-91bc-99e163be4095" class="">
+</p><figure id="61f64300-2524-4b84-a63e-de812edfc6cd"><a href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Git - Basic Branching and Merging</div><div class="bookmark-description">Switch to your production branch. Create a branch to add the hotfix. After it&#x27;s tested, merge the hotfix branch, and push to production. Switch back to your original user story and continue working. First, let&#x27;s say you&#x27;re working on your project and have a couple of commits already on the master branch.</div></div><div class="bookmark-href"><img src="https://git-scm.com/favicon.ico" class="icon bookmark-icon"/>https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging</div></div><img src="https://git-scm.com/book/en/v2/images/basic-branching-2.png" class="bookmark-image"/></a></figure><p id="b3f00d85-d2a2-4062-a094-36eff9eb6634" class="">
+</p><pre id="ffbecc0b-03bd-437c-b2e0-e46c8b59b288" class="code"><code>$ git checkout master</code></pre><p id="cfe3ea67-b247-4e3f-a269-7491c7d2ba43" class="">
+</p><pre id="482f9a21-2bbc-4714-9c80-1d7912f76139" class="code"><code>$ git merge iss53</code></pre><p id="e2a4368b-c3e1-4eb7-81c9-9bcc1c0a6978" class="">
+</p><p id="2ab0a679-c485-4b29-9d34-64b8c9b63e40" class="">
+</p><p id="8c3d974f-3c75-4c27-9a74-55ad7205a332" class="">Once your pull request has been approved and merged to the main branch of the original - you&#x27;ll want to merge the updated original to your local version.</p><p id="4bb3b262-d782-4301-9e9e-5650b19d370e" class="">
+</p><pre id="6badd7da-381f-4c2f-bee0-1e70795c7a3d" class="code"><code># move to the branch that you want to move into:
+$ git checkout gh-pages
+
+# Tell git what what branch you want to merge in:
+$ git merge add-deuxp
+
+# tidy up by deleting your feature now that the branch has merged
+$ git branch -d add-deuxp
+
+# Delete the branch from your fork on github
+$ git push &lt;REMOTENAME&gt; --delete &lt;BRANCHNAME&gt;</code></pre><p id="a907006b-8094-477e-8cd0-64772c35eb1b" class="">
+</p><figure id="c92c8b97-fd71-4740-b9b3-d4d526644fd4"><a href="https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Git - Basic Branching and Merging</div><div class="bookmark-description">Switch to your production branch. Create a branch to add the hotfix. After it&#x27;s tested, merge the hotfix branch, and push to production. Switch back to your original user story and continue working. First, let&#x27;s say you&#x27;re working on your project and have a couple of commits already on the master branch.</div></div><div class="bookmark-href"><img src="https://git-scm.com/favicon.ico" class="icon bookmark-icon"/>https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging</div></div><img src="https://git-scm.com/book/en/v2/images/basic-branching-2.png" class="bookmark-image"/></a><figcaption>Professional use-case scenario</figcaption></figure><p id="78be10ae-58e3-45e7-a68c-dbba92307a1b" class="">
+</p><p id="551acf52-108c-4e19-931f-86aadd5d378a" class="">
+</p><p id="19006bf7-33aa-4647-90da-2be74cdf8927" class="">
+</p><h1 id="cc64f4e6-73d7-47df-846e-1d754631779a" class="">Rollback</h1><hr id="e120df8d-29ac-4375-8d43-6f686c90b17e"/><figure id="25956cef-9eb3-4c17-991f-3ca557a8f41b"><a href="https://opensource.com/article/18/6/git-reset-revert-rebase-commands" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">How to reset, revert, and return to previous states in Git</div><div class="bookmark-description">One of the lesser understood (and appreciated) aspects of working with Git is how easy it is to get back to where you were before-that is, how easy it is to undo even major changes in a repository.</div></div><div class="bookmark-href"><img src="https://opensource.com/themes/osdc/assets/img/favicons/favicon.ico" class="icon bookmark-icon"/>https://opensource.com/article/18/6/git-reset-revert-rebase-commands</div></div><img src="https://opensource.com/sites/default/files/lead-images/code_computer_development_programming.png" class="bookmark-image"/></a></figure><p id="731fe166-3482-46b4-be0d-d0c739a2f17f" class="">
+</p><pre id="175efe2f-4474-446b-9cce-3177962c9d4d" class="code"><code># if changes are local
+$ git reset [log]
+
+# if changes are pushed to remote and other people have them
+$ git revert [log]</code></pre><p id="d28c4cfa-2d10-406a-8441-9d954dc96e8b" class="">
+</p><p id="387f6b67-7b1d-4ece-a551-526d50f35517" class="">
+</p><p id="e9bc968c-0baa-4a41-8324-f74211a8f49c" class="">
+</p><h1 id="efcc1052-b405-46e5-b403-4d96517fc71f" class="">stash</h1><hr id="068b4df9-3390-4c38-9857-5a5281d073f9"/><p id="7d8f378a-8f46-4dc2-bf26-8b471b432170" class="">
+</p><figure id="79c04839-df35-460d-ab3e-e026802c1e8a"><a href="https://git-scm.com/docs/git-stash" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Git - git-stash Documentation</div><div class="bookmark-description">Use git stash when you want to record the current state of the working directory and the index, but want to go back to a clean working directory. The command saves your local modifications away and reverts the working directory to match the HEAD commit.</div></div><div class="bookmark-href"><img src="https://git-scm.com/favicon.ico" class="icon bookmark-icon"/>https://git-scm.com/docs/git-stash</div></div><img src="https://git-scm.com/images/logo@2x.png" class="bookmark-image"/></a></figure><pre id="4658af78-cfe1-410d-9f93-5fe585ce4625" class="code"><code># takes it out
+git stash 
+# puts it in
+git stash pop
+# deletes a single stash
+git stash drop
+#deletes all stashes
+git stash clear</code></pre><p id="66607c34-c323-48b1-8586-a570e0cec29a" class="">
+</p><p id="f5bc2f45-29a1-41b5-b94f-9548210b0e58" class="">
+</p><p id="c5cc73d7-af0e-40a8-abd4-25cb4fd528a3" class="">
+</p><h1 id="b178ba52-ab73-4f9d-96eb-3f7f7cad715b" class="">Pull</h1><hr id="88c0396a-9112-46c9-b922-cea67d93727b"/><p id="20247473-eb76-4488-91e9-9e455b2275a9" class="">
+</p><p id="590d08c9-df62-4b6d-8dac-99b862accf79" class="">Keeps your file up to date with updates from collaborators. Stay up to date with the latest state.<div class="indented"><p id="aa2595d1-d55d-46d2-a792-aedb640baab7" class="">PULL any changes that have been made to the main branch.</p><pre id="6d16d00a-ae66-4b88-af07-da0f0b93bee4" class="code"><code>$ git pull &lt;remoteName&gt; &lt;branchName&gt;</code></pre></div></p><p id="08a64098-b324-4686-984e-a57ea9efe02c" class="">
+</p><p id="7cac76ed-b920-42ad-a921-17a40951ef59" class="">If nothing has changed → &#x27;Already up-to-date&#x27;</p><p id="4eb3dfb9-12e5-48ca-8303-9bed7a0b6ba7" class="">If changes → they will merge into your local version</p><p id="9c137e17-d538-4942-be39-c858665cdbc8" class="">
+</p><h2 id="66a0d9bb-512c-4f4a-88d8-9d60cec8433f" class="">Pull requests</h2><p id="68dfcf41-1ab2-4fe5-bc2c-94bbdf615a19" class="">
+</p><p id="56925fb9-7b45-4c76-9a89-aac8da2fa242" class="">When you have finished your fork, you want to send those changes to the maintainer of the original. So everyone can benefit.<div class="indented"><p id="3f6d47c6-bee5-4484-b38b-7d712825f4c2" class=""><strong>Request</strong> that they <strong>pull</strong> your changes.<div class="indented"><p id="241064e3-52f8-4c7d-87a8-91e59a79f833" class="block-color-red">→ pull request</p></div></p><blockquote id="61e2a908-fe07-435f-9670-7b2e2212726a" class="block-color-teal">Created from your forked repo!</blockquote><p id="4dbdd2e9-d305-4ec2-bddb-07d0aa7af922" class="">
+</p><p id="895d0289-d3fc-4910-b7e3-4f0c309c09af" class="">
+</p><ol type="1" id="99a3bf58-b128-40e2-819f-522ac44be778" class="numbered-list" start="1"><li>first go to the maintainers page and see  select your branch name.</li></ol><ol type="1" id="187dd111-a452-4322-901b-8ad4c948849f" class="numbered-list" start="2"><li>contribute button on top right</li></ol><ol type="1" id="80ba8649-f147-43d8-b652-86b3ba744fa0" class="numbered-list" start="3"><li>Submit the pull request</li></ol><ol type="1" id="c66192c0-807d-481a-8912-34691dc39ec9" class="numbered-list" start="4"><li>Wait for someone to approve</li></ol></div></p><p id="f557f5c0-3589-4653-b5b9-606b8a97a415" class="">
+</p><p id="7612b0b5-25b1-4473-b06f-bc7ce2c82c62" class="">
+</p><h2 id="6499c90a-890f-4648-98f9-9eb46f58a123" class="">Pull from upstream</h2><p id="8adcb6c1-76c2-4ad4-833a-4ccfe0317566" class="">
+</p><pre id="539921f8-f445-4c9f-8f1d-45fccc34ccd8" class="code"><code>$ git pull upstream gh-pages
+$ git pull upstream &lt;O.G.Branch&gt;</code></pre><h1 id="7a6f4c9b-9e92-4929-abb6-95dd6515c347" class="">Github pages</h1><p id="7302c56e-af02-4398-a54a-80cf42466201" class="">ghub will automatically serve and host static website files in branches named &#x27;gh-pages&#x27;. For these projects; instead the main branch is called <strong>gh-pages.</strong></p><pre id="aad6a83d-624e-4494-a1b1-fcb0603bebae" class="code"><code>http://githubusername.github.io/repositoryname</code></pre><p id="50a59b04-55c8-4a02-bf9f-80f59833a346" class="">
+</p><h1 id="d4e3e449-2eb5-4fd1-a282-615ce8341a31" class="">Collaborators</h1><p id="3c373ffa-2b87-4b39-b753-f22266332482" class="">other ghub users who are given permission to make edits to a repository owned by someone else.<div class="indented"><p id="2f93443f-daba-4328-a4e0-172e7a010891" class="">in the settings tab on ghub.</p></div></p><p id="530f0cba-470c-45a1-b321-dc085f437fd7" class="">
+</p><h2 id="e4e1d73b-d09c-4164-9541-ef5ad28c20ff" class="">links</h2><p id="293082be-b863-49d1-a31e-02499df7c3a9" class="">
+</p><figure id="18d9ff78-b555-4d02-9e2f-27ef42d21187"><a href="https://training.github.com/downloads/github-git-cheat-sheet/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub Git Cheat Sheet</div><div class="bookmark-description">desktop.github.com Configure user information for all local repositories $ git config --global user.name &quot;[name]&quot; Sets the name you want attached to your commit transactions $ git config --global user.email &quot;[email address]&quot; Sets the email you want attached to your commit transactions $ git config --global color.ui auto Enables helpful colorization of command line output Branches are an important part of working with Git.</div></div><div class="bookmark-href">https://training.github.com/downloads/github-git-cheat-sheet/</div></div></a></figure><figure id="1deb1fe7-545d-435b-923b-1d7c4bca3c7d"><a href="https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/git-basics" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Git Basics | The Odin Project</div><div class="bookmark-description">In this lesson, we&#x27;ll cover common Git commands used to manage your projects and to upload your work onto GitHub. We refer to these commands as the basic Git workflow. When you&#x27;re using Git, these are the commands that you&#x27;ll use 70-80% of the time, so if you can get these down, you&#x27;ll be more than halfway done mastering Git!</div></div><div class="bookmark-href"><img src="https://www.theodinproject.com/favicon-16x16.png" class="icon bookmark-icon"/>https://www.theodinproject.com/paths/foundations/courses/foundations/lessons/git-basics</div></div><img src="https://www.theodinproject.com/assets/og-logo-022832d4cefeec1d5266237be260192f5980f9bcbf1c9ca151b358f0ce1fd2df.png" class="bookmark-image"/></a></figure><figure id="fea6a5ca-39da-44e0-97f1-257c3b04c459"><a href="https://education.github.com/git-cheat-sheet-education.pdf" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href"><img src="https://education.github.com/favicon.ico" class="icon bookmark-icon"/>https://education.github.com/git-cheat-sheet-education.pdf</div></div></a></figure><p id="c35287c0-3b7a-4223-b81c-17e1b9efe2a2" class="">
+</p></div></article></body></html>

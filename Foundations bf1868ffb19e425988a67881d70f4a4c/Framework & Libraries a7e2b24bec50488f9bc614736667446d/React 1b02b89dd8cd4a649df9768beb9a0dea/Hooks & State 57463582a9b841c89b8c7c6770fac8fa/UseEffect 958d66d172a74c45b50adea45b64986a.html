@@ -1,0 +1,773 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>UseEffect</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="958d66d1-72a7-4c45-b50a-dea45b64986a" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🐎</span></div><h1 class="page-title">UseEffect</h1></header><div class="page-body"><p id="946a4f9e-683e-4dde-bb0f-55dd8d73c9a3" class="">
+</p><nav id="b2b1f567-1bcf-47da-9ea0-dd80ee20127e" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4fc3c5fb-5d17-401e-a1a2-f74dcc5193f4">The basic pattern for async api request in a Component:</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e9fae798-9eb0-413c-81e4-b7c7766d204c">Dependencies</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1923e089-a039-4b04-9dc2-c130f73817f2">Stale State bug:</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#9b4fcf08-c251-4c62-9025-bdda87914189">Using the current Value</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f47de098-1f22-4746-a371-3e7ee7d3874e">prev</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f9b62511-413b-4008-af28-4f199f6bcfe4">Garbage collection - cleanup</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e67f39a2-7bcb-4232-97b3-ae6531ba2693">Cleanup</a></div></nav><p id="0df8e420-180c-4127-8d86-db81eb932b5a" class="">
+</p><p id="026c1cfc-db55-4da9-be20-b603ac22ab75" class="">We use this hook to deal with side effects of our components. HTTP requests being one of them.</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="8dd49b2e-95c4-4787-8a17-dedb13e28aa6"><div style="font-size:1.5em"><span class="icon">🌮</span></div><div style="width:100%">The effect hook fires after the browser has painted the DOM</div></figure><p id="36a4929f-bc08-4a51-aca0-150067e3f024" class="">
+</p><ul id="9bed9202-000a-43ae-b80d-5ca02eb1e5c5" class="bulleted-list"><li style="list-style-type:disc">Multiple effect hooks can be used inside of a single component to group similar operations together.</li></ul><p id="b31b6f7f-dc96-4764-8a69-1b7488db7563" class="">
+</p><pre id="cffd5fe9-ed88-463f-9ef0-e1414a7cd564" class="code"><code>useEffect(() =&gt; {}, [])</code></pre><p id="19c5e700-af95-4a17-9ef4-b02f75371cb9" class="">the dependency is what useEffect is monitoring in order to trigger the anonymous function</p><p id="9aa54925-6443-45cf-b13a-9ed718e5ada1" class="">
+</p><ul id="7398958c-ca61-42d2-a57e-583dc050bf0e" class="bulleted-list"><li style="list-style-type:disc">The React useEffect API is to be used with requests (axios or fetch), since the re-rendering of components will trigger the fetch every time, causing an infinite loop.</li></ul><p id="62d032d8-7a60-4781-a927-3a594fe4d8f1" class="">When we make requests to an API server it is considered a <strong>side effect</strong> of rendering a component. We can manage a side effect like this one with the <code>useEffect</code> Hook provided by the React library.</p><p id="4a27b8ee-036f-4fe4-81a2-e7864fe6cbd3" class="">
+</p><p id="1160a9b9-06a7-4ef0-8d75-f4f7b77f19f8" class="">
+</p><blockquote id="513c31ad-80cc-49f0-b15a-d57a2b20a3c2" class="block-color-orange_background">The <code>useEffect</code> Hook allows us to trigger side effects 
+when our components render. The effects can be run when specific data 
+changes. We can define the dependencies of the effect to ensure React 
+only runs it when the data it relies on changes.</blockquote><blockquote id="22a2c37c-551c-46a1-a925-b6ce06d8ba9e" class="block-color-yellow_background">There are two classifications of side effects. Some require cleanup, 
+and others do not. We can return a function from our effect that 
+describes how to clean up the side effect. Timers, event listeners and 
+socket connections are examples of side effects that require cleanup.</blockquote><p id="b10fda59-1219-4487-a734-d09d9d332af6" class="">
+</p><figure id="a9a451da-2eaa-4d5a-8604-baf190442662" class="image"><a href="UseEffect%20958d66d172a74c45b50adea45b64986a/Untitled.png"><img style="width:698px" src="UseEffect%20958d66d172a74c45b50adea45b64986a/Untitled.png"/></a></figure><p id="97b10651-c33e-4080-a48d-4685a7b8c3eb" class="">OR</p><figure id="db93dcaa-52b8-4557-8c7d-034b642a0e29" class="image"><a href="UseEffect%20958d66d172a74c45b50adea45b64986a/Untitled%201.png"><img style="width:583px" src="UseEffect%20958d66d172a74c45b50adea45b64986a/Untitled%201.png"/></a></figure><p id="b6270217-8931-47db-9dde-a5b886aaaada" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="2f641cef-a846-4c2b-ba7d-ba23414975ef"><div style="font-size:1.5em"><span class="icon">🧅</span></div><div style="width:100%">ALWAYS declare the dependency for your useEffect Hook, to avoid bugs later on.. I don’t even know why you wouldn’t or how it would work if you didn’t</div></figure><p id="1c05d836-d5db-467b-baee-336b5b275875" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="43d7b108-dab9-4e39-b819-26cb508fd847"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">In some cases you might want to run your request at the beginning of the page load once. Or you may want to run it after a specified state is changed only</div></figure><p id="a3d53aec-69b8-409b-9dce-fceaedac2e29" class="">
+</p><h1 id="4fc3c5fb-5d17-401e-a1a2-f74dcc5193f4" class="">The basic pattern for async api request in a Component:</h1><ol type="1" id="e0595681-06f0-4431-b427-d4e1ef85577f" class="numbered-list" start="1"><li>The component has no <code>results</code> when React renders it the first time.</li></ol><ol type="1" id="7f893576-bfa9-4a42-9784-930d946f0294" class="numbered-list" start="2"><li>The component makes an asynchronous request to the API server.</li></ol><ol type="1" id="e9ec0cfa-796c-438f-9b4d-cefc8f4d7ea8" class="numbered-list" start="3"><li>The data for the component is returned in the response.</li></ol><ol type="1" id="9858bf73-ad2e-45c9-a0cf-f9c5b9ef56b9" class="numbered-list" start="4"><li>The component can now be updated with the data using an action that sets the state.</li></ol><p id="7b2cf0b0-2f0c-4626-95a9-f618f4d23de5" class="">
+</p><pre id="a555956c-4093-4cde-9ede-3bc54d92623a" class="code"><code>function LiveSearch(props) {
+  const [term, setTerm] = useState(&quot;&quot;);
+  const [results, setResults] = useState([]);
+
+  useEffect(() =&gt; {
+    fetch(`/search?term=${term}`).then(setResults);
+  }, [term]);
+
+  return (
+    &lt;&gt;
+      &lt;SearchBar value={term} onChange={setTerm} /&gt;
+      &lt;Results results={results} /&gt;
+    &lt;/&gt;
+  );
+}</code></pre><p id="1156984f-da4e-44f8-bb0f-4f779bd61ede" class="">
+</p><p id="6290b795-cc92-4ed8-a90e-5c80480efa6a" class="">
+</p><p id="e4dd667a-9808-474a-b70b-7cd8f87d0cea" class="">We must follow specific rules when using Hooks. ESLint configurations help us ensure we are compliant.</p><ol type="1" id="374ff7c0-6984-4fda-9b04-8ae000f29376" class="numbered-list" start="1"><li><strong>Don&#x27;t call Hooks inside loops, conditions, or nested functions.</strong></li></ol><ol type="1" id="f83dde71-3de0-4e7f-a380-a7eacaf1753e" class="numbered-list" start="2"><li><strong>Only call Hooks from inside React components.</strong></li></ol><p id="fa6f0cd0-e14c-46dc-8d2d-fdc15d72e498" class="">The <code>useEffect</code> hook usually depends on props, state, or both. In our example, the <code>term</code> value was the dependency that we declared in the dependency array provided to <code>useEffect</code>.</p><p id="e1b04ea2-e5a3-4ae6-8dde-ccf99c92c51d" class="">There is an older way of making requests using a similar pattern as when we created components as Classes.</p><p id="4d0cd89b-71b0-44b5-9de5-c85e6452db4b" class="">
+</p><h1 id="e9fae798-9eb0-413c-81e4-b7c7766d204c" class="">Dependencies</h1><hr id="e47661fc-c195-4bac-9cd4-25ed0fff6e5a"/><p id="d4e6c0ec-9d8f-4942-82fa-4da7e402c8f9" class="">
+</p><pre id="412ae52a-d3a8-4ad0-a6b4-2aae834954d8" class="code"><code>useEffect(() =&gt; {}, [dependency1, dependency2, ...])</code></pre><p id="20fc94e8-89ab-418d-b7d7-fc939970db74" class="">
+</p><ul id="88de468a-b351-498d-b7a3-c11b5df4120c" class="bulleted-list"><li style="list-style-type:disc">The second argument to useEffect is a dependency array that lets you specify when you want the hook to run</li></ul><ul id="76f52051-0c86-4799-bdb0-2d25221c6f56" class="bulleted-list"><li style="list-style-type:disc">The hook will run again anytime the value of a dependency changes</li></ul><ul id="d2a060c9-5273-49b2-a7ba-53d4f80ddf4b" class="block-color-yellow_background bulleted-list"><li style="list-style-type:disc"><strong>NOTE</strong>: It is possible to get stuck in an infinite loop if the effect hook updates a value in the dependency array</li></ul><p id="b2f79ff0-ebca-43fc-b2c7-59a578018d26" class="">
+</p><p id="27b6539f-b606-40a7-bea5-da8e0d28dbbc" class="">
+</p><h2 id="1923e089-a039-4b04-9dc2-c130f73817f2" class="">Stale State bug:</h2><p id="53da6ce5-86e4-4151-ba33-ba4e2e296e3e" class="">example from scheduler:</p><p id="1f698907-7168-42b0-b379-e857f1519546" class="">When we pass new props to the <code>Appointment</code>
+ component, we need to determine if the <code>interview</code>
+ data has changed. We can handle this as a side effect in the <code>Appointment</code>
+. When the component renders, we want to check if we are in the <code>EMPTY</code>
+ mode with a truthy <code>interview</code>
+ value. When this happens, we can call <code>transition(SHOW)</code>
+ to update the visual mode. The same is true when we remove an <code>interview</code>
+. We need to transition to the <code>EMPTY</code>
+ visual mode.</p><figure id="788e1ceb-303d-4f46-a642-42086260368a" class="image"><a href="UseEffect%20958d66d172a74c45b50adea45b64986a/Untitled%202.png"><img style="width:1812px" src="UseEffect%20958d66d172a74c45b50adea45b64986a/Untitled%202.png"/></a></figure><pre id="e956333a-8023-4dd2-a4a8-6ebc995c9b62" class="code"><code>useEffect(() =&gt; {
+ if (interview &amp;&amp; mode === EMPTY) {
+  transition(SHOW);
+ }
+ if (interview === null &amp;&amp; mode === SHOW) {
+  transition(EMPTY);
+ }
+}, [interview, transition, mode]);</code></pre><p id="b8d36439-06b1-4fdd-90c3-1742501c56d2" class="">This effect listens for changes to the interview, transition or mode 
+values. It will only run this effect if one of these three values 
+changes. The purpose of the <code>useEffect</code>
+ Hook is 
+synchronization. We run side effects when there are changes to props or 
+state in a component. We can define which props we are interested in by 
+listing them in the dependency array.</p><h1 id="9b4fcf08-c251-4c62-9025-bdda87914189" class="">Using the current Value</h1><hr id="1ffbdffd-366f-4735-8830-e23b4092099d"/><p id="cae13dc1-800d-4948-bbcf-bccc87a8206c" class="">
+</p><pre id="a40c9f2a-210e-45e8-95f1-03665ec1d4eb" class="code"><code>const [likes, setLikes] = useState(0);
+return &lt;button onClick={() =&gt; setLikes(likes + 1)} /&gt;
+
+// Becomes:
+
+
+const [likes, setLikes] = useState(0);
+return &lt;button onClick={() =&gt; setLikes(prev =&gt; prev + 1)} /&gt;
+</code></pre><p id="3692fca5-1e9a-4a47-b8f6-cd4e85d4bfcc" class="">
+</p><p id="f3c1243e-52eb-4cec-ad8b-be096f3c7dcf" class="">
+</p><h2 id="f47de098-1f22-4746-a371-3e7ee7d3874e" class="">prev</h2><hr id="791f5a47-1e2c-46ea-a859-de8584027bd6"/><p id="3b098b52-0d49-4fae-a0bb-938504939a19" class="">
+</p><p id="a8c73b84-84ec-4424-88f6-fa57af58b3c2" class="">The setState function can take a value or a callback. The value returned by the callback becomes the value that the state will be set to.<div class="indented"><p id="e5dc60f8-836e-429c-8878-3900e23520e9" class="">the callback takes a parameter, the value of which is the value of the state before the setState was triggered by React.<div class="indented"><p id="09277f9c-b29d-44a0-9897-d879971bc25a" class="">by convention this param is named <code>prev</code></p></div></p></div></p><p id="a712e700-7a5b-409e-93dc-51e7dd0d8112" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="69be2d79-4630-4919-95a6-a482c8c82445"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">you would consider this if your setState depends on the current value. </div></figure><p id="3db32e91-6871-4a24-b89b-d6c5870f98fd" class="">The above warning is more applicable when you are batching states for a render, since React batches multiple state changes for performance.</p><p id="e78b4400-12f8-4e02-b4fa-f97be32f61cf" class="">
+</p><figure id="182bcef0-bed6-4cf3-87b2-41e17fcd5aad"><a href="https://github.com/reactwg/react-18/discussions/21" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Automatic batching for fewer renders in React 18 · Discussion #21 · reactwg/react-18</div><div class="bookmark-description">You can&#x27;t perform that action at this time. You signed in with another tab or window. You signed out in another tab or window. Reload to refresh your session. Reload to refresh your session.</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/reactwg/react-18/discussions/21</div></div><img src="https://opengraph.githubassets.com/ee5db83652036a0c8282cf4efe8fd2095a317dca2b667609a9013eaf30f3ee78/reactwg/react-18/discussions/21" class="bookmark-image"/></a></figure><p id="ea0fc5fc-1467-4155-83f2-f194fefdfb3a" class="">
+</p><p id="73ebaf67-287b-43b8-8b3e-83b771709d6d" class="">
+</p><h1 id="f9b62511-413b-4008-af28-4f199f6bcfe4" class="">Garbage collection - cleanup</h1><hr id="c5cd864b-6dc5-4a98-aa36-1241fb388173"/><h3 id="e67f39a2-7bcb-4232-97b3-ae6531ba2693" class="">Cleanup</h3><ul id="b73cee94-e95a-45b2-814e-15cfe1589650" class="bulleted-list"><li style="list-style-type:disc">Sometimes side effects need to be cleaned up (eg. socket connections terminated)</li></ul><ul id="93f1437c-54d4-4b38-b40b-4905ce4033d5" class="bulleted-list"><li style="list-style-type:disc">To perform cleanup, return a function from your</li></ul><pre id="c22506de-6227-44b8-ac97-3b563625c347" class="code code-wrap"><code>const [timer, setTimer] = useState(0);
+
+useEffect(() =&gt; {
+  // set up an interval to increment a timer
+  const myInterval = setInterval(() =&gt; {
+    setTimer(timer =&gt; timer + 1);
+  }, 1000);
+
+  // declare a cleanup function
+  const cleanup = () =&gt; {
+    clearInterval(myInterval);
+  };
+
+  return cleanup;
+}, []);
+</code></pre><p id="2e7612c1-771c-4553-b9c0-3a642c192173" class="">OR</p><pre id="41918e21-fe27-459b-8ba8-616fcf8375a6" class="code"><code>useEffect(() =&gt; {
+  if (likes &gt; 0) {
+    const timeout = setTimeout(() =&gt; setLikes(prev =&gt; prev - 1), 1000);
+    return () =&gt; clearTimeout(timeout); // clears the timer set above
+  }
+}, [likes]);</code></pre><p id="ef8a13ff-805b-4996-9bb9-de712dc6144e" class="">
+</p><hr id="51a81fe3-d0a4-4558-b64c-7adc4d2cf97f"/><p id="f0eb3f1d-99a6-4a17-97a7-695c7805ed54" class="">
+</p><p id="0be47238-4c57-40b1-99f5-5c9e6e08bd28" class="">The <code>useEffect</code> Hook allows us to trigger side effects when our components render. The effects can be run when specific data changes. We can define the dependencies of the effect to ensure React only runs it when the data it relies on changes.</p><p id="e10b47f3-b5d4-4f9d-95fc-4c69e62a5215" class="">There are two classifications of side effects. Some require cleanup, 
+and others do not. We can return a function from our effect that describes how to clean up the side effect. <code>Timers</code>, <code>event listeners</code> and 
+<code>socket connections</code> are examples of side effects that require cleanup.</p><p id="e294aea1-c30d-4300-ac68-dc8238b60ea1" class="">
+</p><hr id="4e344bff-bcfb-4342-99d1-b5c4f0c45183"/><p id="1bdf2641-d4d9-402a-b0b3-950730874008" class="">
+</p><p id="e8dee507-8960-4448-acb4-542f706daa01" class="">The function that you return can be used for garbage collection. If your effect function will collide with one another when running concurrently in async, terminate socket connections etc.</p><p id="085fe92e-c5aa-4428-b20b-3db3f377af3d" class="">
+</p><p id="bff43930-33ff-4301-8a95-db078695d10e" class="">
+</p></div></article></body></html>

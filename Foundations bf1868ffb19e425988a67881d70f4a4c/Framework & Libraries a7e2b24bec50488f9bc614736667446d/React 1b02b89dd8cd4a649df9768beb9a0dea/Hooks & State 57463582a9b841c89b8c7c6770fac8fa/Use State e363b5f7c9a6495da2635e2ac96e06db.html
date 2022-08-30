@@ -1,0 +1,836 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Use State</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="e363b5f7-c9a6-495d-a263-5e2ac96e06db" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🐎</span></div><h1 class="page-title">Use State</h1></header><div class="page-body"><hr id="de018e0e-41cc-4a00-bc7d-166ae9dbc2c1"/><p id="3833e224-9137-4990-a528-b06ed973b0aa" class="">
+</p><p id="2e79f519-f80f-4c29-b9ca-e4826ea174dd" class="">
+</p><nav id="454b111a-f529-4c62-9733-7929b6c9bca9" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3f95db66-31a2-4fcc-87df-95a34b01e977">modifying the state</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#635dbd44-b04a-4a1e-ac62-b68663a3af56">Lifting up the state</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2192fc81-7868-452d-87c8-db618092d1de"><strong>Passing Down A Way To Change The State</strong></a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3197cc36-1fe6-41c5-8e16-8134e9bc13cc">Choosing where to put State</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#f3bbec55-fed9-461e-8eb1-b605bd56cbf9">Stateful Data</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fbb7be47-7f26-46a7-9998-877321b93437">Managing State</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ef0f5f9d-12b8-4550-a00a-29748f7f3161">Immutable Update Patterns using Spread {...}</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#5db177fe-6ca7-4bfd-a45e-63e80fb5115d">Adding with the spread</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d434691d-3467-4ab9-8e0c-6cb6bb7860e9">Updating an Object</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#e2ab5461-c5b5-4865-9b71-b6334743aee7">Merging multiple Objects</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9bfcc45a-db9c-4ccb-80ff-f5cb1c28be75">Aliasing Actions</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#2324fb79-b589-4486-8f7e-ededafe01073">dependency Error</a></div></nav><p id="6a14f106-7b43-488b-9c90-249e9f974eb4" class="">
+</p><figure id="56b6f462-cb62-46be-9911-fbdc1c8cd885"><a href="https://vimeo.com/684402627/3733c6f493" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">m07w18_lecture_flex_day_2021_10_18</div><div class="bookmark-description">This is &quot;m07w18_lecture_flex_day_2021_10_18&quot; by Lighthouse Labs on Vimeo, the home for high quality videos and the people who love them.</div></div><div class="bookmark-href"><img src="https://f.vimeocdn.com/images_v6/favicon.ico?270f998b440acf73659ea656d4a2009242da6be9" class="icon bookmark-icon"/>https://vimeo.com/684402627/3733c6f493</div></div><img src="https://i.vimeocdn.com/video/1387188600-5ef22dd43abff3290be7d65bd752bd2fa47bafd37c7fdd9edf7c09fa605bb8ac-d_1280" class="bookmark-image"/></a><figcaption>Hooks</figcaption></figure><p id="4ba28318-43d6-438e-adb8-72be206e52b9" class="">
+</p><p id="89c45de9-03cf-4c52-b58c-accab3ab77e1" class="">
+</p><blockquote id="ae1ffe8b-0129-40f7-91c8-96adb2c90f37" class="">“The state in React allows us to dynamically change one or many elements at once based on <strong>one</strong> variable. State encompasses the key parts of our UI that change based on user input. State allows us to retain information across multiple renders. To store state, we need to use a feature of React called &quot;hooks&quot; - specifically, the <code>useState</code>hook.”
+-<em>LHL</em></blockquote><p id="4ad32a73-1900-4ea9-98e8-1260414c3106" class="">Import the <code>useState</code> <strong>hook</strong></p><pre id="8f1d7b78-209c-4170-8814-15d2892a0394" class="code"><code>import React, { useState } from &quot;react&quot;;</code></pre><p id="51ca9c9a-1158-47dd-82ae-53f70a978179" class="">
+</p><figure id="a586a513-2d70-4ce1-868f-d48f1b742cb7" class="image"><a href="Use%20State%20e363b5f7c9a6495da2635e2ac96e06db/image.jpg"><img style="width:4032px" src="Use%20State%20e363b5f7c9a6495da2635e2ac96e06db/image.jpg"/></a></figure><p id="43476725-e78b-4410-956a-742cd174d19b" class="">
+</p><p id="d229860d-10e5-4a8e-a99f-4dc5d62396ce" class="">The pair of values returned in the array are related:</p><ul id="df470197-d6d1-4a83-a478-bd083673aea3" class="bulleted-list"><li style="list-style-type:disc">One is used to <em>get </em>a value (a &quot;getter) </li></ul><ul id="5eba64e0-c341-4234-8b66-3588c2efa918" class="bulleted-list"><li style="list-style-type:disc">The other is used to <em>set </em>a value (a &quot;setter&quot;).</li></ul><p id="d7539d4d-49f1-4b7b-a440-569081812caf" class="">
+</p><pre id="d57cefe1-0d07-4590-ad60-c68af84b9fc2" class="code"><code>function Application(props) {
+  const [count, setCount] = useState(0);
+
+  return (
+    &lt;main&gt;
+      &lt;Button onClick={() =&gt; setCount(count + 1)}&gt;Increment&lt;/Button&gt;
+      &lt;h1&gt;Button was clicked {count} times.&lt;/h1&gt;
+    &lt;/main&gt;
+  );
+}
+
+// the setter, setCount has to be called in a callback to throw it into async
+
+//NOT: 
+//&lt;Button onClick={setCount(count + 1)}&gt;Increment&lt;/Button&gt;
+// This is wrong! The function would be invoked immediately as soon as the page renders.</code></pre><p id="682c3a59-f4b7-4a3b-bedf-685dd03a022b" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="9a20c128-5ca3-4b7c-ba52-58d3f1eefe13"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">You have seen that sometimes we have to pass a function as a prop. If we
+ need to pass any arguments to that function, the pattern is to put it <em>inside</em>
+ another function. <code>setCount</code>
+ has to be passed a value (<code>count + 1</code>
+) and so we wrap it in an outer function. This is a way to prevent <code>setCount</code>
+ from being invoked immediately when the page renders.</div></figure><p id="d42f3fbd-ec69-4745-a096-60c72643095c" class="">
+</p><p id="35e54c3b-fb5a-40bb-8626-80527b88610f" class="">the params of useState are positional so choose names that reflect the state you are tracking, using the convention</p><p id="e9619f33-e297-4da4-bb2d-f59891cdff83" class=""><code>[state, setState]</code></p><p id="b0968fbe-2559-432d-8bdb-cbceaf55a352" class="">is like:</p><p id="7c69b821-394f-4bbd-9a3d-8e9eca1caa47" class=""><code>[read, update] = useState(create)</code></p><ul id="335db6d4-763a-4741-8b58-c7cfd9d2499e" class="bulleted-list"><li style="list-style-type:disc">where create is the starting value or initial state</li></ul><p id="5f0eda72-0a48-4a3b-a9c9-cdb83deceb5b" class="">
+</p><p id="6743a8ae-0438-4a94-9b99-544693389b6b" class="">
+</p><h2 id="3f95db66-31a2-4fcc-87df-95a34b01e977" class="">modifying the state</h2><hr id="2bdeca9a-ed65-4e4c-8ff3-5b5821f229b0"/><p id="045731ac-9829-42d4-b346-0a09c3a4d7dc" class="">
+</p><p id="3ab2bdc8-de9c-4990-bd3c-58bc71370d44" class="">
+</p><p id="16edfc96-7760-4d57-a503-15f749326ca5" class="">use the second value provided by the hook, the first one is a reference to the value in our state, the getter:</p><pre id="99ff0a8a-bacc-4c03-9e78-4de89c9b82f6" class="code"><code>let [x, setX] = useState(42);
+// WRONG!
+x = 99;
+
+// CORRECT!
+setX(99);</code></pre><p id="1ed7a0b9-cb0e-47de-8b0a-e7f7b66095ea" class="">
+</p><p id="28a7b247-a89d-4bbe-ae32-2f6d4f5947b2" class="">setState is a function that can change the value and trigger a re-rendering of our components.</p><p id="07f53335-08bf-4345-a937-1a95baf7f429" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="347e0f88-67f8-4fca-9978-d802155f3931"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">Since we need to wait for the next rendered version, that means that setState works asynchronously. That is why when it is passed into the JSX component it must be used in a callback.</div></figure><p id="40aab806-5af5-4797-a66c-bf53e6a07a75" class="">
+</p><p id="b65cf526-352e-4244-baa1-bd9f76536fd5" class="">to keep JSX clean when performing actions on events is to create a function that only needs to be referenced</p><p id="e2e3c821-600b-4423-8fbe-07abb7f294d8" class="">
+</p><pre id="1714de2d-ec8d-43b8-a304-8c0f743b964b" class="code"><code>const handleClick = (event) =&gt; setState(event.target.value ? event.target.value : &quot;&quot;);
+
+  &lt;button onClick={handleClick} /&gt;
+
+  // instead of
+
+  &lt;button onClick={event =&gt; setState(event.target.value ? event.target.value : &quot;&quot;)} /&gt;</code></pre><p id="6fe38e4f-99ae-4b9f-ae53-07250f48bfbc" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a6fd8eba-39a3-433a-9951-c226aa1e7953"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">remembee that htaml attributes in JSX are written in camelcase, because the dash in javascript is an operator.</div></figure><p id="f5c79e37-4e43-41e8-9bee-192dc4e2ab1a" class="">
+</p><p id="72f5783c-2545-4e48-a78a-5a03f5c09df4" class="">
+</p><h2 id="635dbd44-b04a-4a1e-ac62-b68663a3af56" class="">Lifting up the state</h2><hr id="a86aeaa7-5e24-4c84-be93-67d196058d1f"/><p id="3458bdb7-db16-4b6d-aa81-41652eb4915e" class="">
+</p><p id="ee0653ae-372e-4a11-81d7-8308134500d4" class="">From the React docs:
+<em>In React, sharing state is accomplished by moving it up to the 
+closest common ancestor of the components that need it. This is called *</em>
+“lifting state up”*<em>.</em></p><p id="f1a4329a-a658-4312-8c0e-db7f2328b937" class="">
+</p><h2 id="2192fc81-7868-452d-87c8-db618092d1de" class=""><strong>Passing Down A Way To Change The State</strong></h2><hr id="bfae5745-6acc-41bc-8bc3-9cfe1d040723"/><p id="c4a776df-b8a4-4de0-b49d-2592c84ff62b" class="">
+</p><p id="05a905f0-019a-4c6b-b990-b67d9f48733c" class="">Since the function is declared in <code>App</code>
+, even if we reference it in the <code>LightSwitchButton</code>
+ component <em>it will run with the context of </em><code><em>App</em></code>
+. That means that it will be able to change the value of the <code>light</code>
+ state and trigger a re-render.</p><p id="ffc112ec-e6a3-4c11-8d28-7d5abfdfa1bb" class="">
+</p><blockquote id="697f7c35-500f-412e-947b-b1f79315bd4f" class="">It is good practice to keep logic that changes the state near the declaration, and not in a child component. The reason behind this is that if the code that changes the state is written in a component that is several levels down, it can be hard to find the source of a bug.</blockquote><p id="6cd2f9e5-b243-4296-b9ce-0e6e5cf5253a" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ae276700-71e7-42ad-9c8d-9b1a621209f5"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">keep the logic near the declaration and not stored in the child</div></figure><ul id="8ec5d98f-96e6-496d-bdc8-8dadd5deff11" class="bulleted-list"><li style="list-style-type:disc">keeping the handler close to useState declaration<ul id="948d934c-9b88-4b1c-b69d-992f09979bc1" class="bulleted-list"><li style="list-style-type:circle">pass down the handler-setter, and the getter-for the conditional render</li></ul><p id="ed7e55bb-5eee-4fb8-97c1-7b549395e7fd" class="">
+</p><p id="cd94fe17-2314-4d55-a361-24fa92c0be42" class="">Logic surrounding state updates should be declared in the same component as where the state was declared.</p></li></ul><p id="19f7e17f-0424-44ea-8799-ee649e7a0cfd" class="">
+</p><p id="2c6c9026-9c0a-418a-b7fc-a1abb54b677d" class="">
+</p><h1 id="3197cc36-1fe6-41c5-8e16-8134e9bc13cc" class="">Choosing where to put State</h1><hr id="9e33ec34-dd02-4b58-a74d-b4e81b71c517"/><p id="718514f6-901f-4243-a9d7-d5aa6aa35ccb" class="">
+</p><p id="02bd7645-7b77-4ffa-a674-66e849c82ec6" class="">When building components you can visualize it as a tree.. This helps to give an overview of the components that you have to build, their stories and which components are state dependent. Which of these share the same state etc.</p><figure id="34d7bbc7-c05f-4a4a-990d-40c49ad02504" class="image"><a href="Use%20State%20e363b5f7c9a6495da2635e2ac96e06db/Untitled.png"><img style="width:765px" src="Use%20State%20e363b5f7c9a6495da2635e2ac96e06db/Untitled.png"/></a></figure><p id="e9e9cc65-f069-4f1c-a668-fd9c71fe076b" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e6e2e481-6eff-4bf7-899d-33806e6b2e4e"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%">If 2 components need access to the same data, then the state should be placed in the closest common Ancestor.</div></figure><p id="c00fb111-3498-4d57-b2b4-6312ab6ffcf0" class="">
+</p><h2 id="f3bbec55-fed9-461e-8eb1-b605bd56cbf9" class="">Stateful Data</h2><hr id="659427af-90ee-41a9-a66a-045ccb69d286"/><p id="781d6879-9096-42d8-bf7d-343800594308" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3ee0b58e-3218-43c0-b294-b1792c0c6414"><div style="font-size:1.5em"><span class="icon">🧅</span></div><div style="width:100%">all components are on a need-to-know basis when it comes to data in React.</div></figure><p id="5439e19d-dc5e-4fed-8d5f-01b2e9ccf60c" class="">
+</p><p id="23f57443-ce95-40e1-bea5-0497f1b776be" class="">When controlling form input data, it makes sense to have the state locally, since you are not updating the entire state of the app by entering information and monitoring the changes in real time.</p><p id="c54d362c-f6fc-4444-a5e4-75b553c855c2" class="">The real-time changes to the form are local to the form since you are only entering field data. Once you save your form, then it makes sense to have a more elevated state updated to the new default value.</p><p id="c1d093dd-67f5-4f8a-bb3f-2f76a25ae86b" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="65848767-8f65-44c4-ac87-a2da5bae5232"><div style="font-size:1.5em"><span class="icon">🧅</span></div><div style="width:100%">Even though the data is being passed down as a prop, we are using that as the default for another state that is localized to the Form element only for the reasons just mentioned.
+
+You can use logical operators for the state default to be the props or blank if no props are there.</div></figure><p id="5c023ae9-02fd-4257-b70c-b7da20f36e3c" class="">
+</p><ul id="ed3b117d-0cdc-474f-833b-3761ad253302" class="bulleted-list"><li style="list-style-type:disc">when a user is interacting with the <code>&lt;Form&gt;</code>, the values need to be updated immediately to give the user visual feedback. Once a user inputs data and saves, the <code>&lt;Form&gt;</code> disappears and is replaced by a saved appointment. Outside the view of using the <code>&lt;Form&gt;</code>, we don&#x27;t need to store the <code>student</code> or <code>interviewer</code> in state because they are not being changed; they are not bound to an interactive element.</li></ul><ul id="4a13490c-1cad-4631-8a65-3d680c69eb0d" class="bulleted-list"><li style="list-style-type:disc">So, we&#x27;re choosing to hold the <code>interviewer</code> and <code>student</code> in state in the <code>&lt;Form&gt;</code>. Those are the only pieces of data the <code>&lt;Form&gt;</code> requires to do its job.</li></ul><p id="a816f2b9-e1a0-44e3-925f-892d11ca276a" class="">
+</p><p id="4b76b288-6267-4be9-b56e-82a42950215a" class="">
+</p><p id="34b74fe6-d324-47dd-9cc1-a512e494fdc0" class="">
+</p><h1 id="fbb7be47-7f26-46a7-9998-877321b93437" class="">Managing State</h1><hr id="79a95303-de12-478a-a4db-ceeed36cd6e2"/><p id="9d2a1ab3-b141-4bf6-927c-79c7958e4acf" class="">
+</p><p id="db508466-d59d-43ee-b2e4-66e1e0a5ab4a" class="">
+</p><p id="40524cf6-c1f7-47ee-bac6-982e14853943" class="">2 ways to update a state when they are all kept in one state object:</p><ol type="1" id="18da3b69-02fb-4487-a237-ae805395dd71" class="numbered-list" start="1"><li>spread Operator<pre id="910268e5-594f-4ce4-84c1-e502946fcf1e" class="code"><code>const state = { day: &quot;Monday&quot;, days: [] };
+setState({ ...state, day: &quot;Tuesday&quot; });</code></pre></li></ol><p id="ab316a2b-e643-4b96-b8ca-9a41a0a55ee8" class="">
+</p><ol type="1" id="db8f426b-5043-4c72-a0dc-71474e4d321f" class="numbered-list" start="2"><li>Object.assign<pre id="57127c45-448d-49ec-b802-1d7bf975fe93" class="code"><code>const state = { day: &quot;Monday&quot;, days: [] };
+setState(Object.assign({}, state, { day: &quot;Tuesday&quot; });</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="1f04b6c4-1f03-4b7a-a08f-0dbeb5478e13"><div style="font-size:1.5em"><span class="icon">🌮</span></div><div style="width:100%">Notice that the first argument passed to assign is an empty object. Without this detail, we would mutate the state which is an anti-pattern.. as in the state would’n’t recognize the change and no rendering would occur as a result.</div></figure></li></ol><p id="ff83c5db-dfbe-4b71-901c-25d7d2dff229" class="">
+</p><p id="cd08c84f-6dc4-4643-bbc3-059a96bf4ada" class="">
+</p><h2 id="ef0f5f9d-12b8-4550-a00a-29748f7f3161" class="">Immutable Update Patterns using Spread {...}</h2><hr id="e73a06cf-4ba4-433f-80e2-27617b0308bf"/><p id="ebeb24ca-b2f2-4609-86ea-f1a804354663" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="da07bbba-cc47-4ed9-8234-189ba2929535"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">When updating a state that is stored in an object, be careful to clone the state and not just reference to it</div></figure><p id="ce2c6576-acc7-48c7-a213-1b5fccf08ff3" class="">ie., Copies only one level of keys</p><pre id="aa799258-2784-45ba-831b-d64940f47d00" class="code"><code>cont original = { one: 1 };
+const bad = original;
+const good = { ... original };
+
+console.log(orginal === original); // true
+console.log(orginal === bad); // true
+console.log(orginal === good); // false</code></pre><p id="61bff6d6-e92a-4201-b4cb-387c9dfe6d60" class="">ie., How to copy multiple level of keys</p><pre id="c9ee916c-3fb4-4fc4-aa0d-ab4bec8d615a" class="code"><code>const original - { one: 1, sub: { two: 2 } };
+const copy - { ...original, sub: { ...original.sub } };
+
+console.log(original === copy); // false
+console.log(original.sub === copy.sub); // false </code></pre><p id="ac9668f5-679c-4439-8ea1-3b376e89a816" class="">
+</p><p id="4b453000-d8f7-4bec-9e22-e2b766637de1" class="">Note that it is best to avoid this kind of complexity. Keep state nesting to a minimum. The work around for that is to keep your data structured in a normalized form. Using id’s and then using selector helper functions to append the correct information when you are retrieving said data.</p><p id="79d7d0ab-551e-4d02-bc67-ecf4b6279cbd" class="">
+</p><p id="25dae0da-2f48-4f82-b4c8-1987aebc4e76" class="">
+</p><h3 id="5db177fe-6ca7-4bfd-a45e-63e80fb5115d" class="">Adding with the spread</h3><hr id="4b31dcbc-0002-4803-8440-d8dd4fceb258"/><p id="e1c8d2c9-6f28-477c-aeeb-d39713a7bb45" class="">
+</p><pre id="5afba01d-6f7d-4d68-9dbc-9548ee89de72" class="code"><code>const original = { one: 1 };
+const copy = { ...original, two: 2 };
+
+console.log(original === copy); // false
+
+/* original */
+{
+  one: 1
+}
+
+/* copy */
+{
+  one: 1,
+  two: 2
+}</code></pre><p id="e65f4721-bbce-41cf-95b8-921226e8d08a" class="">
+</p><p id="f09d6465-ae26-4f10-954c-c753c0ed8680" class="">
+</p><h3 id="d434691d-3467-4ab9-8e0c-6cb6bb7860e9" class="">Updating an Object</h3><hr id="e0739e8f-8c9a-4b4b-813c-a2fe62d978aa"/><p id="0615d2f9-1aeb-4abd-bea8-a868522a548c" class="">
+</p><pre id="f0520a4f-fcb7-4c55-a4d4-8d8a31dfb7db" class="code"><code>const original = { one: 1, two: 3 };
+const copy = { ...original, two: 2 };
+
+console.log(original === copy); // false
+
+/* original */
+{
+  one: 1,
+  two: 3
+}
+
+/* copy */
+{
+  one: 1,
+  two: 2
+}</code></pre><p id="c4ab0b79-ed2d-44e8-afe3-2cf954789ed0" class="">
+</p><p id="bec37c40-30ec-4481-baf3-45bebd253ea8" class="">
+</p><h3 id="e2ab5461-c5b5-4865-9b71-b6334743aee7" class="">Merging multiple Objects</h3><hr id="c82879c4-dc24-4329-9fac-c03d4e678ebd"/><p id="c22d584d-68f0-4a2a-87c1-8f22a62ede79" class="">
+</p><pre id="75fb1fa9-2917-4a22-b283-3ec31c588ffc" class="code"><code>const first = { one: 1 };
+const second = { two: 2 };
+const copy = { ...first, ...second };
+
+console.log(copy === copy); // true
+console.log(first === copy); // false
+console.log(second === copy); // false
+
+/* first */
+{
+  one: 1
+}
+
+/* second */
+{
+  two: 2
+}
+
+/* copy */
+{
+  one: 1,
+  two: 2
+}</code></pre><p id="25aa559a-3f49-46fd-a94f-84ae02762cca" class="">
+</p><p id="c8282f3f-b89c-4771-b804-cd261ab3c97e" class="">
+</p><h2 id="9bfcc45a-db9c-4ccb-80ff-f5cb1c28be75" class="">Aliasing Actions</h2><hr id="ca3dfef3-de1c-4a06-9a84-a934de97960d"/><p id="ac5d440c-f7a2-4db8-96a2-e071617179c7" class="">
+</p><p id="8264f424-4737-4c44-85c7-75c47d6d37e8" class="">Even though all of the states are combined into a single object, we can still have separate actions to update certain parts of the state by creating a function that acts on setState, but with the spread operator and a param to change, observe:</p><pre id="8ef73962-3e1e-45eb-8a84-6b065cd342da" class="code"><code>const setDay = day =&gt; setState({...state, day});</code></pre><p id="77ebeee5-11ab-4d42-801f-2b982a8e5bc7" class="">
+</p><h3 id="2324fb79-b589-4486-8f7e-ededafe01073" class="">dependency Error</h3><hr id="3cf1a3b8-7270-4c25-859c-13e17c424c95"/><p id="ed0cd887-a10f-426d-9cb4-e469527cfe8b" class="">
+</p><p id="eae82668-0faf-4062-96b5-74860d971da4" class="">if you find that you get an error:</p><figure id="a9b55b7d-1aac-4fce-beb9-00f391ae0689" class="image"><a href="Use%20State%20e363b5f7c9a6495da2635e2ac96e06db/Untitled%201.png"><img style="width:633px" src="Use%20State%20e363b5f7c9a6495da2635e2ac96e06db/Untitled%201.png"/></a></figure><p id="59be0a91-7ad4-4e46-a079-07ce4be2247f" class="">
+</p><p id="8dfea704-2a36-44ed-8b76-a24b8153f9c5" class="">The issue is that we are now referring to state in the effect method, but we haven’t declared it in the dependency list. In fact: we don’t want to.</p><pre id="c19d030a-8003-4c2a-b68d-678ef9a40397" class="code"><code>const setDays = days =&gt; setState({...state, days})</code></pre><p id="ebbf6e15-f264-40eb-bb70-4860cc79c687" class="">
+</p><p id="45743102-bcea-4647-b12e-fc03fbb93696" class="">So to remove this dependency, we must pass setState a function, so the dependency is not detected in the useEffect</p><p id="6fd77188-f72b-4f63-a750-1a02891bcd53" class="">
+</p><pre id="14aaeae5-8928-4efe-a7db-f149cecdb7a4" class="code"><code>const setDays = days =&gt; setState(prev =&gt; ({...prev, days}))</code></pre></div></article></body></html>

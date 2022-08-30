@@ -1,0 +1,885 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Rspec</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c0fe340a-9e4b-4120-b702-7a8fdf65d40f" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/solid_blue.png" style="object-position:center 40%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🎽</span></div><h1 class="page-title">Rspec</h1></header><div class="page-body"><p id="e854b3f8-be87-4bca-badc-c1ab755b44d6" class="">
+</p><figure id="9bfd37bc-844d-47ce-94d5-a877fcf5f61e"><a href="https://semaphoreci.com/community/tutorials/getting-started-with-rspec" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">RSpec Tutorial: Test-Drive Your Ruby Code - Semaphore</div><div class="bookmark-description">Marko Anastasov is a software engineer, author, and co-founder of Semaphore. He worked on building and scaling Semaphore from an idea to a cloud-based platform used by some of the world&#x27;s engineering teams. RSpec is a testing tool for Ruby, created for behavior-driven development (BDD).</div></div><div class="bookmark-href"><img src="https://semaphoreci.com/favicon-16x16.png" class="icon bookmark-icon"/>https://semaphoreci.com/community/tutorials/getting-started-with-rspec</div></div><img src="https://wpblog.semaphoreci.com/wp-content/uploads/2015/03/Group-4614-1.jpg" class="bookmark-image"/></a></figure><p id="22952332-f4c9-4a2a-8194-a368984f1070" class="">
+</p><p id="5df39959-120a-4d62-b9c7-ca050abf5e37" class="">Advanced Topic</p><figure id="a8b3a165-bd1a-49b4-9b62-fc69328a76db"><a href="https://semaphoreci.com/community/tutorials/rspec-subject-helpers-hooks-and-exception-handling" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">RSpec Subject, Helpers, Hooks and Exception Handling - Semaphore</div><div class="bookmark-description">Marko Anastasov is a software engineer, author, and co-founder of Semaphore. He worked on building and scaling Semaphore from an idea to a cloud-based platform used by some of the world&#x27;s engineering teams. We are continuing an introduction to RSpec, a testing tool for Ruby.</div></div><div class="bookmark-href"><img src="https://semaphoreci.com/favicon-16x16.png" class="icon bookmark-icon"/>https://semaphoreci.com/community/tutorials/rspec-subject-helpers-hooks-and-exception-handling</div></div><img src="https://wpblog.semaphoreci.com/wp-content/uploads/2019/03/semaphore.jpg" class="bookmark-image"/></a></figure><p id="052b5e56-c457-451b-9a4a-d05d2c142107" class="">
+</p><p id="5873c8d8-acd6-4b55-964a-37cef432cb6a" class="">Rspec-Rails</p><figure id="64ac0bcd-80a6-42a6-9b42-1ca4a853283e"><a href="https://github.com/rspec/rspec-rails" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - rspec/rspec-rails: RSpec for Rails 5+</div><div class="bookmark-description">rspec-rails brings the RSpec testing framework to Ruby on Rails as a drop-in alternative to its default testing framework, Minitest. In RSpec, tests are not just scripts that verify your application code. They&#x27;re also specifications (or specs, for short): detailed explanations of how the application is supposed to behave, expressed in plain English.</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/rspec/rspec-rails</div></div><img src="https://opengraph.githubassets.com/5097f4ac0b777d9a563324f6c2edcd5e006763cbbb2eee5b4c13fe5e9737ce3a/rspec/rspec-rails" class="bookmark-image"/></a><figcaption>Follow this to install within a rails project, refer also to Compass for the distillation of this. Since you have to set up the environment and binaries to work with Rails.
+
+&amp; a test database needs to be setup</figcaption></figure><p id="7b052aa7-d1b2-46c1-9d1a-a823ff597c84" class="">
+</p><nav id="bca111f1-b616-43ad-bdab-8886a9915b6f" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c6204e3e-5725-4707-b697-e4b95949f277">Switching to test db</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#23f9f549-54d5-486e-beb3-946bcf66b58f">Rspec Idom</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#72344516-9456-4a3a-b0cf-ce23383b26d2">Describe block with expect assertion</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#14262638-93e4-4c89-83b9-5ff8d438b6a6">Testing validations</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c973370e-5b01-45e3-ba0a-1b2ee8b558a4">Before and After Blocks</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#25353cc4-202c-4dac-870e-02858c5ff409">Context</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a7bbb7b8-71ba-405c-9269-2d419acabf79"> using let</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f694f2c7-a2a9-45d0-b220-f59200ffd9c4">Expect</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c59e151e-7ebb-44c1-808b-f26e27bd8316">Subject</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#50f1d475-a0fc-4c33-8a3c-41380399ed0b">Auto Generate Model specs</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#513f6563-072e-406a-a7c1-a3419378af7b">factories and fixtures</a></div></nav><p id="e30cc316-99bf-4e6b-bf73-b0160cb2257b" class="">
+</p><ul id="9b2dcbd4-d6f5-42c5-8330-450c502a7116" class="bulleted-list"><li style="list-style-type:disc"><a href="https://github.com/markoa/rspec-intro">Example code on GitHub</a></li></ul><ul id="6480b2ca-4680-418f-ad15-83fc0c9a4702" class="bulleted-list"><li style="list-style-type:disc"><a href="http://bundler.io/gemfile.html">Gemfile syntax</a></li></ul><ul id="68fddb6e-c609-4252-b7ad-eead9f8937fc" class="bulleted-list"><li style="list-style-type:disc"><a href="https://relishapp.com/rspec/rspec-core/v/3-9/docs/example-groups/basic-structure-describe-it">RSpec: basic structure</a></li></ul><ul id="e5f8018c-9b65-475b-9d4c-8b308b40afd8" class="bulleted-list"><li style="list-style-type:disc"><a href="https://relishapp.com/rspec/rspec-expectations/docs">RSpec: expectations</a></li></ul><ul id="ccb89bf0-0711-464b-a6a0-2d6bfc2ee216" class="bulleted-list"><li style="list-style-type:disc"><a href="https://relishapp.com/rspec/rspec-expectations/v/3-9/docs/built-in-matchers">RSpec: built-in matchers</a></li></ul><ul id="f76907a9-afad-4bb6-8a47-8bc0508427e3" class="bulleted-list"><li style="list-style-type:disc"><a href="https://docs.semaphoreci.com/guided-tour/creating-your-first-project/">Configuring continuous integration with Semaphore</a></li></ul><p id="80a4ebc6-707c-47b4-97f7-33e4f1fad698" class="">
+</p><pre id="ffc337bb-dfac-4cc6-8101-24bbef98ff8f" class="code"><code>$ bundle init</code></pre><p id="f3da81e9-bc12-4e28-9499-44aecaa04dc7" class="">
+</p><pre id="4dc62fd9-0118-4c2b-934c-72c0d2334920" class="code"><code># Gemfile
+source &quot;https://rubygems.org&quot;
+
+gem &quot;rspec&quot;</code></pre><p id="5cff9983-8ddd-4e1e-ab78-b862d47d63ea" class="">
+</p><p id="b4301ec7-6ff9-4c68-a8e8-80d45c50f5fe" class="">file structure <code>./lib/</code> &amp; <code>./rspec/</code></p><pre id="75e3b64b-60e7-480b-82ec-aa71a507be74" class="code"><code>
+# ./rspec/filename_spec.rb
+require &#x27;./lib/file_name.rb&#x27;
+
+describe ...</code></pre><p id="93e55665-93aa-4f30-a8a4-d63c9cff78c0" class="">
+</p><p id="908fc431-72e0-4d8d-bbab-07239bdc002b" class="">Running specs</p><pre id="37c6b027-13c5-4294-b744-e63d7d55769b" class="code"><code># run test suite
+$ bundle exec rspec
+
+# verbose output
+$ bundle exec rspec --format documentation
+
+# Rails - after setup
+$ bin/rspec
+
+# individual spec
+$ rspec file_spec.rb</code></pre><p id="867b7c1a-ba69-4f2f-80b5-28bef898a867" class="">
+</p><h1 id="c6204e3e-5725-4707-b697-e4b95949f277" class="">Switching to test db</h1><hr id="d90f7bd1-3834-494b-b420-eb80affb4dae"/><p id="88266d66-1a21-4ca8-843e-dd6ff55505c8" class="">
+</p><pre id="f525b228-1a50-4032-82c8-f182b431c88d" class="code"><code>bin/rake db:setup RAILS_ENV=test</code></pre><h1 id="23f9f549-54d5-486e-beb3-946bcf66b58f" class="">Rspec Idom</h1><hr id="03bee4b6-2ff5-4841-985d-2bd862c822fe"/><p id="aaf28ad6-51d8-4af0-99a3-36d7b5bd9b15" class="">
+</p><blockquote id="d0b60c3b-366a-47c5-abb9-d422456b5208" class="">We usually use the <code>describe</code>
+ keyword to describe methods. 
+Using a “.” will signify that you’re testing a class method, and using 
+“#” will signify that it’s an instance method.</blockquote><p id="b2464c7a-05c4-4749-a988-2ad0ab844aaf" class="">
+</p><pre id="7f79fadf-57a7-406f-8fa8-3f651d3dea8b" class="code"><code>describe MyClass do
+  describe &quot;.class_method_1&quot; do
+  end
+
+  describe &quot;#instance_method_1&quot; do
+  end
+end</code></pre><p id="b4817e1b-acfa-4b57-ada5-32b9358f79c7" class="">
+</p><h1 id="72344516-9456-4a3a-b0cf-ce23383b26d2" class="">Describe block with expect assertion</h1><hr id="97596a56-ec27-4927-bd7f-f003b9d89328"/><p id="c801fa55-f087-4abd-aeb2-0eb9153fe5a0" class="">
+</p><pre id="cb85ea10-096a-4261-b77a-3ac00f5fe1d0" class="code"><code>describe Hash do
+  it &quot;should return a blank instance&quot; do
+    expect(Hash.new).to eq({})
+  end
+end</code></pre><p id="a39e7d1a-4dee-4590-a096-130148b5a84f" class="">
+</p><pre id="461e9694-221f-4eae-aeb9-97d6b0ea05f7" class="code"><code>@cat = Category.find_or_create_by! name: &#x27;Apparel&#x27;</code></pre><p id="91666004-96d5-4ea2-9c69-60d870b0a10c" class="">The bang operator here does something where it alters the way that an error is thrown if there is no match</p><h1 id="14262638-93e4-4c89-83b9-5ff8d438b6a6" class="">Testing validations</h1><hr id="bb629139-4d72-4570-a9c0-8d6f9afe9dad"/><p id="08fae493-670f-4678-bdee-c0ee5fea9a6e" class="">
+</p><pre id="89efdaa8-8169-4fc2-aebf-d00433fa05cf" class="code"><code>it &#x27;validates :price, presence: true&#x27; do
+      @product = @cat.products.new({
+        name:  &#x27;Men\&#x27;s Classy shirt&#x27;,
+        description: Faker::Hipster.paragraph(4),
+        quantity: 10,
+      })
+      @product.save
+      errors = @product.errors.full_messages
+      expect(errors).to include(&quot;Price cents is not a number&quot;)
+      expect(errors).to include(&quot;Price is not a number&quot;)
+      expect(errors).to include(&quot;Price can&#x27;t be blank&quot;)
+    end</code></pre><h1 id="c973370e-5b01-45e3-ba0a-1b2ee8b558a4" class="">Before and After Blocks</h1><hr id="2416a4be-e3af-4208-9d74-4bbba87d38d3"/><p id="aeadc701-278b-4ffa-985a-58891807c1cf" class="">
+</p><pre id="855eb1f9-c1e5-4de0-b17d-c50eb2a5b1da" class="code"><code>describe Hash do
+  before do
+    @hash = Hash.new
+		@hash[:hello] = &#x27;world&#x27;
+  end
+
+  it &quot;should return a blank instance&quot; do
+    expect(Hash.new).to eq({})
+  end
+
+  it &quot;hash the correct information in a key&quot; do
+    expect(@hash[:hello]).to eq(&#x27;world&#x27;)
+  end
+end</code></pre><ul id="c3912e5e-8ecc-4da0-a950-8218b25a4b95" class="bulleted-list"><li style="list-style-type:disc">can also use <code>each</code> or <code>all</code> with the before block</li></ul><ul id="f3d052a8-40d9-4ad0-bf9d-d6173080b83d" class="bulleted-list"><li style="list-style-type:disc">another block is available → the <code>after</code> block. Which has the same properties as the <code>before</code><ul id="197d46de-d686-4ce3-aabc-dc8ab92f9a7b" class="bulleted-list"><li style="list-style-type:circle">Used to setup or tidy up between test blocks</li></ul></li></ul><p id="f6509829-82b0-483d-b373-c624f0395f78" class="">
+</p><h1 id="25353cc4-202c-4dac-870e-02858c5ff409" class="">Context</h1><hr id="a7e0f8f7-40c4-4389-aed2-b06dcaf315db"/><p id="4486a649-8942-4929-9ce1-f447d2da6015" class="">
+</p><p id="edbbb3d8-aae4-4eb1-b0b0-ffe47d325071" class="">The structure I use when defining rspec files (based on reading I&#x27;ve done on rspec) is that you use <code>describes</code>
+ to describe specific functions, and <code>context</code>
+ to talk about a specific context of state and/or path through the function.</p><p id="7eed7184-7825-4896-aa46-fbb32c228019" class="">
+</p><pre id="8223fccb-10de-4e96-b5c7-a226b1ca9b0a" class="code"><code>describe Burger do
+  describe &quot;#apply_ketchup&quot; do
+# contextualize a block of tests - used for more complex setup and tear down code
+# here the context is that the succeeding test blocks have setup code that assumes every burger has ketchup on it
+    context &quot;with ketchup&quot; do
+      before do
+        @burger = Burger.new(:ketchup =&gt; true)
+        @burger.apply_ketchup
+      end
+
+      it &quot;sets the ketchup flag to true&quot; do
+        @burger.has_ketchup_on_it?.should be_true
+      end
+    end
+
+    context &quot;without ketchup&quot; do
+      before do
+        @burger = Burger.new(:ketchup =&gt; false)
+        @burger.apply_ketchup
+      end
+
+      it &quot;sets the ketchup flag to false&quot; do
+        @burger.has_ketchup_on_it?.should be_false
+      end
+    end
+  end
+end</code></pre><p id="0669e35a-9263-42ba-a525-24e00f9f020c" class="">
+</p><h2 id="a7bbb7b8-71ba-405c-9269-2d419acabf79" class=""> using let</h2><p id="c0a9492e-b723-4756-b6ee-cbbc72d0bc25" class="">
+</p><pre id="60570c66-52c9-4f48-a1c1-b7ecafa8978f" class="code"><code>describe Burger do
+  describe &quot;#apply_ketchup&quot; do
+    context &quot;with ketchup&quot; do
+      let(:burger) { Burger.new(:ketchup =&gt; true) }
+      before  { burger.apply_ketchup }
+
+      it &quot;sets the ketchup flag to true&quot; do
+        burger.has_ketchup_on_it?.should be_true
+      end
+    end
+
+    context &quot;without ketchup&quot; do
+      let(:burger) { Burger.new(:ketchup =&gt; false) }
+      before  { burger.apply_ketchup }
+
+      it &quot;sets the ketchup flag to false&quot; do
+        burger.has_ketchup_on_it?.should be_false
+      end
+    end
+  end
+end</code></pre><p id="c0a22b09-dbad-423d-b573-775dab76059a" class="">
+</p><p id="1e95b4ef-8a5b-4627-aeaf-8a77341d26bb" class="">
+</p><h1 id="f694f2c7-a2a9-45d0-b220-f59200ffd9c4" class="">Expect</h1><hr id="edc4f407-ff20-4227-b8d3-2f9ffb346935"/><p id="526a828f-3742-45a7-bd0e-1a24ce278d8e" class="">
+</p><pre id="65526c18-d579-4dac-a68a-ef3747f83bfe" class="code"><code>│ require &#x27;string_calculator&#x27;
+   2   │
+   3   │ describe StringCalculator do
+   4   │
+   5   │     describe &#x27;.add&#x27; do
+   6   │         context &quot;given an empty string&quot; do
+   7   │             it &quot;returns zero&quot; do
+   8   │                 expect(StringCalculator.add(&#x27;&#x27;)).to eq(0)
+   9   │             end
+  10   │         end
+  11   │
+  12   │         context &quot;given a string &#x27;4&#x27;&quot; do
+  13   │             it &quot;returns integer of 4&quot; do
+  14   │                 expect(StringCalculator.add(&#x27;4&#x27;)).to eq(4)
+  15   │             end
+  16   │         end
+  17   │
+  18   │         context &quot;given a string &#x27;10&#x27;&quot; do
+  19   │             it &quot;returns an integer of &#x27;10&#x27;&quot; do
+  20   │                 expect(StringCalculator.add(&#x27;10&#x27;)).to eq(10)
+  21   │             end
+  22   │         end
+  23 ~ │
+  24 ~ │         # nested context
+  25 ~ │         context &quot;two numbers&quot; do
+  26 ~ │             context &quot;given &#x27;2,4&#x27;&quot; do
+  27 ~ │                 it &quot;returns integer of 6&quot; do
+  28 ~ │                     expect(StringCalculator.add(&#x27;2,4&#x27;)).to eq(6)
+  29 ~ │                 end
+  30 ~ │             end
+  31 ~ │
+  32 ~ │             context &quot;given &#x27;17,100&#x27;&quot; do
+  33 ~ │                 it &quot;returns an integer of 117&quot; do
+  34 ~ │                     expect(StringCalculator.add(&#x27;17,100&#x27;)).to eq(117)
+  35 ~ │                 end
+  36 ~ │             end
+  37 ~ │         end
+  38   │
+  39   │     end
+  40   │ end</code></pre><h1 id="c59e151e-7ebb-44c1-808b-f26e27bd8316" class="">Subject</h1><hr id="68d71e8c-8378-40b4-8abd-beede5dd0a1d"/><p id="42a8df54-d574-4afa-8c7a-09b1ee36963c" class="">
+</p><pre id="6351ae48-5924-46f3-bd3c-2b66541f47f4" class="code"><code>describe Burger do
+  describe &quot;#apply_ketchup&quot; do
+    subject { burger }
+    before  { burger.apply_ketchup }
+
+    context &quot;with ketchup&quot; do
+      let(:burger) { Burger.new(:ketchup =&gt; true) }
+
+      specify { subject.has_ketchup_on_it?.should be_true }
+    end
+
+    context &quot;without ketchup&quot; do
+      let(:burger) { Burger.new(:ketchup =&gt; true) }
+
+      specify { subject.has_ketchup_on_it?.should be_false }
+    end
+  end
+end</code></pre><p id="d84a4777-bdd5-402f-8678-3ac6101c0c49" class="">
+</p><p id="35940cde-8624-4d19-8c74-cd7800028d95" class="">
+</p><h1 id="50f1d475-a0fc-4c33-8a3c-41380399ed0b" class="">Auto Generate Model specs</h1><pre id="2aa00505-d3dd-4981-ad5d-1d8fc0a27611" class="code"><code>
+$ bin/rails g rspec:model
+$ bin/rails g # to list available generators
+
+# or 
+bin/rails g model widget # g is for generate
+# When this generates the model, rails-rspec gem will generate a spec file for it.
+
+#note you can also destroy models
+bin/rails d model widget # d is for destroy</code></pre><ul id="d7583404-b4ec-4f5f-8c8b-757dc251216a" class="bulleted-list"><li style="list-style-type:disc">With the <code>rspec-rails</code>
+ gem installed and configured in your 
+project, when you generate a new model in this project it will 
+automatically hook into the model generation process and auto-generate a
+ corresponding spec file for that model.</li></ul><pre id="0717e3c4-6e2a-483c-b999-d4587ca5b7f5" class="code"><code>RSpec.describe Product, type: :model do
+  describe &#x27;Validations&#x27; do
+    # validation tests/examples here
+  end
+end</code></pre><p id="12be8919-49ca-4c63-9a25-30abe60d1a6e" class="">
+</p><p id="d6878805-77d8-4bbf-b9aa-c14cee476d13" class="">
+</p><p id="4611872b-71ee-469b-a720-fd18e0114d86" class="">
+</p><h1 id="513f6563-072e-406a-a7c1-a3419378af7b" class="">factories and fixtures</h1><p id="1dac791b-9647-4d01-8595-81bf1043de1b" class="">We have intentionally <em>not</em>
+ installed FactoryBot (previously 
+named FactoryGirl) nor are using Fixtures in this project. These 
+libraries make it easier to template out and create test data. They help
+ keep our test code more DRY for large projects. However, learning about
+ factories or fixtures is not a core requirement and something you can 
+add to your list of things to learn during final project or after the 
+program.</p></div></article></body></html>

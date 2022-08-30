@@ -1,0 +1,720 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>MVC Pattern</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="aefe4bdd-dec7-4e3d-815f-75a0b39ae211" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/nasa_transonic_tunnel.jpg" style="object-position:center 60%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🎙️</span></div><h1 class="page-title">MVC Pattern</h1></header><div class="page-body"><figure id="9982abcd-c648-4d27-af89-2736fa76c8e3"><a href="https://guides.rubyonrails.org/v4.2/getting_started.html#getting-up-and-running" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Getting Started with Rails - Ruby on Rails Guides</div><div class="bookmark-description">This guide is designed for beginners who want to get started with a Rails application from scratch. It does not assume that you have any prior experience with Rails. However, to get the most out of it, you need to have some prerequisites installed: The Ruby language version 1.9.3 or newer.</div></div><div class="bookmark-href"><img src="https://guides.rubyonrails.org/v4.2/images/favicon.ico" class="icon bookmark-icon"/>https://guides.rubyonrails.org/v4.2/getting_started.html#getting-up-and-running</div></div><img src="https://guides.rubyonrails.org/v4.2/images/getting_started/rails_welcome.png" class="bookmark-image"/></a></figure><p id="8566c2b9-cb17-47c9-a6da-1e3fc54fafe4" class="">
+</p><figure id="5f7375f7-9e7e-4aad-b895-912e45e342cb" class="link-to-page"><a href="https://www.notion.so/Jungle-Rails-5f7375f79e7e4aadb895912e45e342cb"><span class="icon">🌴</span>Jungle-Rails</a></figure><figure id="ed282d89-cf39-441c-9522-5d1a9f9e8ff1" class="link-to-page"><a href="MVC%20Pattern%20aefe4bdddec74e3d815f75a0b39ae211/Error%20Handling%20-%20Views%20-%20Validations%20ed282d89cf39441c95225d1a9f9e8ff1.html"><span class="icon">🧼</span>Error Handling - Views - Validations</a></figure><nav id="9e35773c-6c65-4a27-aa8b-2adf05acfee9" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#edf74b21-9b64-4b3b-8971-6c3d40ae669d">#CLI</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#cd92dde5-e442-4644-b01d-ccd18bb51166">#Controller</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#32d16665-5b17-4ea4-8588-a9db45c43274">#View</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#99547814-6a94-423f-8be0-766d3c228750">#Model</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#34d1582b-8fa8-4456-b6e6-53a1d1b80495">#Migrate</a></div></nav><h1 id="edf74b21-9b64-4b3b-8971-6c3d40ae669d" class="">#CLI</h1><hr id="bb79b665-eecc-4b81-9c8a-03f14d716508"/><p id="74c60bd9-5c8c-4873-b1b5-255486e37ba3" class="">
+</p><pre id="d03207ae-cf8f-4672-a084-8baf508fd533" class="code"><code># start server - self updates
+$ bin/rails server
+
+# generates a new controller - add resources in the config/route file
+$ bin/rails generate controller controller_name [action_name]
+
+# `g` alias for generator - without arg shows list of generators - rspec too
+$ bin/rails g
+
+# generate the resource REST api routes - can run again to view them
+$ bin/rake routes
+
+# generate a database migration file inside the db/migrate directory
+$ bin/rails generate model [col_name:type] [col_name2:type] [...]
+
+# runs the migration
+$ bin/rake db:migrate
+
+# environment console -&gt; can directly manipulate db with active record, so you don&#x27;t need to create a form just to test the db
+$ bin/rails c[onsole]</code></pre><p id="32ef1b3d-6ab6-46fa-8460-92453929b411" class="">
+</p><figure class="block-color-purple callout" style="white-space:pre-wrap;display:flex" id="143873eb-f835-467d-870e-19b2730e0b5d"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">Conventional order CRUD of operations:
+
+1. index
+2. show
+3. new
+4. edit
+5. create
+6. update
+7. destroy
+
+I.S.N.E.C.U.D.</div></figure><p id="9bb8bf55-cf33-46d5-9080-2e6413d0aeeb" class="">
+</p><ul id="541a4907-e60b-4db2-acc2-c13ace70a30f" class="block-color-orange_background toggle"><li><details open=""><summary>flow → error led</summary><ol type="1" id="30fe58c2-5d23-43a3-b7ec-cbf17a93cdb4" class="numbered-list" start="1"><li><strong>Generate</strong> the controller</li></ol><ol type="1" id="89b2de24-9439-47a1-90e3-b172ee3dc321" class="numbered-list" start="2"><li>config the root route<ul id="e6d6b4e9-4193-4176-bd50-527eb640e1b9" class="bulleted-list"><li style="list-style-type:disc">config your resources - (endpoints)
+makes a new controller and view associations
+however you must create the view file according to the expected path shown in the thrown error</li></ul></li></ol><ol type="1" id="e1920d87-20be-4eec-a754-dff641bbd137" class="numbered-list" start="3"><li><code>bin/rake routes</code> → initializes all the possible routes for your resources<ol type="a" id="fc330000-476c-456e-b8b5-85dab5c8b619" class="numbered-list" start="1"><li>You can run this again if you forget what is available
+when you are <strong>defining your actions</strong> in the controller</li></ol></li></ol><ol type="1" id="130eaf60-c9da-49dc-b191-98b7b9209586" class="numbered-list" start="4"><li> Set up the new action in the controller of the new resource<ul id="62293534-57db-4180-8745-f53da17e3114" class="bulleted-list"><li style="list-style-type:disc">which is literally a func with the name of the restful endpoint</li></ul></li></ol><ol type="1" id="e11a220c-025f-48b9-8018-8362453807d7" class="numbered-list" start="5"><li>Create the associated view file for the new action</li></ol><ol type="1" id="b7da8c84-d9fa-4bdd-86a3-a2c1eb9cd107" class="numbered-list" start="6"><li>Populate the page with the elements you want<ul id="7bda0a86-187a-4b7c-bec6-589dd68fcc8f" class="bulleted-list"><li style="list-style-type:disc">opportunity to use the many helpers available</li></ul></li></ol><ol type="1" id="2a2a632c-7953-4a22-b15d-c1071b4d0d60" class="numbered-list" start="7"><li><strong>Generate</strong> Models for the database → they are ruby class objects that interact with the database.<ol type="a" id="154d4689-aec8-45a6-97b7-c7771cf9165c" class="numbered-list" start="1"><li>Run a <strong>Migration - </strong>with <code>bin/rake db:migrate</code>/turninto</li></ol></li></ol><ol type="1" id="e9255a87-f35d-4322-b9ff-ea35a47a47f3" class="numbered-list" start="8"><li>Back in the controller, use the new model to save the data from the POST in the database.</li></ol><ol type="1" id="0f97be5b-81fe-4312-859f-5f6392aa8253" class="numbered-list" start="9"><li>Whitelist the parameters → see strong parameters</li></ol><ol type="1" id="21d8d4fe-6067-426f-a008-6ca17496fb16" class="numbered-list" start="10"><li>Create a <code>Show</code> action in the controller with the <code>Create</code> action</li></ol><p id="4271c37d-14a9-4f0f-a99e-33d4005bec04" class="">
+</p><p id="f9398d01-27e3-46cc-a147-b6e203d907cd" class="">...</p><p id="66c88779-c348-49a5-9987-afbb6b82e1c8" class="">
+</p><p id="f310918a-b9e3-4769-9a2e-6677639d7279" class="">Authenticate - basic authentication</p><p id="90b9ed49-eb12-434a-beb9-94b4b28df0b1" class="">
+</p></details></li></ul><p id="593e6d1d-c695-4ba4-8870-94fb8d6c474c" class="">
+</p><div id="b716995e-7f61-4b9b-8cea-d192ce39a3f0" class="column-list"><div id="31d04153-aa4d-4e39-a9a4-aa6592e50dac" style="width:50%" class="column"><figure id="bdf719b7-37dc-40e1-9549-e1c9383dc875" class="image"><a href="MVC%20Pattern%20aefe4bdddec74e3d815f75a0b39ae211/Untitled.png"><img style="width:288px" src="MVC%20Pattern%20aefe4bdddec74e3d815f75a0b39ae211/Untitled.png"/></a></figure><p id="2ca39348-d742-4d4f-8422-f47bab4be4c8" class="">
+</p></div><div id="6fd4a58b-a46f-4ab9-b47d-8e8f58bcd868" style="width:50%" class="column"><figure id="cc6049ec-7a09-44f8-929a-efafd7876c32" class="image"><a href="MVC%20Pattern%20aefe4bdddec74e3d815f75a0b39ae211/Untitled%201.png"><img style="width:384px" src="MVC%20Pattern%20aefe4bdddec74e3d815f75a0b39ae211/Untitled%201.png"/></a></figure></div></div><div id="1f82d376-80c7-47a9-b38b-6dc3f2d3dcbf" class="column-list"><div id="7b8a6b96-8178-4b78-9fd4-329797e83ac3" style="width:50%" class="column"><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="be19a6c5-85bf-4dc6-8540-b371780df30f"><div style="font-size:1.5em"><span class="icon">🔥</span></div><div style="width:100%">All instance variables (@something) are passed to view by Rails.
+
+This is the pattern for passing data to the views (response).
+
+By calling the method from the Article class defined in the <code>Model</code> file. storing the results in an instance variable. 
+The view looks for this.
+
+The <code>model</code> has its inherited methods that can be called which interact with the database. Which was created by running the Migration once. *<em>see </em><code><em>Model</em></code><em> section below</em></div></figure></div><div id="77084cd2-fcdc-451e-b5b7-bc8a64a7d7ef" style="width:50%" class="column"><figure id="2015158c-ee12-4b32-9f4c-630c23d3b83a"><a href="https://www.railstutorial.org/book#sec-mvc" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Ruby on Rails Tutorial</div><div class="bookmark-description">Newly updated for Rails 6, the Ruby on Rails Tutorial book and screencast series teach you how to develop and deploy real, industrial-strength web applications with Ruby on Rails, the open-source web framework that powers top websites such as GitHub, Hulu, Shopify, and Airbnb.</div></div><div class="bookmark-href"><img src="https://www.railstutorial.org/favicon-le.png" class="icon bookmark-icon"/>https://www.railstutorial.org/book#sec-mvc</div></div><img src="https://softcover.s3.amazonaws.com/636/ruby_on_rails_tutorial_6th_edition/images/cover-web.png" class="bookmark-image"/></a><figcaption>excellent resource text book - online - the above model is also explained very well there</figcaption></figure></div></div><p id="93d5a647-f1e4-491f-b75e-2852d79b1f7c" class="">
+</p><h1 id="cd92dde5-e442-4644-b01d-ccd18bb51166" class="">#Controller</h1><hr id="d75ece14-3092-40c3-a274-6df6ded9f559"/><figure id="216cb03b-cc67-4d97-a2e6-4116e10e84bb" class="link-to-page"><a href="MVC%20Pattern%20aefe4bdddec74e3d815f75a0b39ae211/Controller%20216cb03bcc674d97a2e64116e10e84bb.html"><span class="icon">☄️</span>Controller</a></figure><h1 id="32d16665-5b17-4ea4-8588-a9db45c43274" class="">#View</h1><hr id="15b56153-5ef0-49ee-941a-75892ba78f1d"/><figure id="89ccfcdf-4d17-426a-9d53-614855d599c5" class="link-to-page"><a href="MVC%20Pattern%20aefe4bdddec74e3d815f75a0b39ae211/Views%2089ccfcdf4d17426a9d53614855d599c5.html"><span class="icon">🎙️</span>Views</a></figure><h1 id="99547814-6a94-423f-8be0-766d3c228750" class="">#Model</h1><hr id="1f4d0b0a-359f-4396-80fb-64aa5a73ae83"/><figure id="9167307c-95b7-4351-be25-e259541a7d09" class="link-to-page"><a href="MVC%20Pattern%20aefe4bdddec74e3d815f75a0b39ae211/Model%209167307c95b74351be25e259541a7d09.html"><span class="icon">👘</span>Model</a></figure><h1 id="34d1582b-8fa8-4456-b6e6-53a1d1b80495" class="">#Migrate</h1><hr id="53127246-1202-473b-a09a-33b1fb02d75a"/><figure id="666d6560-6250-4d4e-94b9-8a9e2b204bdd" class="link-to-page"><a href="MVC%20Pattern%20aefe4bdddec74e3d815f75a0b39ae211/Migrate%20666d656062504d4e94b98a9e2b204bdd.html"><span class="icon">🕔</span>Migrate</a></figure><p id="c47d25b3-09bd-4c7c-b5dc-026302e6306f" class="">
+</p><p id="24694fb7-1c2e-4f25-b62a-3295430c745e" class="">
+</p></div></article></body></html>

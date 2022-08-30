@@ -1,0 +1,882 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>class based react</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="3111ed42-d1b4-45eb-b0ed-0a44fc3d80d0" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/met_silk_kashan_carpet.jpg" style="object-position:center 50%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🌨️</span></div><h1 class="page-title">class based react</h1></header><div class="page-body"><p id="dc2e9001-cdeb-4630-8be4-40182dfbf495" class="">
+</p><p id="ff7272e4-b036-4953-a550-95eb5560e3f3" class="">
+</p><p id="6e4eb7f0-9a3e-4320-abde-a0a4f4c625b0" class="">
+</p><p id="e00e5ec1-7bb1-4bf9-b341-471fb5638b6e" class="">
+</p><nav id="788048b3-a543-4e64-b639-e9f404da9889" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#37aedcfa-6477-4259-bef2-337cc2877022">Overview</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#cea483bc-0e26-45d0-af3d-b3b80cfdfe22">React.Component</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ffd587c6-e5ff-47f0-ae47-9898122f40a1">render()</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ebb85b3b-2510-4177-8317-8143a3bef278">this.props</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c9989667-7af8-462e-b23e-3ae6a757369e">Initial State</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8908ceaf-57ad-4e00-acdd-64249fd198a8">this.state</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#235a1614-6d3b-4fb0-892f-be7319c13f4b">this.setState</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b9e1a472-d260-46e2-b238-38b965476713">Instance Methods</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#245f62c1-3816-4e24-8010-d45e96f64224">Binding Context</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#04ef210c-4392-467e-9e1d-a4bea49349f5">Handling State</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#509efbfd-6465-489e-a817-f2fd59c2ad9d">Binding this</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c42297e8-d059-47b4-96c0-21a665b60da2">Life Cycle</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#222d1a10-68e2-486a-bd91-c0ac3e1afad2">Connecting WebSockets</a></div></nav><p id="0b1c68b8-0475-4586-b894-0fd38303defc" class="">
+</p><ol type="1" id="686e57b1-3f79-4fe7-b6a1-94f4b73ba678" class="numbered-list" start="1"><li>All class-based React components must <code>extend</code> the <code>React.Component</code> class.</li></ol><ol type="1" id="f2866ce0-d90c-4c8d-9185-91635c857238" class="numbered-list" start="2"><li>All class-based React components must override the <code>render</code> method of the <code>React.Component</code> superclass that they <code>extend</code>.</li></ol><pre id="7a9d52b3-52d4-41f8-a93c-6287606b5317" class="code"><code>import React, { Component } from &quot;react&quot;;
+
+class Application extends Component {
+// define class methods, inherited information: props, state, setState
+// state is a class property, so no need for &#x27;this&#x27;
+// do not need constructor () -&gt; but if you do use super(props) to not override the data passed down
+
+state = {a: &#x27;a&#x27;, b: 5}
+
+const { ... } = this.props
+
+method (arg) {
+	return this.setState(arg)
+}
+
+
+ render() {
+	// render logic &amp; selector helpers
+  return &lt;div&gt;&lt;/div&gt;;
+ }
+}</code></pre><p id="f86c7e33-be81-4e32-9036-8feacea2f9be" class="">
+</p><p id="9760c80d-e259-4d09-be5d-5ac5a23781fd" class="">
+</p><p id="55d47861-b47a-43ec-aaf3-d90f89ddb9f3" class="">
+</p><h1 id="37aedcfa-6477-4259-bef2-337cc2877022" class="">Overview</h1><hr id="810b5a93-2dd3-4159-a4b8-6e61166d702e"/><p id="772369e4-d65a-4e46-aff1-238723f241a3" class="">
+</p><p id="8f59b15c-348a-4086-8035-626d22c42a43" class="">We have covered eight of the topics relevant to the Class-based component API.</p><h3 id="cea483bc-0e26-45d0-af3d-b3b80cfdfe22" class="">React.Component</h3><p id="8fb99c5e-aca0-4f17-9b2c-bd4ca498760f" class="">We inherit the behaviour from a base component class provided by React. Sometimes we would see <code>React.Component</code> instead, if we aren&#x27;t using named imports.</p><h3 id="ffd587c6-e5ff-47f0-ae47-9898122f40a1" class="">render()</h3><p id="288c45f0-7b96-4db0-b628-6a966f23ce0c" class="">We must define a <code>render</code> method in our class. It is the only method that must exist for a component to work in React.</p><h3 id="ebb85b3b-2510-4177-8317-8143a3bef278" class="">this.props</h3><p id="325718af-5e8b-4d9b-81a9-05a26a202caa" class="">React attaches the props object to the component instance. We can access props using <code>this.props</code>.</p><h3 id="c9989667-7af8-462e-b23e-3ae6a757369e" class="">Initial State</h3><p id="e5d520b0-e619-4576-aedc-fd4902fd29fd" class="">We can initialize the state in the constructor or using class 
+property syntax. We have decided not to use constructors for this 
+project.</p><h3 id="8908ceaf-57ad-4e00-acdd-64249fd198a8" class="">this.state</h3><p id="cf5f24d7-0687-4f47-a356-7f6aa6e320e3" class="">Similar to how props are attached to the instance, the same is true for <code>this.state</code>. We can access the state for the instance of the component using <code>this.state</code>.</p><h3 id="235a1614-6d3b-4fb0-892f-be7319c13f4b" class="">this.setState</h3><p id="6bdf9474-7fa2-4117-883a-f993c1940ca3" class="">To change the existing state, we need to call the <code>setState</code> instance method provided by React. A component will render when after we called <code>setState</code>.</p><h3 id="b9e1a472-d260-46e2-b238-38b965476713" class="">Instance Methods</h3><p id="e0d77c8a-5050-4e28-a736-d8bc701aab45" class="">There are instance methods that we inherit from <code>React.Component</code> like <code>this.setState</code>. We also create our own to help organize our logic.</p><h3 id="245f62c1-3816-4e24-8010-d45e96f64224" class="">Binding Context</h3><p id="a0de13a8-7fd2-4d0a-93a0-8e84cb7e4b7e" class="">When we start to pass functions around, we need to be careful of maintaining the correct context.</p><p id="f199fbaf-479f-4eac-813f-e9651ea0b8b2" class="">
+</p><p id="a4921f6c-57ae-4469-a164-74ede2e09ba1" class="">
+</p><p id="8a7e5dde-e64b-4271-9004-56aa72c5948b" class="">The <code>render</code> method in a class returns the React elements. The behaviour of JSX is no different whether we use a Function or a Class to declare our component.</p><p id="c9c03149-6230-46a8-bb28-e734c627fd75" class="">
+</p><pre id="880db702-599f-4153-b1a0-aaae7131ba07" class="code"><code>import React, { Component } from &quot;react&quot;;
+
+class Application extends Component {
+ constructor(props) {
+  /* If we add a constructor to our class, we must pass props to the super class */
+  super(props);
+ }
+
+ render() {
+  return &lt;div&gt;&lt;/div&gt;;
+ }
+}</code></pre><ul id="3e57711d-d456-4148-b2ec-f8e47b1cb4b9" class="bulleted-list"><li style="list-style-type:disc">you dont have to have a constructor, but if you do, you must call the <code>super()</code>
+ method, and  pass it the <code>props</code> object.</li></ul><p id="6bbfa738-b8f9-4387-a55a-7dc31c247de3" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="f2487f7f-3148-4063-8a98-bc7fa9ab26b1"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">keep in mind passing by reference vs passing the computed value</div></figure><h1 id="04ef210c-4392-467e-9e1d-a4bea49349f5" class="">Handling State</h1><hr id="e9bfa51d-7cf4-4515-a7c7-550d0fb06f72"/><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="e08c8b1e-28aa-4b42-99ee-dc83307d90e7"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">We don&#x27;t need  a constructor with class property syntax</div></figure><ul id="08a1eec8-2a51-42c7-ac84-3f68ce4c442f" class="bulleted-list"><li style="list-style-type:disc">Although class property syntax is not officially part of the JavaScript specification, it is enabled using our Babel transpiler</li></ul><p id="a19ca2c1-5ca5-430b-bf43-74dbbea6c33b" class="">
+</p><p id="25c0a312-9520-455c-a77a-0230d3f81c58" class="">
+</p><p id="888555f7-a2ea-480a-9b84-3ba400d7ddbf" class="">**use a ternary to evaluate the state. if it already is something back to default or not.</p><pre id="a4f494e1-5818-47f1-9bee-aa1ce7b48f79" class="code"><code>
+state = { loading: false, focused: null };
+
+// remember when using prev like that sometimes you need to wrap in a closure (parens) to evaluate a multiline function call else it is implied if a one liner
+selectPanel(id) {
+    this.setState(prev =&gt; ({
+      focused: prev.focused === null ? id : null
+    }));
+  }</code></pre><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="70b1aab8-a4c2-461c-9104-1d330aae22e4"><div style="font-size:1.5em"><span class="icon">👉🏽</span></div><div style="width:100%">We depend on the existing state to get the next value. This operation is a lot safer if we pass a function to <code>this.setState</code>. The function will pass the previous state and must return an object to represent the new state.</div></figure><p id="533b77a1-861c-427f-8b0d-3c1209e96ed2" class="">
+</p><p id="f1d8aa6d-8205-418a-967c-00008adbfb2b" class="">
+</p><p id="eabf13f0-7e9e-439d-96d2-74dcf382ec34" class="">
+</p><h2 id="509efbfd-6465-489e-a817-f2fd59c2ad9d" class="">Binding this</h2><hr id="a1dbbb71-b7fa-42d2-840b-04db9e63cb6a"/><p id="23407a29-4766-467f-8d79-16858eec3208" class="">
+</p><ul id="d21eba02-e69b-40ec-8a48-5efb00b112ad" class="block-color-orange bulleted-list"><li style="list-style-type:disc">arrow functions are designed to alter <code>this</code> behaviour in a specific way.<ul id="bbb92da0-5d46-4405-adbb-514900a6eade" class="bulleted-list"><li style="list-style-type:circle">the binding is not dynamic<ul id="510fb06e-1c33-4df9-ab3b-2fcac449fa06" class="bulleted-list"><li style="list-style-type:square">it is based on where the function is declared</li></ul></li></ul></li></ul><p id="90fe27b4-25c9-48f7-9c20-4d146073bbbc" class="">Normally the <code>this</code> binding is <em>dynamic</em>. That is why when you pass it down. it is looking for the instance method within the context of the child component and not finding it.<div class="indented"><p id="95b10c28-2377-43dd-b06a-c3fb435db3ff" class="">when you bind the method to the context of the class component that it is defined in, then you can pass by reference and it will refer to the method in the context that it was called in.</p></div></p><p id="f413cf98-dbd2-445a-9a78-03a6a4488775" class="">
+</p><pre id="da9d0a20-eaab-4196-b533-c9a42039bd76" class="code"><code>class Dashboard extends Component {
+   /* Instance Method */
+   selectPanel(id) {
+    this.setState({
+     focused: id
+    });
+   } 
+}
+
+class Dashboard extends Component {
+   /* Class Property with Arrow Function */
+/// binds to the Dashboard instead of an instatnce of the Comonent class inherited
+   selectPanel = id =&gt; {
+    this.setState({
+     focused: id
+    });
+  };
+}</code></pre><figure id="ad0eb2c3-7482-4b36-8994-8282e54bac8b"><a href="https://medium.com/free-code-camp/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">React Binding Patterns: 5 Approaches for Handling `this`</div><div class="bookmark-description">JavaScript&#x27;s this keyword behavior has confused developers for ages. There are at least five ways to handle the this context in React. Let&#x27;s consider the merits of each approach. If you use React.createClass, React autobinds all functions to this .</div></div><div class="bookmark-href"><img src="https://miro.medium.com/1*m-R_BkNf1Qjr1YbyOIJY2w.png" class="icon bookmark-icon"/>https://medium.com/free-code-camp/react-binding-patterns-5-approaches-for-handling-this-92c651b5af56</div></div><img src="https://miro.medium.com/max/849/1*Brf51FVp5subpavq4ax8ow.jpeg" class="bookmark-image"/></a></figure><p id="98e029d1-d5c1-4f21-9eae-7da1bb137dfb" class="">
+</p><p id="7987c073-5374-46b8-9c4c-ce5d91eef57e" class="">5 approaches: not the first because it is too outdated</p><pre id="70813d98-62a2-410f-9921-c80d33ebb1ee" class="code"><code>
+// Approach 2: Bind in Render
+class HelloWorld extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { message: &#x27;Hi&#x27; };
+  }
+
+  logMessage() {
+    // This works because of the bind in render below.
+    console.log(this.state.message);
+  }
+
+  render() {
+    return (
+      &lt;input type=&quot;button&quot; value=&quot;Log&quot; onClick={this.logMessage.bind(this)} /&gt;
+// if you are calling anonymously with an arg then you can use an arrow func. Works since you are evaluating and passing the value down. If you can clean up the props this way use this. Else the class property with arrow function works well for passing by reference
+			&lt;input type=&quot;button&quot; value=&quot;Log&quot; onClick={() =&gt; this.logMessage(arg)} /&gt;
+    );
+  }
+}
+
+// Approach 3: Use Arrow Function in Render
+class HelloWorld extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { message: &#x27;Hi&#x27; };
+  }
+
+  logMessage() {
+    // This works because of the arrow function in render below.
+    console.log(this.state.message);
+  }
+
+  render() {
+    return (
+      &lt;input type=&quot;button&quot; value=&quot;Log&quot; onClick={() =&gt; this.logMessage()} /&gt;
+    );
+  }
+}
+
+// Approach 4: Bind in Constructor
+class HelloWorld extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { message: &#x27;Hi&#x27; };
+    this.logMessage = this.logMessage.bind(this);
+  }
+
+  logMessage() {
+    // This works because of the bind in the constructor above.
+    console.log(this.state.message);
+  }
+
+  render() {
+    return (
+      &lt;input type=&quot;button&quot; value=&quot;Log&quot; onClick={this.logMessage} /&gt;
+    );
+  }
+}
+
+// Approach 5: Arrow Function in Class Property
+// uses stage 2 from babel; could possible be integrated already, these examples are from 2016
+class HelloWorld extends React.Component {
+  // Note that state is a property,
+  // so no constructor is needed in this case.
+  state = {
+    message: &#x27;Hi&#x27;
+  };
+
+  logMessage = () =&gt; {
+    // This works because arrow funcs adopt the this binding of the enclosing scope.
+    console.log(this.state.message);
+  };
+
+  render() {
+    return (
+      &lt;input type=&quot;button&quot; value=&quot;Log&quot; onClick={this.logMessage} /&gt;
+    );
+  }
+}</code></pre><p id="bc62e2ad-685d-44cc-b29d-902f62abe04a" class="">
+</p><p id="9afcd783-bc1c-40ce-94ed-b87f28616501" class="">
+</p><p id="2ec9ac69-ec55-4082-a181-8faedaf2e1da" class="">
+</p><h1 id="c42297e8-d059-47b4-96c0-21a665b60da2" class="">Life Cycle</h1><hr id="48313010-35a7-48eb-ac61-5cd96bc5d00b"/><figure id="0ffa8f1d-67e2-4e51-93a6-d2f0c8130dd5"><div class="source"><a href="https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/">https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/</a></div></figure><p id="cdfcda8c-1210-4156-aa65-aec85d9c4960" class="">for class based components: the life cycle instance methods take the place of the useEffect Hook. They manage the side effects.</p><p id="82ba4f71-6294-4745-8a8a-747c386be7a6" class="">
+</p><p id="fece99e5-39aa-4215-92c8-89923fcb924d" class="">They are instance methods that happen on their own in the lifecycle of a component, but we may leverage these by overriding them in our component and inserting our side effect logic, for example setting or getting from local storage.</p><p id="e1bc1b15-23bc-42c8-b25e-831c34685298" class="">
+</p><p id="cdc9f64b-f413-43f7-808a-b3e99a4d8f80" class="">the 3 life cycle phases of a component and their methods</p><pre id="cfed945e-0be7-4a93-8c9d-28e15e73afb5" class="code"><code>1. mount Phase
+	constructor
+	render
+	componentDidMount
+
+2. Update Phase
+	render
+	componentDidUpdate
+
+3. Unmount Phase
+	componentWillUnmount</code></pre><figure id="0758edb5-255c-48fb-9af5-9d581f665db8"><a href="https://reactjs.org/docs/state-and-lifecycle.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">State and Lifecycle - React</div><div class="bookmark-description">This page introduces the concept of state and lifecycle in a React component. You can find a detailed component API reference here. Consider the ticking clock example from one of the previous sections. In Rendering Elements, we have only learned one way to update the UI.</div></div><div class="bookmark-href"><img src="https://reactjs.org/favicon-32x32.png?v=f4d46f030265b4c48a05c999b8d93791" class="icon bookmark-icon"/>https://reactjs.org/docs/state-and-lifecycle.html</div></div><img src="https://reactjs.org/logo-og.png" class="bookmark-image"/></a></figure><figure id="ce18833e-5cbc-484b-b0a7-8a7160978211" class="image"><a href="class%20based%20react%203111ed42d1b445ebb0ed0a44fc3d80d0/Untitled.png"><img style="width:909px" src="class%20based%20react%203111ed42d1b445ebb0ed0a44fc3d80d0/Untitled.png"/></a></figure><figure id="3e616f36-c385-40e4-8b1e-f78386615ba4" class="image"><a href="class%20based%20react%203111ed42d1b445ebb0ed0a44fc3d80d0/Untitled%201.png"><img style="width:903px" src="class%20based%20react%203111ed42d1b445ebb0ed0a44fc3d80d0/Untitled%201.png"/></a></figure><p id="2204149c-3170-4ff4-aab8-7303d5a9ef4f" class="">
+</p><p id="271be1bf-3ff6-4077-902e-9b3e11b53247" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c03df43c-3108-4e36-814d-e256046ec9ef"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%">The methods are acting similar to the dependency array in the useEffect Hook</div></figure><p id="9e060c8f-fec8-411a-96b7-e01e249c2bff" class="">
+</p><pre id="0ed88124-066a-4e37-a755-45b830e81708" class="code"><code>class Dashboard extends Component {
+  state = { /* do not replace your initial state */ };
+
+	// checking if there is a state saved in local storage after we render the component for the first time
+  componentDidMount() {
+    const focused = JSON.parse(localStorage.getItem(&quot;focused&quot;));
+
+    if (focused) {
+      this.setState({ focused });
+    }
+  }
+	
+	// this has access to the previous props and state before the update
+  componentDidUpdate(previousProps, previousState) {
+    if (previousState.focused !== this.state.focused) {
+      localStorage.setItem(&quot;focused&quot;, JSON.stringify(this.state.focused));
+    }
+  }
+
+  render() { /* do not replace your render method */ }
+}</code></pre><p id="976b75f2-f7d7-4633-a770-7208ddcd5064" class="">
+</p><p id="d67ffb97-0847-4b8b-8852-734650600221" class="">
+</p><h1 id="222d1a10-68e2-486a-bd91-c0ac3e1afad2" class="">Connecting WebSockets</h1><hr id="07bbdd54-0c32-4f3d-97a4-131c3abf73c8"/><p id="51eb87d2-31e6-420c-832a-77b2be50933c" class="">
+</p><p id="fc83e078-a8cd-4ff5-b910-a59766357d5e" class="">Simply put, WebSockets allow push messages, or 
+&quot;live data&quot;, to be sent from the server to the client (browser). Usually
+ with HTTP, the client makes a request to the server, specifying that 
+they would like some data please, the server responds with that data or 
+an error and then the connection closes.</p><p id="4e3324e1-0120-4b37-8faf-0d6945a94a3d" class="">Since
+ the client is the one opening the connections and initiating the 
+requests, that leaves no room for the server to push data to the client 
+when the server knows that an update is available.</p><p id="b88834c2-efdc-4b18-9fb6-b545fb5f5416" class="">That&#x27;s where <a href="https://en.wikipedia.org/wiki/WebSocket">WebSockets</a> kick in.</p><p id="1bdcf9e3-dd4e-47dd-b609-cc8bd48efec0" class="">Like with any other HTTP request, the browser initiates the connection, but indicates that they would like to upgrade the connection to a WebSocket. If the server accepts this, they will then switch the protocol. This connection will not terminate, but will stay open until either side decides to close it. Now, we have a fully functioning bi-directional connection open, where both sides can transmit data.</p><p id="74107be7-a8a7-443b-a062-c02066fa6974" class="">This has the main advantage that the server can now push selective updates to the client. This can come in very handy if you have multiple users viewing the same data, and one user makes an update. Usually, the other clients will not see that update until they actively refetch. WebSockets allow to instantly push those updates in real-time.</p><p id="20bdf517-077a-44df-b07c-0850cade2cb6" class="">
+</p><ol type="1" id="5973f72d-c081-4c03-97c7-ee4c0ffc76ad" class="numbered-list" start="1"><li>establish the socket connection</li></ol><ol type="1" id="2d4033b4-e1b7-4ec0-abb5-35cd63e30f07" class="numbered-list" start="2"><li>confirm in network tools that it is being sent</li></ol><ol type="1" id="e2e27017-d310-4290-b1a6-cd289c773085" class="numbered-list" start="3"><li>Listen for messages on the socket connection<ol type="a" id="55b6169a-1497-43fc-88a1-cac7aceac973" class="numbered-list" start="1"><li>In the <code>componentDidMount</code>
+ method add an <code>onmessage</code>
+ event handler to <code>this.socket</code>
+.</li></ol></li></ol><ol type="1" id="6884b6a6-1ff3-4aba-9641-d8905a9b560c" class="numbered-list" start="4"><li>use them to update the state</li></ol><p id="7239ae36-230f-4ba8-92a6-852c3632d032" class="">
+</p></div></article></body></html>

@@ -1,0 +1,776 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Rendering conditionals &amp; arrays in Components</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="67356b64-9d41-4a67-959f-6b5d9eb0aea7" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🧃</span></div><h1 class="page-title">Rendering conditionals &amp; arrays in Components</h1></header><div class="page-body"><p id="f9c95e61-0675-4b29-bf2b-1b5bae55cdf7" class="">JSX cannot evaluate if else statements in the return () closure</p><p id="4b0a4f95-bdb6-4108-8940-d49c2a534e19" class="">
+</p><nav id="b7189bb2-746f-46b0-b262-7cac4e1b6ef2" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3fd0a41c-b7e7-4805-b192-c954e7937811">ternary Operator</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4b18f36d-ee37-4391-a56d-f2abe0d48d19">Short Circuit evaluation</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#01187c78-930e-4661-8861-2b44f77e1072">Rendering arrays in JSX</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#19e19c0b-1040-4f81-a2f2-3feb7a282aa7">lists and keys in React</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4ee235da-a245-4eab-8c39-efcba76565cc">Classnames - Library</a></div></nav><h2 id="3fd0a41c-b7e7-4805-b192-c954e7937811" class="">ternary Operator</h2><hr id="ab413cf6-0d77-435c-825d-c9f5f4de56e8"/><p id="5b08b29e-9a3c-418d-a9e7-ede269d33ea4" class="">
+</p><p id="170a4d2a-fd74-4d56-9460-5f6509e31408" class="">However, a statement using the ternary operator is allowed because it resolves to an <strong>expression</strong>.</p><pre id="6975cd19-5ebd-4e94-aa89-eaf574c215d8" class="code code-wrap"><code>function Hello(props) {
+// CORRECT: Ternary is allowed. One of the two &lt;h1s&gt; will be rendered
+  return (props.yourName ? &lt;h1&gt;Hello, {props.yourName}.&lt;/h1&gt; : &lt;h1&gt;Sorry, you don&#x27;t seem to have a name.&lt;/h1&gt;);
+}</code></pre><p id="3e964380-2687-4a1d-ad85-df238c520973" class="">The ternary operator is a good choice when you have two different 
+possible elements to display. It can be useful to think the ternary 
+operator like an <code>if...else</code> statement.</p><h2 id="4b18f36d-ee37-4391-a56d-f2abe0d48d19" class="">Short Circuit evaluation</h2><hr id="e71e56f2-5868-4d6c-9756-101c2b52399d"/><p id="defc7958-36a9-46da-8fae-73052151665b" class="">
+</p><p id="472c3962-4ea9-4372-a529-6ac145395623" class="">The logical <code>&amp;&amp;</code> operator can be used for 
+short-circuit evaluation. It is evaluated left to right, and if the 
+first expression is false, the second expression is not evaluated at 
+all. Consider this:</p><pre id="7e877d25-1553-4733-ba3e-7b4646378338" class="code code-wrap"><code>function Hello(props) {
+  return (props.yourName &amp;&amp; &lt;h1&gt;Hello {props.yourName}&lt;/h1&gt;);
+}</code></pre><p id="b48ff8d5-bab2-41bc-8954-4fb53d7ee1a6" class=""><code>{props.yourName} &amp;&amp; &lt;h1&gt;Hello {props.yourName}&lt;/h1&gt;</code> is short-circuit evaluated. If <code>props.yourName</code> contains a value that is truthy, the <code>&lt;h1&gt;</code> will be rendered. However, if <code>props.yourName</code> is falsy then the JSX expression <code>&lt;h1&gt;Hello {props.yourName}&lt;/h1&gt;</code> is <em>not evaluated at all</em> and nothing is shown. Any side effects of attempting to render the <code>&lt;h1&gt;</code> don&#x27;t matter, and no error will be thrown.</p><p id="5641e57a-3ede-4ea0-817b-094a74e1f8ae" class="">The <code>&amp;&amp;</code> operator is a good choice if you want to show something or nothing at all. It can be useful to think of the <code>&amp;&amp;</code> operator like an <code>if</code> statement.</p><p id="a08124a9-9294-47c8-b405-6d806dedf3b8" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="900f0cfc-9b75-4c96-b35a-47ab52bff5d5"><div style="font-size:1.5em"><span class="icon">❗</span></div><div style="width:100%">there is also the <code>||</code> logical operator that applies to short circuit evaluation.</div></figure><p id="ffae1af6-e020-49de-8427-96c511814cd5" class="">
+</p><p id="8bee7c5e-a428-40f1-81b6-c176fdfb3858" class="">
+</p><h1 id="01187c78-930e-4661-8861-2b44f77e1072" class="">Rendering arrays in JSX</h1><hr id="add7a169-1a58-41e1-9d1d-f35e633f3264"/><p id="9509bfe3-296f-4c4e-9a83-cc992751ee8b" class="">
+</p><p id="ea41db02-a3af-4da9-a384-88df57a2e512" class="">When an array is referenced in JSX, the values of the array are automatically looped and rendered:</p><p id="d738e173-7a34-4c0a-8077-624af90393f8" class="">
+</p><p id="399e8e4c-0976-482f-8c82-de42926d8fa8" class="">WARNING, these are missing the keys in lists in React, refer to the next sub category for further explanation.</p><pre id="98ffb0dd-1166-40fb-98e8-d24f00fc06eb" class="code"><code>// MatchList.js
+
+function MatchList(props) {
+
+const matches = props.matchData.map((match) =&gt; {
+  return (
+    &lt;Match
+      players={match.players}
+      winner={match.winner}
+      scoreDifference={match.scoreDifference}
+    /&gt;
+  );
+});
+
+return (
+  &lt;section className=&quot;PlayerList MatchList&quot;&gt;
+    &lt;h1&gt;Match list&lt;/h1&gt;
+    {matches}
+  &lt;/section&gt;
+);
+
+// or more conscisesly ----- - - - - --  -
+
+function MatchList(props) {
+
+  return (
+    &lt;section className=&quot;PlayerList MatchList&quot;&gt;
+      &lt;h1&gt;Match list&lt;/h1&gt;
+      {props.matchData.map(match =&gt; &lt;Match {...match}/&gt;)}
+    &lt;/section&gt;
+  )
+}
+
+// the players example ----- - - - - --  - all the examples/incartnations are there:
+
+function PlayerList(props) {
+  // const players = props.playerData.map(player =&gt; {
+  //   return &lt;Player {...player}/&gt;
+  //   // same as
+  //   // return &lt;Player firstName={player.firstName} lastName={player.lastName} gamerTag={player.gamerTag} wins={player.wins} /&gt;
+  // })
+  // same as:
+  // const players = props.playerData.map(player =&gt; &lt;Player {...player}/&gt;)
+  // same as line 15
+  return (
+    &lt;section className=&quot;PlayerList&quot;&gt;
+      &lt;h1&gt;Current Participating Players&lt;/h1&gt;
+      {props.playerData.map(player =&gt; &lt;Player {...player}/&gt;)}
+    &lt;/section&gt;
+  )
+
+</code></pre><p id="7d16a695-683d-4e1b-8c57-7192d25e4272" class="">
+</p><p id="2e1126be-3ddc-491b-8cdf-40f5407df309" class="">
+</p><h2 id="19e19c0b-1040-4f81-a2f2-3feb7a282aa7" class="">lists and keys in React</h2><hr id="ce9f40e8-5989-46f9-af6d-09f88e827fa4"/><p id="b9cce6a3-6498-407e-9dca-5bd9ce3939bd" class="">
+</p><figure id="bfb6db42-e979-4ef3-ab19-5fcc50849c43"><a href="https://reactjs.org/docs/lists-and-keys.html#keys" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Lists and Keys - React</div><div class="bookmark-description">First, let&#x27;s review how you transform lists in JavaScript. Given the code below, we use the function to take an array of numbers and double their values. We assign the new array returned by map() to the variable doubled and log it: This code logs [2, 4, 6, 8, 10] to the console.</div></div><div class="bookmark-href"><img src="https://reactjs.org/favicon-32x32.png?v=f4d46f030265b4c48a05c999b8d93791" class="icon bookmark-icon"/>https://reactjs.org/docs/lists-and-keys.html#keys</div></div><img src="https://reactjs.org/logo-og.png" class="bookmark-image"/></a></figure><p id="3e34e7cb-6f2f-424f-9b9b-2a6225409906" class="">
+</p><p id="a3a5a464-e769-4230-8a77-eeb63e1041f1" class="">
+</p><h1 id="4ee235da-a245-4eab-8c39-efcba76565cc" class="">Classnames - Library</h1><hr id="8c8dd037-2a64-426b-a95f-eacb8548196a"/><p id="0f02bb63-e0ea-42dd-a469-a5123a2414d2" class="">
+</p><p id="0007a19b-485c-4c84-8ee0-2cd19f29aaba" class="">we use this library to cleanly handle multiple conditional className appending coming from the props.<div class="indented"><ul id="0ad2273c-88c6-4333-8657-e055bd4086a1" class="bulleted-list"><li style="list-style-type:disc">A way to avoid a page of if statements.. <ul id="fbdbdadc-54cd-4c69-9e8c-4c5132ee6f87" class="bulleted-list"><li style="list-style-type:circle">many prop choices gets messy</li></ul></li></ul></div></p><p id="36b8b729-09fe-4d24-9c6d-86f65e6bb025" class="">
+</p><p id="e3187164-8838-4ca1-b5af-3a65d5e0e89d" class="">The library gives us access to a func called: classnames:</p><pre id="4c92c5e5-e0ef-4650-8329-5ca467650d0b" class="code"><code>classNames(&#x27;foo&#x27;, &#x27;bar&#x27;); // =&gt; &#x27;foo bar&#x27;</code></pre><p id="3e8508e7-2267-4f35-88bd-942c44429cbf" class="">
+</p><p id="ab296574-e8c6-4329-99e7-269265ee4098" class="">example:</p><pre id="86be055c-20fc-4b93-a12e-5f21ab5b6c84" class="code"><code>classNames(&#x27;foo&#x27;, { bar: true }); // =&gt; &#x27;foo bar&#x27;
+classNames(&#x27;foo&#x27;, { bar: false }); // =&gt; &#x27;foo&#x27;
+
+classNames(&#x27;foo&#x27;, &#x27;bar&#x27;); // =&gt; &#x27;foo bar&#x27;
+classNames(&#x27;foo&#x27;, { bar: true }); // =&gt; &#x27;foo bar&#x27;
+classNames({ &#x27;foo-bar&#x27;: true }); // =&gt; &#x27;foo-bar&#x27;
+classNames({ &#x27;foo-bar&#x27;: false }); // =&gt; &#x27;&#x27;
+classNames({ foo: true }, { bar: true }); // =&gt; &#x27;foo bar&#x27;
+classNames({ foo: true, bar: true }); // =&gt; &#x27;foo bar&#x27;
+
+// lots of arguments of various types
+classNames(&#x27;foo&#x27;, { bar: true, duck: false }, &#x27;baz&#x27;, { quux: true }); // =&gt; &#x27;foo bar baz quux&#x27;
+
+// other falsy values are just ignored
+classNames(null, false, &#x27;bar&#x27;, undefined, 0, 1, { baz: null }, &#x27;&#x27;); // =&gt; &#x27;bar 1&#x27;</code></pre><blockquote id="492c06b8-8331-4979-9521-041ee167127e" class="">“In the example above, the first argument is a string, but the second argument is an object. The string <code>foo</code>
+ is always returned, but <code>bar</code>
+ is a key to a boolean value. If the boolean value is <code>true</code>
+, bar is added to the string that is returned. If false, <code>bar</code>
+ is not added.”</blockquote><p id="ff3b02ad-f154-4e64-84cd-140557137dde" class="">
+</p><figure id="8b2a8724-02f8-4d6c-a73e-073a124196b5"><a href="https://github.com/JedWatson/classnames#usage" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - JedWatson/classnames: A simple javascript utility for conditionally joining classNames together</div><div class="bookmark-description">A simple javascript utility for conditionally joining classNames together - GitHub - JedWatson/classnames: A simple javascript utility for conditionally joining classNames together</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/JedWatson/classnames#usage</div></div><img src="https://opengraph.githubassets.com/2ea44ef0dda2aeb8e4d76730d800064bd152a0d7f17422d8e57b348026867094/JedWatson/classnames" class="bookmark-image"/></a></figure><p id="7177c7bd-ac88-423b-a497-e3c77af0375d" class="">
+</p><pre id="c61d7dc1-4550-42e5-a5d9-298f0f912a8e" class="code"><code>export default function Button(props) {
+   const buttonClass = classNames(&#x27;button&#x27;, {
+      &#x27;button--confirm&#x27;: props.confirm,
+      &#x27;button--danger&#x27;: props.danger
+   });
+   
+   return &lt;button onClick={props.onClick} 
+                  className={buttonClass}
+                  disabled={props.disabled}
+                  &gt;{props.children}&lt;/button&gt;;
+}</code></pre></div></article></body></html>

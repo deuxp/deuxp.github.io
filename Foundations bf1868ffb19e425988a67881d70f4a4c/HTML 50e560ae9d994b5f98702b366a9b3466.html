@@ -1,0 +1,793 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>HTML</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="50e560ae-9d99-4b5f-9870-2b366a9b3466" class="page mono"><header><div class="page-header-icon undefined"><img class="icon" src="data:image/png;base64,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"/></div><h1 class="page-title">HTML</h1></header><div class="page-body"><nav id="0f80d966-9250-4ec6-b24d-ec264ebb9ab1" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#4b9c58b3-fea8-4061-b36d-d2156fd58371">Anatomy of an HTML file</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6106c398-510f-4f4d-8fb7-3a8dd40d3cc3">Semantics</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#bc478583-7537-4524-beb3-06f5f5554ae6">IDs vs Classes</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ca310ed6-410e-41af-b64c-51479b3ce671">Text</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#63a13065-ac92-4b45-b7de-026abce3c5b3">Encoding Special Characters</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#989e565a-0c4c-481b-a399-f47ec87ef30f">Element</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#258374b9-4842-43ad-b0a4-98af3f6eedb9">Attribute</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#5d553b2d-dbac-4d29-bfd6-bf41aa689b28">Structure</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#223c73aa-2a07-4955-8f9d-f767f7b3f1dd">&lt;div&gt; &amp; &lt;span&gt;</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#774f1d0f-2d3b-4346-9f94-2d1cbcd884bf">In-line and block Elements</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c1ea3c3a-a0f7-4b51-994f-8f1cb2ff25fb">Self-closing Elements</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#fc25b655-8611-4e51-a451-5346edf00add">Images</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3c852841-8593-4833-b738-2617c89cb718">Empty elements</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#7d5ad7c1-81cb-43b4-8d07-5b95bf447b4a">Lists</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#2e787949-0b54-4495-9d1e-8d4a5fda35d1">Links</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3d8db9fb-c655-4821-ba91-e1e358a63740">opening links in a new window</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#7131e4f0-cc40-498f-afdb-320bda1e46c1">Linking to top of page</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3ff81d85-706e-4cad-b51c-bb96fdaad094">linking an awesome font</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#931aa0a6-baba-4dd1-aba9-e0b72a2f9db5">Forms</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e8c7e217-3149-434c-a267-0a52e2cc58a7">id </a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#8e9ed9e1-fe41-4beb-ac4b-0825fff72968">Label</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#9e2e4c48-ce48-4f5e-89cd-4e3677e4b031">Input </a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#056769ca-8146-4c39-bb24-169f3da94481">types</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e728d306-f08c-45c9-b8c0-b648c434ee2d">Radio Buttons</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dcabca76-4368-47ce-9b30-a36f4fbe4542">name=&quot;&quot; → PHP server processing &amp;&amp; grouping radio buttons</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b3e44b6e-353d-4864-b670-0fecacddbd2e">value</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d61bbb08-6ad3-4f25-a28b-1daaca661d4e">Select box</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#227e051b-1212-4970-87f6-903e31f8dadb">Text area</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#33423934-a7b3-4ab1-a5cb-03c4034bd98e">Placeholder</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dff945f5-dc83-49e1-a72e-bff659f43efe">Submit Button</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#31a343bf-6ff6-4c8e-a2b5-6b48b92ea316">Required</a></div></nav><p id="52b6b75b-2db9-4a07-b818-4540ca745a42" class="">
+</p><hr id="bffca8a2-6a31-4b49-b429-9b746f990dbe"/><p id="79e70cab-9917-4e67-bf22-d854fa0a1217" class="">
+</p><p id="75763ccc-2ef5-4401-9c3c-9a38bf32c07f" class="">
+</p><h1 id="4b9c58b3-fea8-4061-b36d-d2156fd58371" class="">Anatomy of an HTML file</h1><pre id="d9fe2773-9572-4e5b-8add-d8e5df606c0c" class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;title&gt;My test page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;img src=&quot;images/firefox-icon.png&quot; alt=&quot;My test image&quot;&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre><p id="4c1d6a20-3064-4aea-85b7-a7c70095452b" class=""><code>&lt;html&gt;</code>This element wraps all the content on the entire page and is sometimes known as the root element.</p><p id="b9256421-00af-451b-8374-d94325b7ff5b" class=""><code>&lt;head&gt;</code>acts as a container for all the stuff you want to include on the HTML page that isn&#x27;t the content you are showing to your viewers. Things like keywords | page description that you want to appear in search results | CSS to style our content | character set declarations...</p><p id="b614616d-0fa2-471e-af23-5c092f83d8a8" class=""><code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>sets the character set your document should use to UTF-8 → standard</p><p id="ec959f3b-a9be-4e5e-8e22-e0a7b86c31a8" class=""><code>&lt;title&gt;</code>title that appears in the browser tab</p><p id="f68a6950-f9e5-4c28-8b97-757d47bbab8c" class=""><code>&lt;body&gt;</code>This contains all the content that you want to show to web users</p><figure id="0ffe93fe-5d42-4a69-9ca2-4d0765d916ca" class="image"><a href="HTML%2050e560ae9d994b5f98702b366a9b3466/Screen_Shot_2021-09-09_at_9.47.12_PM.png"><img style="width:593px" src="HTML%2050e560ae9d994b5f98702b366a9b3466/Screen_Shot_2021-09-09_at_9.47.12_PM.png"/></a></figure><p id="2211c054-d532-423a-9dfd-9f6d927ca1fd" class="">
+</p><h1 id="6106c398-510f-4f4d-8fb7-3a8dd40d3cc3" class="">Semantics</h1><p id="66a6fe53-6fc7-4646-9784-f8341cb446a2" class="block-color-orange_background">So what exactly are semantics? Semantics within HTML is the practice of giving content on the page meaning and structure by using the proper element. Semantic code describes the value of content on a page, regardless of the style or appearance of that content. There are several benefits to using semantic elements, including enabling computers, screen readers, search engines, and other devices to adequately read and understand the content on a web page. Additionally, semantic HTML is easier to manage and work with, as it shows clearly what each piece of content is about.</p><figure id="fcb410ea-d182-4a2c-aebd-aab0262f6bd0"><a href="http://boagworld.com/dev/semantic-code-what-why-how/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href">http://boagworld.com/dev/semantic-code-what-why-how/</div></div></a></figure><ul id="83aba5bf-acd8-491d-912d-022c5a58c323" class="bulleted-list"><li style="list-style-type:disc">Use meaningful elements moving forward → that is elements that best describe the content. </li></ul><p id="921676e6-8d36-4252-a046-d16b46b7b810" class="">
+</p><ul id="9cac971c-fc91-44cb-86d1-225bca055654" class="bulleted-list"><li style="list-style-type:disc">Each heading level should be used where it is semantically valued, and should not be used to make text bold or big—there are other, better ways to do that.<ul id="3838143a-14c4-4650-aeaa-7d3a993fbd92" class="bulleted-list"><li style="list-style-type:circle">They Help search engines index and determine the content of a page.</li></ul></li></ul><p id="3e748fa6-737a-48f8-87cf-814c2703ace7" class="">
+</p><p id="09ede737-f59d-4b8b-8a33-b47772941c4f" class="">
+</p><h2 id="bc478583-7537-4524-beb3-06f5f5554ae6" class="">IDs vs Classes</h2><p id="aaae47b9-8544-4f2d-ad95-4d731990c131" class="">
+</p><p id="34e91b24-017e-430f-b527-255bfd8718d9" class="">classes imply stylistic or behavioural properties about an element</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="31934a6f-d409-4631-b108-68b92d9e4380"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">Use classes most of the time → as a general rule. Use musch more frequently than IDs</div></figure><p id="0854fab5-4bff-44fb-b8f1-c8e66d61b840" class="">
+</p><p id="b777b467-7d07-4ade-a8cd-4583fdc95597" class="">Usse IDs when you have a unique element such as a call to action. Something that needs to stand out from the rest of the DOM.<div class="indented"><ul id="44b3371d-198b-4419-9955-4e8397376427" class="bulleted-list"><li style="list-style-type:disc">also when you need to specify them from the url, so the browser can jump to the content.<ul id="be33d35b-6ded-4549-a7ca-ba5b97c6f210" class="bulleted-list"><li style="list-style-type:circle">they are more performant since they the browser only has to search for one item and then can stop searching once found.</li></ul></li></ul></div></p><p id="9de40d4d-53f4-42ed-a496-6337a3d41e3b" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="325bbf14-f0f1-4757-a07c-0669501c1070"><div style="font-size:1.5em"><span class="icon">➡️</span></div><div style="width:100%">also consider that you can style elements broadly without assigning a class or ID to the element.. So if you dont need them, don tuse them</div></figure><p id="b80eb438-3320-4d69-8679-c1a04696b590" class="">
+</p><p id="a31d08dc-b028-40a1-b50d-4f5a0d4ca30d" class="">You can use a combination of tag names, nesting an pseudo classes to craft a CSS selector for anything you want on your DOM, but if it becomes too <strong>verbose</strong>, then maybe you should consider using a class or ID at that point.</p><p id="efe2db9e-9ee1-4056-9094-917e06b6443f" class="">
+</p><ul id="6f8a99a0-1882-42b6-8fa6-2208dbffeef1" class="bulleted-list"><li style="list-style-type:disc">refering to them in CSS, they are called hooks.</li></ul><p id="72c492c7-5aed-4d8f-b4e5-268ac061375d" class="">
+</p><p id="163c2a8f-59c3-4765-b3b9-3b17bdbdad9e" class="">
+</p><h2 id="ca310ed6-410e-41af-b64c-51479b3ce671" class="">Text</h2><p id="797196ee-f1bd-48f3-9e50-898e636d7315" class="">
+</p><p id="73f34719-f8ed-4aca-b736-119e4319f7a5" class="">&lt;strong&gt; → strong importance</p><p id="9abb0353-255a-48c9-93e2-5f854402a372" class="">&lt;b&gt; → bold</p><ul id="f23c2c68-9898-403f-95b0-82c5fdb2795b" class="bulleted-list"><li style="list-style-type:disc">These both will make text bold but have <a href="http://html5doctor.com/i-b-em-strong-element/">semantic differences</a>.</li></ul><p id="0592a640-dd90-469d-9ad5-0588122aac54" class="">
+</p><ul id="8ab5b65a-9303-4a6a-9a20-bafc38a018e4" class="bulleted-list"><li style="list-style-type:disc">Similarly both of the following are italicize:</li></ul><p id="96a06861-53c3-41ce-bcca-8a9097d5ed5a" class="">&lt;em&gt; → Stressed emphasis.</p><p id="2c1e53a0-8482-4f4f-8554-e123ef306e2d" class="">&lt;i&gt; → A different voice or tone</p><p id="5004daa5-67d9-46bf-b510-f4efc8dea7ad" class="">
+</p><h1 id="63a13065-ac92-4b45-b7de-026abce3c5b3" class="">Encoding Special Characters</h1><figure id="faf8a382-736b-47ec-a2a7-ea00a24f5512"><a href="http://copypastecharacter.com/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">✿ Our favorite set - CopyPasteCharacter.com</div></div><div class="bookmark-href"><img src="https://copypastecharacter.com/favicon.ico" class="icon bookmark-icon"/>http://copypastecharacter.com/</div></div><img src="https://copypastecharacter.com/apple-touch-icon-114x114-precomposed.png" class="bookmark-image"/></a></figure><p id="010e8b2b-5764-4ddc-8972-d55fa7a2c7bd" class="">
+</p><p id="163a048c-31cf-460c-9934-578ffbe2beb2" class="">
+</p><p id="c97224f4-6e96-491a-bd93-0bd8fde6ca3e" class="">
+</p><h1 id="989e565a-0c4c-481b-a399-f47ec87ef30f" class="">Element</h1><figure id="0c0cf3f3-9f34-4ac3-a3d6-f6a5ffe678d6" class="image"><a href="HTML%2050e560ae9d994b5f98702b366a9b3466/Untitled.png"><img style="width:765px" src="HTML%2050e560ae9d994b5f98702b366a9b3466/Untitled.png"/></a></figure><p id="ecc7ce70-44fa-40bc-839f-563a88456e6a" class="">
+</p><h1 id="258374b9-4842-43ad-b0a4-98af3f6eedb9" class="">Attribute</h1><figure id="6086308b-0e4c-46a9-ae54-a8d7e866fa93" class="image"><a href="HTML%2050e560ae9d994b5f98702b366a9b3466/Untitled%201.png"><img style="width:766px" src="HTML%2050e560ae9d994b5f98702b366a9b3466/Untitled%201.png"/></a></figure><p id="386d4fbf-853f-420b-8984-619b3c424a0f" class="">Attributes contain extra information about the element that you don&#x27;t want to appear in the actual content.</p><p id="730c9eb4-e67d-4b78-b23f-b67b4dee4fb2" class="">
+</p><p id="c6b92c14-0fcf-407a-84ff-aec1de351389" class="">Here, <code>class</code> is the <em>attribute</em> <strong>name</strong> and <code>editor-note</code> is the <em>attribute</em> <strong>value</strong>. The <code>class</code> <em>attribute</em> allows you to give the element a non-unique identifier that can be <strong>used to target it</strong> → <div class="indented"><p id="2891645e-2c65-433a-90a7-73ddf03c03cf" class="">(and any other elements with the same class value) with <strong>style information</strong> and other things.</p><p id="71f54694-4f78-4704-92a2-959947a3f6f9" class="">
+</p><p id="5cbd16ca-066c-4de5-9f77-e2a4fb8cc78b" class=""><span style="border-bottom:0.05em solid">Attribute checklist:</span></p></div></p><ol type="1" id="fe11efc8-38e9-4337-b3fc-50af9afd663b" class="numbered-list" start="1"><li>A space between it and the element name (or the previous attribute, if the element already has one or more attributes).</li></ol><ol type="1" id="58140856-c211-4a92-8ae6-f44ff2940a18" class="numbered-list" start="2"><li>The attribute name followed by an equal sign.</li></ol><ol type="1" id="185ada91-75d1-4970-b2f1-dd1d8055df70" class="numbered-list" start="3"><li>The attribute value wrapped by opening and closing quotation marks.</li></ol><p id="fae3e2cd-e306-46b7-9ee6-0f592aacbd10" class="">
+</p><p id="7c22f2ba-b109-499e-a2ba-55c67e87c201" class="">
+</p><p id="6524d039-d492-47fa-bc3f-0ba2c2ef8cd3" class="">
+</p><p id="b3518feb-2d89-4eae-bf1b-9b9ff03ddf7d" class="">
+</p><h1 id="5d553b2d-dbac-4d29-bfd6-bf41aa689b28" class="">Structure</h1><figure id="e6763b76-0479-40d1-93ed-b78ab4b65e1d"><a href="https://dev.opera.com/articles/new-structural-elements-in-html5/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">New Structural Elements in HTML5</div></div><div class="bookmark-href"><img src="https://dev.opera.com/favicon.ico" class="icon bookmark-icon"/>https://dev.opera.com/articles/new-structural-elements-in-html5/</div></div><img src="https://dev.opera.com/authors/bruce-lawson.jpg" class="bookmark-image"/></a></figure><figure id="ac8231f2-19d1-4c67-99c5-760a5a60bb36" class="image"><a href="HTML%2050e560ae9d994b5f98702b366a9b3466/Screen_Shot_2021-09-11_at_10.40.54_AM.png"><img style="width:624px" src="HTML%2050e560ae9d994b5f98702b366a9b3466/Screen_Shot_2021-09-11_at_10.40.54_AM.png"/></a></figure><p id="245e6bf0-5b76-4738-b55a-f220e14aa590" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="a96d94a3-c684-42cc-bc9f-42e512a95887"><div style="font-size:1.5em"><span class="icon">📓</span></div><div style="width:100%">I think that the header and possibly the footer appear on every page.. that is why you would have a hyper link to the index.html file, since it is typically the homepage.</div></figure><p id="b2734354-8b78-4a12-9df3-6c5d01a03153" class="">
+</p><p id="90438a81-7c68-4255-bbeb-37f183176ed3" class="">
+</p><p id="203e29ac-4dfd-4c3a-9ebd-698baa099585" class="">&lt;div&gt; should only be used when the content doesn&#x27;t have any semantic meaning that matches the above groups, yet needs to be styled.</p><p id="defd7c11-a104-477a-8be9-e22ec1d0fab0" class="">
+</p><p id="a375a396-e339-40b1-9e3f-1afa47c9c026" class="">
+</p><p id="75ed654c-1e0e-4e29-b977-1ab2b61ae90a" class="">
+</p><p id="04c59bdd-6a16-45df-911d-09ad63d5f349" class="">
+</p><h2 id="223c73aa-2a07-4955-8f9d-f767f7b3f1dd" class="">&lt;div&gt; &amp; &lt;span&gt;</h2><p id="0148b60f-071d-418b-b182-c934510f296d" class="">generic containers who&#x27;s sole purpose is to group code for targeted styling. More of a CSS advantage that exists in html.</p><p id="a9bcd9da-cd2d-470f-b1f3-cf5505a8f2df" class="">
+</p><p id="18f9f812-7ed1-4cf6-bcb9-ca5abe24f627" class=""><code>&lt;div&gt;</code> → is a <strong>block-level</strong> element that is commonly used to identify large groupings of content, and which helps to build a web page’s layout and design.</p><p id="3cf4aaec-0925-4b55-be97-0db5eb673f8e" class=""><code>&lt;span&gt;</code> → on the other hand, is an <strong>inline-level</strong> element commonly used to identify smaller groupings of text within a block-level element.</p><p id="26ab8869-acee-468f-8fb5-f20a6e0edb35" class="">
+</p><p id="a11dbe32-87dd-41e0-aec6-250b16aa708a" class="">We’ll commonly see <code>&lt;div&gt;</code>s and <code>&lt;span&gt;</code>s with class or id attributes for styling purposes. </p><p id="7cc8b571-3eb6-4517-9eed-824531cc3a35" class="">
+</p><blockquote id="c44c05df-743b-4964-b086-2afd875f29b6" class="">Choosing a <span style="border-bottom:0.05em solid"><strong>class</strong></span><span style="border-bottom:0.05em solid"> or </span><span style="border-bottom:0.05em solid"><strong>id</strong></span><span style="border-bottom:0.05em solid"> </span><span style="border-bottom:0.05em solid"><em>attribute</em></span><span style="border-bottom:0.05em solid"> value, or name</span>, requires a bit of care. We want to choose a value that refers to the content of an element, not necessarily the appearance of an element.</blockquote><ul id="22384478-1b59-4ff4-8efe-b625a8134433" class="bulleted-list"><li style="list-style-type:disc">make sure that your value (name) choices are reflective of the content you are targeting.</li></ul><p id="f030ac6a-a29c-4fe9-abb2-6093baa0945f" class="">
+</p><pre id="da1d4b5a-3c43-4b45-b6e5-c76afc5041de" class="code"><code>&lt;!-- Division --&gt;
+&lt;div class=&quot;social&quot;&gt;
+  &lt;p&gt;I may be found on...&lt;/p&gt;
+  &lt;p&gt;Additionally, I have a profile on...&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Span --&gt;
+&lt;p&gt;Soon we&#x27;ll be &lt;span class=&quot;tooltip&quot;&gt;writing HTML&lt;/span&gt; with the best of them.&lt;/p&gt;</code></pre><p id="48a30fe5-2b95-4e0d-9579-1d7c7119d519" class="">
+</p><p id="6b8f728b-3323-4862-9741-5c281ab1dd5a" class="">
+</p><p id="fed15405-1c86-44cd-9e42-306c196b111f" class="">
+</p><p id="2d591af8-3565-4224-9486-164d140c53e4" class="">
+</p><p id="e6b49617-f7f2-4ad7-89ff-7b6766c8e594" class="">
+</p><h1 id="774f1d0f-2d3b-4346-9f94-2d1cbcd884bf" class="">In-line and block Elements</h1><p id="3fba4ed0-6d00-46e5-b53d-691760e53da6" class="">You can put elements inside other elements too — these are in-line elements. </p><pre id="6e0ee9b0-c630-482e-85c4-d109024e51bd" class="code"><code>&lt;p&gt;My cat is &lt;strong&gt;very&lt;/strong&gt; grumpy.&lt;/p&gt;</code></pre><p id="d3754b90-5d6f-4ce9-805b-768098a7061a" class="">Block elements take up their own box space that spans the width of the document.</p><p id="ff7bbbd3-a467-44fe-aa79-63e539ae89e7" class="">
+</p><h1 id="c1ea3c3a-a0f7-4b51-994f-8f1cb2ff25fb" class="">Self-closing Elements</h1><ol type="1" id="4540856a-5ec5-4663-a8aa-d77a2a623890" class="numbered-list" start="1"><li><em>&lt;</em>br<em>&gt;</em></li></ol><ol type="1" id="5d9785e4-7480-4c11-8144-d5588497e81f" class="numbered-list" start="2"><li><em>&lt;</em>embed<em>&gt;</em></li></ol><ol type="1" id="f325edc0-b995-4f0f-810c-7b220f8577a7" class="numbered-list" start="3"><li><em>&lt;</em>hr<em>&gt;</em></li></ol><ol type="1" id="ae22b7e6-51b6-44af-977f-d52c240653d7" class="numbered-list" start="4"><li><em>&lt;</em>img<em>&gt;</em></li></ol><ol type="1" id="12b2daf3-3f37-413c-8ec3-7cebb7636067" class="numbered-list" start="5"><li><em>&lt;</em>input<em>&gt;</em></li></ol><ol type="1" id="32114fdc-1a3b-46ae-9535-e0bb140c882a" class="numbered-list" start="6"><li><em>&lt;</em>link<em>&gt;</em></li></ol><ol type="1" id="33bf7e33-ce21-41cb-ae08-eeada0a99968" class="numbered-list" start="7"><li><em>&lt;</em>meta<em>&gt;</em></li></ol><ol type="1" id="cc3676ea-4f5e-49fd-8b03-eeba6378a870" class="numbered-list" start="8"><li><em>&lt;</em>param<em>&gt;</em></li></ol><ol type="1" id="f7000c24-4938-4a11-94d3-397355ebd557" class="numbered-list" start="9"><li><em>&lt;</em>source<em>&gt;</em></li></ol><ol type="1" id="14837ebc-4c8d-437f-a4b4-f0381bdf920c" class="numbered-list" start="10"><li><em>&lt;</em>wbr<em>&gt;</em></li></ol><p id="ac7ce4cf-9b86-428a-a531-f82c4a72c46a" class="">
+</p><h1 id="fc25b655-8611-4e51-a451-5346edf00add" class="">Images</h1><h2 id="3c852841-8593-4833-b738-2617c89cb718" class="">Empty elements</h2><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="c08fe244-a165-40d5-b914-170692ad397f"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%"><strong>Empty Elements</strong>
+the <code>&lt;img&gt;</code> tag is considered an empty element since it does not have a closing tag. it just contains 2 attributes and tells the HTML document that an image is inserted here</div></figure><pre id="c874ac49-2d7e-4363-8c1a-47d88a7d9058" class="code"><code>&lt;img src=&quot;images/firefox-icon.png&quot; alt=&quot;My test image&quot;&gt;</code></pre><p id="1e71fbe3-839f-4be7-9052-cde845096aae" class="">Embeds an image into our page in the position it appears. It does this via the <code>src</code> (source) attribute, which contains the path to our image file.</p><p id="65d2e178-5fb2-4b1e-8ef8-fd8238154a26" class=""><code>alt</code> is descriptive text.</p><p id="8694d32b-4b07-43c6-868b-e99c3a5126d6" class="">
+</p><p id="7a3b51ca-5b48-4892-a58a-89cc833d73de" class="">
+</p><h1 id="7d5ad7c1-81cb-43b4-8d07-5b95bf447b4a" class="">Lists</h1><p id="fa7c0e27-1518-4043-8d58-34833073c24a" class=""><code>&lt;ol&gt;</code> ordered</p><p id="d2a56d8e-26c6-4379-b554-52440aad5eab" class=""><code>&lt;ul&gt;</code> unordered<div class="indented"><p id="3b7eab8e-5dbd-405d-8179-ff1c1a6584cf" class=""><code>&lt;li&gt;</code> list element → nested</p><p id="b47dbb0b-4031-489f-91a7-cc124906491b" class="">
+</p><p id="d75913df-63e1-4de0-aa0b-dc228e55c4cd" class="">
+</p><h1 id="5f2f158f-9e00-4d7f-9ba1-ad67af54f09e" class="">Table</h1><p id="04c99498-981e-4767-b010-e4ee9bb77efc" class="">do not confuse with layout</p><p id="a9d51212-1315-49df-9ca6-b3999f968fd2" class="">
+</p><ul id="5ac4f85f-279e-4423-b75c-8009a20c8f1f" class="bulleted-list"><li style="list-style-type:disc"><code>&lt;table&gt;</code> - display a data table. Note: not to be used for layout<ul id="452fc81a-a0c3-4cfb-8eb1-981c65a8cdb6" class="bulleted-list"><li style="list-style-type:circle"><code>&lt;tr&gt;</code> - a table row</li></ul><ul id="bed157ba-985b-43cd-98da-664928786bb6" class="bulleted-list"><li style="list-style-type:circle"><code>&lt;td&gt;</code> - a cell in a table row</li></ul></li></ul><p id="bc88654c-eee8-48b6-bcd2-52483230d8ff" class="">
+</p></div></p><p id="16bcb7cd-6c68-49ab-af97-d2b27521104e" class="">
+</p><p id="d8493295-6c14-478f-9e85-e67512e30eff" class="">
+</p><p id="dc33d8a6-4402-4f0f-8038-bbe4bace10ab" class="">
+</p><h1 id="2e787949-0b54-4495-9d1e-8d4a5fda35d1" class="">Links</h1><p id="8a6d80b0-d128-4b6e-a195-3afeb316ff6c" class=""><code>&lt;a&gt;</code> anchor tag .. with attribute <code>&lt;href&gt;</code></p><pre id="5a48a9f8-5df7-4139-a5e6-f447b495d476" class="code"><code>&lt;a href=&#x27;https://www.link.org&#x27;&gt;Text that is tagged with link&lt;/a&gt;</code></pre><ul id="a58bae04-a13a-4331-bcc9-3df824e36211" class="bulleted-list"><li style="list-style-type:disc">although anchor is an in-line element; which means that it cannot wrap a block element.. However in HTML5 the &lt;a&gt; specifically can do this.</li></ul><p id="3eed9ad9-12a2-479d-9d49-9a32efb52951" class="">
+</p><ul id="4ab3a120-26ab-4a7c-b862-f988b8a8ee82" class="bulleted-list"><li style="list-style-type:disc">links pointing to another page of the website have a relative path<ul id="9ef7a176-fa5f-4b90-9245-8a22d5b79ba7" class="bulleted-list"><li style="list-style-type:circle">links pointing to another site have an absolute path (web address)</li></ul><p id="0da404d9-cdc6-41f3-b072-b71f79e8f128" class="">
+</p><h3 id="8ea197f6-e163-41a6-8700-4e4cada6ef69" class="">email link</h3><p id="0428ee43-6bf1-4af6-9998-ee83ba4f08d2" class="">To create an email link, the href attribute value needs to start with <code>mailto:</code> followed by the email address to which the email should be sent. To create an email link to <code><a href="mailto:shay@awesome.com">shay@awesome.com</a></code>, for example, the href attribute value would be <code><a href="mailto:shay@awesome.com">mailto:shay@awesome.com</a></code></p><p id="e85b1d44-15d6-4ce4-9a7a-8f2425753a5d" class="">
+</p></li></ul><figure id="e0785000-8ccb-49b6-91bb-bd735f9023c3" class="image"><a href="HTML%2050e560ae9d994b5f98702b366a9b3466/Screen_Shot_2021-09-13_at_12.50.19_PM.png"><img style="width:548px" src="HTML%2050e560ae9d994b5f98702b366a9b3466/Screen_Shot_2021-09-13_at_12.50.19_PM.png"/></a></figure><p id="d2bb1903-3afd-47b7-9368-2f56934c91c2" class="">ie.,</p><pre id="3a1cd77a-5df8-4fa2-949a-0ed1df481b0a" class="code"><code>&lt;a href=&quot;mailto:shay@awesome.com?subject=Reaching%20Out&amp;body=How%20are%20you&quot;&gt;Email Me&lt;/a&gt;</code></pre><p id="0ff55093-70bd-4fbd-8f74-dce0bd4050bd" class="">
+</p><p id="f0980092-96d8-4a59-b387-c7cd813b287e" class="">
+</p><h2 id="3d8db9fb-c655-4821-ba91-e1e358a63740" class="">opening links in a new window</h2><p id="9d1909a4-fea9-4b17-b6eb-31a2d7fd22c9" class="">To trigger the action of opening a link in a new window, use the target attribute with a value of _blank. The target attribute determines exactly where the link will be displayed, and the _blank value specifies a new window.</p><pre id="31ff34b6-f2ed-4c5f-b8c9-94bb8f4291ff" class="code"><code>&lt;a href=&quot;http://shayhowe.com/&quot; target=&quot;_blank&quot;&gt;Shay Howe&lt;/a&gt;</code></pre><p id="a0cc6be6-bb4b-4e4e-8f75-37197b0f0e6f" class="">
+</p><h2 id="7131e4f0-cc40-498f-afdb-320bda1e46c1" class="">Linking to top of page</h2><ul id="1a8734da-0626-4304-8123-847e15b72981" class="bulleted-list"><li style="list-style-type:disc">works with other sections on the page<p id="f9e6bfdc-389d-4958-8ebb-0d9e8a78db7d" class="">Using the “Back to top” link as an example, we can place an id attribute value of top on the &lt;body&gt; element. Now we can create an anchor element with an href attribute value of #top, pound sign and all, to link to the beginning of the &lt;body&gt; element.</p></li></ul><p id="61ccb87e-330d-4d97-9418-09dd0b99d6c6" class="">
+</p><pre id="ec39b6ad-b64f-45d8-8f92-02e1ed8755b6" class="code"><code>&lt;body id=&quot;top&quot;&gt;
+  ...
+  &lt;a href=&quot;#top&quot;&gt;Back to top&lt;/a&gt;
+  ...
+&lt;/body&gt;</code></pre><p id="185e3bc4-9c93-4ed7-a650-90c8f58981c1" class="">
+</p><p id="b7d68544-153a-439c-a349-c246a60620c5" class="">
+</p><p id="24a3c17a-f508-474c-b45d-47d963f42f94" class="">
+</p><h1 id="3ff81d85-706e-4cad-b51c-bb96fdaad094" class="">linking an awesome font</h1><p id="d109a99f-9b78-4826-b1c1-2599eca6f203" class="">
+</p><pre id="94cd4c9f-caa8-4e29-a3ab-41ecbce536d7" class="code"><code></code></pre><p id="45dcbef4-e62d-4cd2-b791-cb2444976542" class="">
+</p><p id="6c03d373-072c-4ccb-bdb9-a11bb8f557dd" class="">
+</p><p id="b387c57d-7997-4d5a-8497-7dcfc0cb6667" class="">
+</p><p id="4e8cfa43-00dd-4079-aad1-c5ca313a7349" class="">
+</p><h1 id="931aa0a6-baba-4dd1-aba9-e0b72a2f9db5" class="">Forms</h1><p id="be21a43a-8c44-4346-b939-68917f9fb372" class="">Generally goo form to include the attributes of </p><ul id="994dee01-ec0c-4179-92a7-2f7de4456135" class="bulleted-list"><li style="list-style-type:disc">name</li></ul><ul id="a294b047-fcb2-4d8d-b261-0cb27af0b93a" class="bulleted-list"><li style="list-style-type:disc">id</li></ul><ul id="d4f79006-b19a-4d20-a3eb-3b1359f310b5" class="bulleted-list"><li style="list-style-type:disc">value → if toggle selection applies<ul id="a8892bf2-c54b-43a8-b7ca-d520261da191" class="bulleted-list"><li style="list-style-type:circle">The information collected from these fields will be processed, server-side by PHP, using these attributes.</li></ul></li></ul><pre id="8bb95368-52ca-4346-92b9-09669fa5495f" class="code"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p id="2325cb39-e461-469b-a130-702ea55877f7" class="">
+</p><p id="c9e224b4-e597-487e-bdc5-0b9d7e0c2fe4" class="">
+</p><h2 id="e8c7e217-3149-434c-a267-0a52e2cc58a7" class="">id </h2><pre id="9fefd2b3-9450-42f9-83ce-85f64aa7de6c" class="code"><code>&lt;input id=&quot;username&quot;&gt;</code></pre><p id="2d101db8-905e-424a-a9bc-3cf0e74c1680" class="">attribute<div class="indented"><p id="bda5caa5-c247-4072-96a2-ca6d7c32d70f" class="">Its almost like a variable in that it is a name attached to the contents of a tag. <div class="indented"><p id="36e646b0-22d5-4c40-a48f-077b84cdcd46" class="">It can be used as a hook by HTML, JS or CSS to apply actionable script or style guide to said tag or labels etc.</p><p id="efb215a9-b237-4d09-8543-2489bd72254e" class="">
+</p><p id="c945879a-796f-43e5-8033-9482f2c92a23" class="">
+</p></div></p></div></p><h2 id="8e9ed9e1-fe41-4beb-ac4b-0825fff72968" class="">Label</h2><pre id="711c223a-dac1-4651-9978-d6b603c8bad3" class="code"><code>&lt;label for=&quot;id-attribute&quot;&gt;&lt;/label&gt;</code></pre><p id="6ac7e455-d4e0-4954-b725-2a93d4e85df0" class="">
+</p><h2 id="9e2e4c48-ce48-4f5e-89cd-4e3677e4b031" class="">Input </h2><p id="d1f5b90b-2eea-45e0-b7bc-c77d4ff24157" class="">Input field<div class="indented"><p id="c7236f10-d5d0-41a7-af66-9e37bbca1000" class="">Must specify the type; <div class="indented"><p id="231a8bae-5046-4c69-ba8c-f22edc1b4135" class="">usually includes a label; id<div class="indented"><p id="19ec005e-4889-45ac-95c5-06c2e927ceea" class="">empty tag → as in no closing tag, similar to <code>&lt;img&gt;</code></p></div></p></div></p></div></p><h3 id="056769ca-8146-4c39-bb24-169f3da94481" class="">types</h3><ul id="cb6c8eda-2208-4721-9790-04e8a876d447" class="bulleted-list"><li style="list-style-type:disc">text</li></ul><ul id="48a6fc07-08d7-4309-92e1-8a57cc519711" class="bulleted-list"><li style="list-style-type:disc">email → browser interprets this as an email and treats it as such</li></ul><ul id="9faa2de5-65b4-4036-ab1b-f6741571934f" class="bulleted-list"><li style="list-style-type:disc">password → cannot see the entering</li></ul><ul id="45d3bb98-4c55-412a-9e33-36b99210acd6" class="bulleted-list"><li style="list-style-type:disc">radio → selectable buttons; see below:</li></ul><p id="7464aa3d-68f7-4b49-a26c-66568943cfb1" class="">
+</p><p id="b144f20a-272d-41eb-8968-21dbcf9bdc5a" class="">
+</p><h2 id="e728d306-f08c-45c9-b8c0-b648c434ee2d" class="">Radio Buttons</h2><h2 id="dcabca76-4368-47ce-9b30-a36f4fbe4542" class="">name=&quot;&quot; → PHP server processing &amp;&amp; grouping radio buttons</h2><p id="1cf4e4e1-108c-4b9a-91cf-3552fba499af" class="">it is like an <code>id</code> hook but for the server side processing to interact with the element with PHP. → learn more about PHP for server side processing.</p><h2 id="b3e44b6e-353d-4864-b670-0fecacddbd2e" class="">value</h2><p id="1a8075f4-e143-43d9-9994-fa4bb0f246e4" class="">is an attribute for radio buttons, since the user is not inputting the value. So it is basically the input. when someone selects thisits as if they entered that information. that is what is sent and processed by the PHP server. </p><p id="6970f5d8-686e-4e1d-beb0-11c4a1c3163f" class="">
+</p><h2 id="d61bbb08-6ad3-4f25-a28b-1daaca661d4e" class="">Select box</h2><ul id="c600e7c8-020f-49ea-8fc3-7c5ef3e06bde" class="bulleted-list"><li style="list-style-type:disc">selecting one of many values, like the radio bittons, but takes less space.</li></ul><p id="05c0c542-a777-4943-a744-ef2a1017ea67" class="">the <code>&lt;select&gt;</code> tag is unlike the other inputs because it is its own element and expects you to nest choices in it.</p><ul id="83e22826-86b9-451a-a017-3070286ca95b" class="bulleted-list"><li style="list-style-type:disc">each option has its own tag <code>&lt;option&gt;</code> → which has value=&quot;&quot; attribute for PHP processing</li></ul><pre id="6be7fe47-fcd3-4eca-b09a-d2627b3ef60b" class="code"><code>&lt;label for=&quot;question&quot;&gt;Security Question:&lt;/label&gt;
+        &lt;select name=&quot;question&quot; id=&quot;question&quot;&gt;
+            &lt;option value=&quot;q1&quot;&gt;what colour are your favourite pair of socks?&lt;/option&gt;
+            &lt;option value=&quot;q2&quot;&gt;if you could be a vegetable, what it be?&lt;/option&gt;
+            &lt;option value=&quot;q3&quot;&gt;what is your best ever security question?&lt;/option&gt;
+        &lt;/select&gt;</code></pre><p id="0cdaa149-fe14-4d97-b44d-cd95d52b9d9c" class="">
+</p><h2 id="227e051b-1212-4970-87f6-903e31f8dadb" class="">Text area</h2><p id="f2abad6b-9b1d-4565-8a9a-fe91b4eae4ee" class="">for longer text input, like bio&#x27;s.</p><ul id="8616eaa3-3c09-468b-91db-2601e6cfe1a5" class="bulleted-list"><li style="list-style-type:disc">not an input type; it is its own tag</li></ul><ul id="3bce3df8-cbf6-4c35-80eb-01f0531d49b6" class="bulleted-list"><li style="list-style-type:disc"></li></ul><pre id="e8c630c2-503b-4482-85d2-8a0870ea3500" class="code"><code>&lt;textarea name=&quot;bio&quot; id=&quot;bio&quot; cols=&quot;30&quot; rows=&quot;10&quot;&gt;&lt;/textarea&gt;</code></pre><p id="f3c12364-3c4e-4d64-86e6-1ad22390985f" class="">You can change the default value with CSS.</p><p id="ce9668a1-a503-491c-9013-b2d5c8b7fa37" class="">the end user can toggle the size of the box, resizing the corner.</p><p id="07be6153-5df3-4eed-9a25-b2290efa56b7" class="">
+</p><h2 id="33423934-a7b3-4ab1-a5cb-03c4034bd98e" class="">Placeholder</h2><p id="238da46d-4c21-4918-8a0a-1079a25a7f03" class="">
+</p><p id="43f7a901-8d27-4d82-92fd-526baf147858" class="">To add default content (about you ...)to the text box:<div class="indented"><ul id="8669edf1-ad36-4c01-8eee-9c33c1585586" class="bulleted-list"><li style="list-style-type:disc">use attribute <code>&lt; placeholder=&quot;&quot;&gt;</code><ul id="fbf08318-6fca-4ba1-a0e6-9271c2dd6eac" class="bulleted-list"><li style="list-style-type:circle">disappears when you start writing<ul id="f4883e41-4832-4c38-a1e0-b22caff3b2b7" class="bulleted-list"><li style="list-style-type:square">gives you a hint what you should start writing</li></ul></li></ul></li></ul><ul id="58a102d4-992c-41ee-b73a-42b1fd37b1bc" class="bulleted-list"><li style="list-style-type:disc">you can use this attribute with <strong>any input field</strong></li></ul></div></p><p id="d1bcc95f-67d5-4182-ae88-ac0b92ebb9bb" class="">
+</p><h2 id="dff945f5-dc83-49e1-a72e-bff659f43efe" class="">Submit Button</h2><p id="48d53873-1750-478a-a905-68e9d506a7e2" class="">
+</p><p id="a05bea97-9390-454a-960c-d0bd8b44d876" class="">The final piece of the form: it is an <strong>input</strong> type</p><pre id="758f8e73-ab2e-4ed8-9ee0-04d130184f96" class="code"><code>&lt;input type=&quot;submit&quot; value=&quot;submit the form&quot;&gt;</code></pre><p id="a617b046-0083-4720-9df0-f428b975eddd" class="">needs a value</p><p id="d6483d9b-ec4b-483a-b4e4-9a0e9e01e0e2" class="">
+</p><p id="a7b2ed30-490d-491e-ba7d-b51d98cc0d4e" class="">the submit button signals the <code>action </code>attribute, which is in the opening tag of the form, to perform some kind of &#x27;action&#x27; when the form is submitted.</p><p id="e89e795f-c551-40cb-ab0e-a9e164d95e39" class="">
+</p><p id="dbdf5f7a-e0b1-4a20-b841-0c9f6f7b11a2" class="">or </p><p id="209ec037-36bd-4fb2-94aa-228eddd555a2" class="">
+</p><p id="3ddec3b4-dfe8-4f6f-9c49-0ce8a6a71444" class="">if you submit the form it actually is sent to the server and it shows up in the address bar. You can actually see in the address bar what is being sent to the server</p><pre id="0e67ae95-eca6-44af-b357-d7775cae834c" class="code"><code>file:///home/deuxp/Documents/Courses/Ninja/CC-CSS/index.html?email=friedi.frieds%40gmail.com&amp;password=xHkGn58XNBfVdQz&amp;age=26-50&amp;question=q1&amp;answer=grey&amp;bio=Im+a+dude.</code></pre><p id="19850917-5cf4-4aed-aaa9-6addf456b1a3" class="">the baton is passed to Javascript, PHP, or Data-processing.</p><p id="2da92fdc-30f7-4493-b669-d20bd23ea4b0" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="ffb2aca2-406f-459c-a037-26780712aee4"><div style="font-size:1.5em"><span class="icon">🔑</span></div><div style="width:100%">note: HTML5 comes with some built in validation for things like email addresses.</div></figure><p id="e8399284-07f5-4fe5-8b6c-395013c35132" class="">
+</p><h2 id="31a343bf-6ff6-4c8e-a2b5-6b48b92ea316" class="">Required</h2><p id="ddc683f6-b5a1-441f-93fb-49c5e32a6f0a" class="">if you want something in the form to be required; then use the <code>required </code> attribute. = no value needs to be set. defaults to true.</p></div></article></body></html>

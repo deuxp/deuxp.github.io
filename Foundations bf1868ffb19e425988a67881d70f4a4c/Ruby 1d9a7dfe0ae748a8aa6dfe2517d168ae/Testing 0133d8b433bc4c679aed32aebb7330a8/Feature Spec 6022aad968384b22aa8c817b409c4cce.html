@@ -1,0 +1,768 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Feature Spec</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="6022aad9-6838-4b22-aa8c-817b409c4cce" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/nasa_earth_grid.jpg" style="object-position:center 30.000000000000004%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🗜️</span></div><h1 class="page-title">Feature Spec</h1></header><div class="page-body"><p id="e4f9af70-c8c7-40b1-bfee-6efaec8a2ec4" class="">
+</p><p id="59b0e42b-0a14-402f-a141-5a86865b758e" class="">
+</p><figure id="5ceeae13-6bda-4d71-aed4-6a148040a2b6"><a href="https://thoughtbot.com/blog/how-we-test-rails-applications" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">How We Test Rails Applications</div><div class="bookmark-description">We use RSpec feature and specs heavily, controller and view specs more judiciously, FactoryBot for test data, JavaScript integration specs with Poltergeist or Capybara Webkit, like test doubles and test spies but not test mocks, and we stub external requests with Webmock.</div></div><div class="bookmark-href"><img src="https://thoughtbot.com/blog/assets/favicon-c1fa98a84eab9d930e8b09cf6a4dbb1156d1436c25c225e6e14fcc5cc84d1b34.ico" class="icon bookmark-icon"/>https://thoughtbot.com/blog/how-we-test-rails-applications</div></div><img src="https://images.thoughtbot.com/blog-images/social-share-default.png" class="bookmark-image"/></a></figure><p id="a71011aa-4b80-4b9d-8107-930876f118a9" class="">
+</p><nav id="128ceca6-8492-4086-bbc3-cd4aff2d66ab" class="block-color-brown_background table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#913156fb-aefa-4820-b061-118572c8a6b2">Cheat Sheets</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a3699e71-1d6d-4729-ae50-8bcb73d4ece8">Package Links</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#a6bd4ed4-aba5-4143-9ed8-4446ca054300">Testing pattern</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5b94a185-8b0c-482b-8b31-29dd316490b8">Steps</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c3cc9e22-95e2-4bb3-a2ce-9f4f104f7013">Snippets</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#1e32969b-d774-4563-86eb-4b76e8e3a923">Click Page Link</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#c74263db-b775-476e-855e-588ada3ea717"><a href="https://stackoverflow.com/questions/39875708/ambiguous-match-found-2-elements-matching-css-capybara"><strong>Ambiguous match, found 2 elements matching css - Capybara</strong></a></a></div></nav><p id="c80e1efc-48db-400b-99d6-d1fe63c0d883" class="">
+</p><figure class="block-color-purple callout" style="white-space:pre-wrap;display:flex" id="12f77f2e-61b1-46a3-b92f-86fd9c6ba803"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">all testing libraries are required in the <code>rails_helper.rb</code>
+
+but after the requirement of rails that is about a 1/4 down the page</div></figure><h1 id="913156fb-aefa-4820-b061-118572c8a6b2" class="">Cheat Sheets</h1><hr id="d2df30ad-3379-4be7-9665-1c70e7274740"/><figure id="cabd4d9e-a585-4d8c-8de8-6ca843de473b"><a href="https://thoughtbot.com/upcase/test-driven-rails-resources/capybara.pdf" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title"></div></div><div class="bookmark-href"><img src="https://thoughtbot.com/favicon.ico" class="icon bookmark-icon"/>https://thoughtbot.com/upcase/test-driven-rails-resources/capybara.pdf</div></div></a><figcaption>Thought-bot has a great cheat sheet for using Capybara that you should use as a reference when writing your Feature specs</figcaption></figure><figure id="730857b8-3863-4411-99a1-4a603c46c3ca"><a href="http://cheatrags.com/capybara" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">UI Testing with RSpec and Capybara [cheat sheet]</div><div class="bookmark-description">Interactive cheat sheet for Capybara</div></div><div class="bookmark-href"><img src="http://cheatrags.com/favicon-16x16.png" class="icon bookmark-icon"/>http://cheatrags.com/capybara</div></div><img src="http://cheatrags.com/images/share/capybara.jpg" class="bookmark-image"/></a><figcaption>Cheat-rags has a wicked cheat sheet that&#x27;s even more extensive! It is interactive as well.</figcaption></figure><p id="906e9f1e-c4f5-45fc-8e01-fc8d698bfc09" class="">
+</p><h2 id="a3699e71-1d6d-4729-ae50-8bcb73d4ece8" class="">Package Links</h2><hr id="d6cb0b5c-3003-49c4-8adc-a796629ef813"/><p id="4b25976e-59b2-485e-8625-bab3dc6d3855" class="">
+</p><ul id="b68d505f-6668-40ce-a5ca-5363a6af3a12" class="bulleted-list"><li style="list-style-type:disc"><a href="https://github.com/jnicklas/capybara">Capybara</a></li></ul><ul id="fe7630a5-7b0e-4992-9310-43a4edb23c6d" class="bulleted-list"><li style="list-style-type:disc"><a href="https://github.com/teampoltergeist/poltergeist">Poltergeist</a><ul id="a5020759-9678-4223-bf0f-eb6cdc3eb524" class="bulleted-list"><li style="list-style-type:circle"><a href="http://phantomjs.org/">Phantomjs (npm)</a></li></ul></li></ul><ul id="0035e8c8-c9bb-4928-8d02-af853d037299" class="bulleted-list"><li style="list-style-type:disc"><a href="https://github.com/DatabaseCleaner/database_cleaner">DatabaseCleaner</a></li></ul><p id="f5301e44-e591-442f-aa63-1908c99a0213" class="">
+</p><h1 id="a6bd4ed4-aba5-4143-9ed8-4446ca054300" class="">Testing pattern</h1><hr id="c4c36401-7ff9-48b1-8979-9be855b4466b"/><p id="71dd7099-f77d-4c19-95c8-4b4dc8b0675f" class="">
+</p><figure class="block-color-purple callout" style="white-space:pre-wrap;display:flex" id="806ed622-fa55-463f-9e9c-5ed4c58c8927"><div style="font-size:1.5em"><span class="icon">🗒️</span></div><div style="width:100%"><code>feature</code> block is like <code>describe</code>
+<code>scenario</code> block is like <code>it</code></div></figure><p id="f00466d5-c8b3-4dc0-a66f-ef67a7caeffa" class="">
+</p><ol type="1" id="13580bd3-d434-493a-aad2-de53d54cd55a" class="numbered-list" start="1"><li>run single features, since it is slow</li></ol><ol type="1" id="41fa3923-6ab7-49b0-bb3a-5edfc760c024" class="numbered-list" start="2"><li>enable <code>js: true</code> in the feature declarations</li></ol><ol type="1" id="d1bed2f7-fd50-42f1-9b08-1bf9d42f119b" class="numbered-list" start="3"><li>Use screenshots to debug</li></ol><ol type="1" id="20d04a42-f35c-4f58-aa01-58ec5468daa0" class="numbered-list" start="4"><li>Use <code>puts page.html</code> to output the current HTML rendered by the browser</li></ol><ol type="1" id="f8ee5853-16a0-469c-af9b-69efa5a34594" class="numbered-list" start="5"><li>Use the reference documents</li></ol><p id="a501012a-e467-401a-9cfb-32e26bd96c27" class="">
+</p><h2 id="5b94a185-8b0c-482b-8b31-29dd316490b8" class="">Steps</h2><hr id="b0351af1-cd13-46a5-ae17-11cf6a3b0d17"/><p id="b0f04a72-f6df-4e02-a658-950cdf7cb99a" class="">
+</p><ol type="1" id="e1ca0851-e96c-46fd-acd4-4bad28bfd1d7" class="numbered-list" start="1"><li>generate the <code>rspec:feature</code> name<pre id="277df848-24d4-4a37-aa9e-b235e7ff8b50" class="code"><code>bin/rails generate rspec:feature feature_name</code></pre></li></ol><ol type="1" id="95e982c6-7b3d-4606-986b-58c0d7f5961f" class="numbered-list" start="2"><li>use screenshot for debugging: use this to start<pre id="2ebb1fe4-6724-4248-bc3f-0a6e525a238b" class="code"><code>RSpec.feature &quot;Visitor navigates to home page&quot;, type: :feature, js: true do
+
+  scenario &quot;They see all products&quot; do
+    # ACT
+    visit root_path
+
+    # DEBUG / VERIFY
+    save_screenshot
+  end
+
+end</code></pre></li></ol><ol type="1" id="2f6cb27c-04c5-4bf6-ac61-7815d415f2bd" class="numbered-list" start="3"><li>Populate the db: Set up (before :each) etc, possibly from other feature specs<pre id="04634d3f-3b27-4f36-82ac-0f89a7e7e562" class="code"><code>require &#x27;rails_helper&#x27;
+
+RSpec.feature &quot;Visitor navigates to home page&quot;, type: :feature, js: true do
+
+  # SETUP
+  before :each do
+    @category = Category.create! name: &#x27;Apparel&#x27;
+
+    10.times do |n|
+      @category.products.create!(
+        name:  Faker::Hipster.sentence(3),
+        description: Faker::Hipster.paragraph(4),
+				image: open_asset(&#x27;image1.jpg&#x27;) #helper function from spec/support file
+        quantity: 10,
+        price: 64.99
+      )
+    end
+  end
+
+  scenario &quot;They see all products&quot; do
+    # ACT
+    visit root_path
+
+    # DEBUG
+    save_screenshot
+
+    # VERIFY
+    expect(page).to have_css &#x27;article.product&#x27;
+  end
+end</code></pre><ul id="374e6214-1a6f-46d5-83d8-ce085c4a8685" class="bulleted-list"><li style="list-style-type:disc">Each test has a blank db and does a setup and teardown</li></ul><ul id="e2a5a94d-eea7-44e3-80b9-a327e5ddcb73" class="bulleted-list"><li style="list-style-type:disc">add things like photos and such to <code>spec/support</code><ul id="92bf7369-b12a-456d-95b8-b2647ba7cd18" class="bulleted-list"><li style="list-style-type:circle">you can find utility methods from the seed</li></ul><pre id="06efc816-dc47-413a-8233-c665cce2a2fa" class="code"><code>def open_asset(file_name)
+  File.open(Rails.root.join(&#x27;db&#x27;, &#x27;seed_assets&#x27;, file_name))
+end</code></pre><ul id="cebd521e-e33e-40e8-a5ff-b70419ac2162" class="bulleted-list"><li style="list-style-type:circle">then add this to the product create!</li></ul><p id="427c48c0-d747-4c95-8c72-759ca0ba6bf1" class="">
+</p></li></ul></li></ol><ol type="1" id="e4acf9ee-3739-4f62-a2a8-5c9217cc783e" class="numbered-list" start="4"><li>run the test:<pre id="603088fa-e2f2-44d5-890b-e2c016e79bb7" class="code"><code>bin/rspec spec/features
+
+#dont run all of them all the time since they are slow
+bin/rspec spec/features/feature_name</code></pre></li></ol><ol type="1" id="12dc6091-0f3a-4cd3-b253-bdc70a46593a" class="numbered-list" start="5"><li>open the screenshot <code>tmp/capybara</code></li></ol><ol type="1" id="08cd5d19-87a2-47f0-a320-13e379885f18" class="numbered-list" start="6"><li>check for expected css: Refer to code in your view _paritals to determine how you are going to select links<pre id="ca22e44b-65f9-4f5a-ab13-73e2cfa62af5" class="code"><code>expect(page).to have_css &#x27;article.product&#x27;
+
+# or for a more robust test:
+
+expect(page).to have_css &#x27;article.product&#x27;, count: 10 </code></pre></li></ol><ol type="1" id="d08679d7-7699-4ab7-b1da-5c56f54530d6" class="numbered-list" start="7"><li>open the latest screenshot (it is just DOM items with no flexbox, which is fine)</li></ol><ol type="1" id="80fb4747-ca71-4aa9-bb1f-9b04ef0911f7" class="numbered-list" start="8"><li>make the test more robust, like adding how many of list items you should see, etc, if you can</li></ol><ol type="1" id="7fe879a6-ba48-4313-a05b-905c1df8a5e7" class="numbered-list" start="9"><li>fix broken images</li></ol><ol type="1" id="2f0b69b8-661d-4b50-a791-d30b57896322" class="numbered-list" start="10"><li>You have to visually inspect hen testing rails with the headless browser</li></ol><p id="df3ab2df-d039-4928-bd41-5526f1847a6e" class="">
+</p><p id="ea90b014-0982-4daf-8dbf-7d6c19378df2" class="">
+</p><h1 id="c3cc9e22-95e2-4bb3-a2ce-9f4f104f7013" class="">Snippets</h1><hr id="560f4663-5ca1-4b94-9cc3-2f6a455f75ff"/><p id="46ef6d09-83b0-432e-9078-c43e851df91a" class="">
+</p><h3 id="1e32969b-d774-4563-86eb-4b76e8e3a923" class="">Click Page Link</h3><pre id="218b9fef-2167-4d44-bf14-fc78c8fc40be" class="code"><code></code></pre><p id="ca8e0aaf-174c-4be8-8a0a-f2c9c540287b" class="">
+</p><h3 id="c74263db-b775-476e-855e-588ada3ea717" class=""><a href="https://stackoverflow.com/questions/39875708/ambiguous-match-found-2-elements-matching-css-capybara"><strong>Ambiguous match, found 2 elements matching css - Capybara</strong></a></h3><pre id="20a2fd07-0ae6-4488-93a9-a006956cd5ba" class="code"><code>#scoped
+within find(&#x27;#my_unique_id&#x27;) do
+  find(&quot;.icon-delete&quot;).click
+end
+
+#scoped
+within(&#x27;footer&#x27;) { expect(page).to have_content(&#x27;Copyright&#x27;) }
+
+first(&quot;.icon-delete&quot;).click
+
+click_on &quot;Link Text.&quot;, match: :first
+
+page.first(&#x27;.icon-delete&#x27;).click
+
+page.first(&#x27;.icon-delete&#x27;, minimum: 1).click</code></pre><pre id="f40913ca-e0c9-4e34-9bab-ccd662bff317" class="code"><code># puts &quot;\n\n\n\n#{page.all(&#x27;.pull-right&#x27;)[0].inspect}\n\n\n\n&quot;
+    # puts &quot;\n\n\n\n#{page.all(&#x27;a.pull-right&#x27;)[0].inspect}\n\n\n\n&quot;
+    # puts &quot;\n\n\n\n#{page.find(&#x27;Details »&#x27;).inspect}\n\n\n\n&quot; # finds css
+
+    # click_on &#x27;Details »&#x27;
+    # click_on.(&#x27;Details »&#x27;)
+    # page.all(&#x27;a.pull-right&#x27;)[0].click
+    # find_link &#x27;Details »&#x27;.trigger(&#x27;click&#x27;)
+    # page.all(&#x27;a.pull-right&#x27;)[0].trigger(&#x27;hover&#x27;).click
+    # page.all(&#x27;a.pull-right&#x27;)[0].trigger(&#x27;focus&#x27;).click
+    # click_on page.all(&#x27;a.pull-right&#x27;)[0]
+    # page.all(&#x27;a.pull-right&#x27;)[0].trigger(&#x27;click&#x27;)
+    
+    # within &#x27;footer.actions&#x27; do
+    #   click_on &#x27;.btn-default&#x27;
+    # end
+    
+    # find(&#x27;a&#x27;, text: &#x27;Details »&#x27;).click
+    # first(&#x27;a&#x27;, text: &#x27;Details »&#x27;).click</code></pre></div></article></body></html>

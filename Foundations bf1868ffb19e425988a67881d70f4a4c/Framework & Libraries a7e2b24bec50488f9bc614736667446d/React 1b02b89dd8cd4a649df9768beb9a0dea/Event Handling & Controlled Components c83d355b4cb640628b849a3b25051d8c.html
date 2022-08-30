@@ -1,0 +1,809 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Event Handling &amp; Controlled Components</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c83d355b-4cb6-4062-8b84-9a3b25051d8c" class="page sans"><header><div class="page-header-icon undefined"><span class="icon">🧃</span></div><h1 class="page-title">Event Handling &amp; Controlled Components</h1></header><div class="page-body"><p id="6c39a41e-d110-4300-8c58-421adffb8a10" class="">
+</p><nav id="0c4a4848-aa42-4f77-8a14-1cd9f5c85855" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#b2913e53-63a9-4a65-8dc0-734fc93bf718">onClick → buttons</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#335a3ccc-6ad3-4ed8-bd44-765cd93344eb">onChange → input values</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1135ad45-c7e6-450f-b96c-979116d8c001">onSubmit → form, e.preventDefault()</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c8c691c6-7be5-42dc-9915-19da061a557c">controlled components</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6a915edf-2af7-4e37-a03d-262eedc2f1f3">Passing Parameters to an eventHandler</a></div></nav><p id="a002f95f-9509-4fde-b7f4-2197ae3335f1" class="">
+</p><p id="b53bb8bd-aa48-4e7e-8a1c-5c6637fdfd23" class="">remember that in vanilla JS these are attributes of a dom element &lt;div onclick={() ⇒ {}}&gt;&lt;div/&gt; ... or onClick for JSX syntax.</p><p id="d78f687a-b403-477a-8ffc-1e367f7788e9" class="">
+</p><p id="25252559-433e-48ae-8d27-269a44ee1c1b" class="">no quotes and has to be in curly braces since this is what JSX uses to recognize a rendered object.</p><p id="0cd2d6c6-3014-4286-8247-9d9720a16988" class="">
+</p><ul id="d833e51d-19b3-4fc3-9e1f-7213c3c74281" class="block-color-teal_background bulleted-list"><li style="list-style-type:disc">In React, the main event handlers we&#x27;ll play with are <code>onClick</code>, <code>onChange</code>, and <code>onSubmit</code>.<ul id="42fddb49-eba0-4c76-98c8-90268673e6ec" class="bulleted-list"><li style="list-style-type:circle">Notice that they are all written in camelCase.</li></ul></li></ul><p id="cbb51908-56b0-4e0f-897e-20874a010737" class="">
+</p><p id="8a734e5f-11a0-4ab5-a58f-b08163342fb6" class="">Keywords, such as Event handlers, are written in camelCase</p><p id="58ef56a2-28f6-447b-8a69-721da184e172" class="">
+</p><p id="9e6784d5-560f-471f-a7a8-8fd1d4a62d0f" class="">an event handler for a button:</p><pre id="2cde0f69-4762-4c86-b3d9-ea8b42918b97" class="code"><code>function Button() {
+    return (
+      &lt;button onClick={() =&gt; console.log(&quot;Button Clicked&quot;)}&gt;
+        Click me!
+      &lt;/button&gt;
+    );
+  }</code></pre><p id="0a7eda01-7bc1-4a24-80ab-70c63b716e9e" class="">
+</p><p id="99fc8deb-a861-4a6c-bb40-9bdc76bb77f4" class="">Its essentially written as a button function.</p><p id="fe9a85ee-0c9a-4715-97f9-805cdd6cc007" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="62939eac-9fa1-4c52-ab46-63b7ee2a7294"><div style="font-size:1.5em"><span class="icon">♻️</span></div><div style="width:100%">With JSX, functions are not called like doStuff().. instead they are passed as a reference: doStuff</div></figure><p id="18ef5f88-d9ee-4c8f-9185-c353b53c997d" class="">OR, if your function has multiple lines of code, it is useful to write it in the following manner: </p><pre id="04326617-f4e7-49eb-b81e-953fc042dc81" class="code"><code>function Button() {
+    const doStuff = () =&gt; {
+      console.log(&quot;Do stuff.&quot;);
+      console.log(&quot;Do more stuff.&quot;);
+      console.log(&quot;Do EVEN MORE stuff!&quot;);
+    };
+
+    return &lt;button onClick={doStuff}&gt;Click me!&lt;/button&gt;;
+  }</code></pre><p id="85b7e543-dfbc-44fe-a52a-e506db85363a" class="">... where the function is passed as a reference, not to be mistaken with called.</p><p id="ca6827ba-a118-4a14-bd12-57a4d5fb9c2a" class="">
+</p><p id="8cdc455d-9446-4d44-8670-358fce946cf1" class="">When any events occur, an <code>event</code>
+ object is automatically passed to the function that is invoked. You may not necessarily use the <code>event</code>
+ object, but it does have a lot of useful information. Here&#x27;s an example where the x and y screen coordinates are printed to the console when a <code>&lt;div&gt;</code>
+ is clicked.</p><pre id="39bd056a-4eec-49d5-8fe6-8db0865938a1" class="code"><code>function MyClickableDiv() {
+    return (
+      &lt;div onClick={(event) =&gt; {
+        console.log(`The mouse coordinates of this click event are: x: ${event.screenX} and y: ${event.screenY}`);
+        }}
+      &gt;
+      &lt;/div&gt;
+    );
+  }</code></pre><p id="2f30bb0e-760d-4a80-b345-d74096763b09" class="">
+</p><h2 id="b2913e53-63a9-4a65-8dc0-734fc93bf718" class="">onClick → buttons</h2><p id="54c42462-ca61-43a7-a6d6-d6d378dfd847" class="">This event handler will listen to <code>click</code> events on clickable elements, like a <code>button</code>. Using the <code>event</code> parameter will give access to information about the event, like <strong>mouse position</strong>, <strong>timestamp</strong>, etc.</p><p id="037fc1d8-e5e0-476a-9e41-f1b42c169ad2" class="">
+</p><h2 id="335a3ccc-6ad3-4ed8-bd44-765cd93344eb" class="">onChange → input values</h2><p id="47cdf144-9c52-4e5a-af51-3200872bc06a" class="">This event handler will listen to <code>change</code>
+ events on input elements, like an <code>input</code>
+ or a <code>textarea</code>
+ element. Using the <code>event</code>
+ parameter will give access to information about the event, like the <strong>name of the input</strong>
+ and the <strong>value that the user typed</strong>
+ or selected with: <code>event.target.value</code></p><p id="b802273f-6f20-4bc3-849c-2ba452817474" class="">
+</p><h2 id="1135ad45-c7e6-450f-b96c-979116d8c001" class="">onSubmit → form, e.preventDefault()</h2><p id="296268bf-71fc-4ea0-b33c-b3788db7d159" class="">This event handler will listen to <code>submit</code>
+ events on submittable elements, like a <code>form</code>
+. Using the <code>event</code>
+ parameter will give access to information about the event, like the <strong>content of the form</strong>
+, and <strong>a method to prevent the default behavior</strong>
+ of a <code>form</code>
+ submission.</p><p id="d0e6f4e7-4179-47c6-bb41-f28f48fa3e39" class="">the prevention func has to be in a handler func with the e param defined.. but it is rendered to the DOM using a pass by reference .. (no parenthis).</p><p id="b36b8b53-9ed0-46bb-bc4d-ef06edfd0d66" class="">ie</p><pre id="04502e76-6798-4f36-9733-924940810685" class="code"><code>function TweetForm() {
+  const humming = &#x27;Vat are you tawlking about??&#x27;
+  function handleClick(e) {
+    e.preventDefault();
+  }
+  
+  return (
+    &lt;section class=&quot;newtweet&quot;&gt;
+    &lt;form method=&quot;post&quot; action=&quot;/tweets&quot; class=&quot;newtweet__form&quot;&gt;
+      &lt;textarea class=&quot;form__textarea&quot; name=&quot;text&quot; placeholder={humming}&gt;&lt;/textarea&gt;
+      &lt;input type=&quot;submit&quot; onClick={handleClick} value=&quot;Tweet&quot; class=&quot;form__input&quot;/&gt;
+      &lt;span class=&quot;form__counter&quot;&gt;140&lt;/span&gt;
+    &lt;/form&gt;
+  &lt;/section&gt;
+  )
+}
+
+export default TweetForm;</code></pre><p id="00a5ef03-d25f-4355-bdbd-a839714de2ec" class="">OR</p><pre id="351476df-9dd4-4d72-9844-696e3494ac5f" class="code"><code>&lt;form onsubmit=&quot;console.log(&#x27;You clicked submit.&#x27;); return false&quot;&gt;
+  &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre><p id="ad19a2dd-aa36-4f41-8988-b966bd58b6b7" class="">OR</p><pre id="abcc81cc-1a64-4a2e-be51-277ce5f3379e" class="code"><code>function Form() {
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(&#x27;You clicked submit.&#x27;);
+  }
+
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;button type=&quot;submit&quot;&gt;Submit&lt;/button&gt;
+    &lt;/form&gt;
+  );
+}</code></pre><p id="8bae3282-1cc8-48a9-819c-71fe9b54eb1c" class="">
+</p><h1 id="c8c691c6-7be5-42dc-9915-19da061a557c" class="">controlled components</h1><hr id="965738da-f61e-45fa-aeec-e135a43e4014"/><p id="6ea18e26-cece-406c-ad41-d42726afef2d" class="">
+</p><p id="09c45761-8bd8-4834-af94-56a066c5ec3d" class="">REMEMBEE to prevent the default for form submission even in React JSX</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="46af7684-ba69-4749-b387-432971560cae"><div style="font-size:1.5em"><span class="icon">🧅</span></div><div style="width:100%"><code>&lt;form onSubmit={event =&gt; event.preventDefault()}&gt;</code></div></figure><p id="cff54669-51f7-4a27-b663-096c83d7f980" class=""><code>onSubmit</code>
+ event handler captures the event and stops it using the <code>event.preventDefault()</code>
+ method</p><p id="e8128916-03d7-42f8-8513-d61280df4aaa" class="">
+</p><p id="5dc503ba-d313-404f-aa06-ab817979333e" class=""><strong>Are components in React that override HTML form elements, so that React can control their state.</strong></p><p id="a7ea6421-3068-47c3-b099-f07c0bcb2552" class="">
+</p><p id="73b813e3-9acd-46bc-aa05-201561f59d3f" class="">The pattern involves:</p><ol type="1" id="9bc56145-4c58-408c-a60a-9d16e4b8f94d" class="numbered-list" start="1"><li>Set a variable that is stored in state as the <code>value</code> attribute on the form element.</li></ol><ol type="1" id="287fc627-aa8f-4012-a9a9-4ffb359e1539" class="numbered-list" start="2"><li>Use an <code>onChange</code> event that uses the setter of your state to set a new <code>value</code> when the input changes.</li></ol><p id="a715394e-51b1-406f-ac5c-bcf1ee161cb6" class="">ie.,</p><pre id="e406e96e-1341-4e19-864c-d12033a5a863" class="code"><code>const [name, setName] = useState(&#x27;&#x27;) // hook
+
+// ...
+
+&lt;input value={name} placeholder=&quot;Type your name&quot; onChange={e =&gt; setName(e.target.value)}&gt;&lt;/input&gt;</code></pre><p id="d483e190-87a6-43b2-8b9e-508423f841e7" class="">
+</p><p id="abae00ad-3d2b-460c-979f-1a3bcb21f2da" class="">
+</p><p id="911472e1-e2a1-4208-88b2-13f7eee9773c" class="">
+</p><ul id="ad679061-1c66-474e-aeb8-f741b8d1188f" class="bulleted-list"><li style="list-style-type:disc">THis is how you track the current input state.. you can use this now in other areas of the app</li></ul><p id="2ef87d81-df45-43ab-9b75-95ae81402f6a" class="">
+</p><p id="83fe0560-0bb1-498d-8d5b-6ebe73afa4bc" class="">(Recall from <a href="https://flex-web.compass.lighthouselabs.ca/b631bae2-8484-42cf-88f9-8cf856c9e11c">reading about event handling</a>
+
+ that events in the DOM generate event objects which have lots of useful
+ information for programmers. When the user types on the keyboard, that 
+triggers the <code>onChange</code>
+ event and the value of the data is found in <code>event.target.value</code>
+.)</p><p id="14881d90-e846-459b-985a-fb91950c37bd" class="">
+</p><p id="0077ab97-ae5a-427b-b24f-b54e1ef53a0b" class="">Forms are important to a website and user interaction. </p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="7a0bd996-312f-437d-99b1-838c896bdadb"><div style="font-size:1.5em"><span class="icon">⚠️</span></div><div style="width:100%">Form elements keep track of their own state</div></figure><p id="2cbb16c4-650c-4933-8d1a-ac2be94e9a07" class="">ie., &lt;input&gt; &lt;textarea&gt; &lt;select&gt;</p><p id="851485e2-d2c2-4313-a8e4-a4c6b973bb73" class="">However, we want React top track the state of the entire wb app, that is the whole point.</p><p id="b4e0f1cb-83ca-4baf-a2f5-d1cdef7c84c2" class="">
+</p><pre id="269383f8-e907-4ba7-9a78-b258fa3b7552" class="code"><code>function DisplayWord(props) {
+  const [word, setWord] = useState(&quot;&quot;);
+
+  return (
+    &lt;main&gt;
+      &lt;input
+        value={word}
+        onChange={(event) =&gt; setWord(event.target.value)}
+        placeholder=&quot;Please enter a word&quot;
+      /&gt;
+      &lt;h1&gt;Your word is: {word}.&lt;/h1&gt;
+    &lt;/main&gt;
+  );
+}</code></pre><p id="24ec6ad6-e878-4647-882a-121c9daa94f1" class="">
+</p><figure id="34c91711-4e8f-49a7-8ad2-7b8ae9404eae"><a href="https://reactjs.org/docs/forms.html" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Forms - React</div><div class="bookmark-description">HTML form elements work a bit differently from other DOM elements in React, because form elements naturally keep some internal state. For example, this form in plain HTML accepts a single name: This form has the default HTML form behavior of browsing to a new page when the user submits the form.</div></div><div class="bookmark-href"><img src="https://reactjs.org/favicon-32x32.png?v=f4d46f030265b4c48a05c999b8d93791" class="icon bookmark-icon"/>https://reactjs.org/docs/forms.html</div></div><img src="https://reactjs.org/logo-og.png" class="bookmark-image"/></a></figure><p id="28b99130-6a8b-4ae1-b7c6-bd6c5345cd7c" class="">
+</p><p id="142491b1-ab33-4077-8c85-da3b42a0dddb" class="">
+</p><h1 id="6a915edf-2af7-4e37-a03d-262eedc2f1f3" class="">Passing Parameters to an eventHandler</h1><hr id="c0410608-5494-4beb-80f1-00293382929c"/><p id="93244e3c-6f80-43f9-aed5-e06e3c9f4767" class="">
+</p><p id="c1fe750a-0a46-4b9d-b2b5-134102479cee" class="">You don’t want to invoke the clickHandler when passing it to the JSX component. That is why you just pass the definition. </p><p id="b9a7637e-de49-43f2-b40f-2cdef3479af4" class="">If you involve the parenthesis, it will invoke the function right away, which is not desire-able since you are waiting for an event so it is async. </p><p id="31a56049-f10a-4b9a-8f69-5e31e98fbf41" class="">So if you need to invoke the parenthesis for let’s say parameters that need to be passed to the handler, you must wrap the function in an anonymous one.. like you would with a callback.</p><p id="7253a038-e1c7-4d52-be32-8d30d787dece" class="">Observe:</p><pre id="b1572159-fe00-4096-816b-34feee307792" class="code"><code>
+// CORRECT!
+function MyComponent(props) {
+  const a = 1;
+  const b = 2;
+  return (
+    &lt;div&gt;
+      &lt;h1 onClick={() =&gt; props.doStuff(a,b)}&gt;Click Me to Do Stuff&lt;/h1&gt;
+    &lt;/div&gt;
+  )
+}
+
+
+// WRONG!
+function MyComponent(props) {
+  const a = 1;
+  const b = 2;
+  return (
+    &lt;div&gt;
+      &lt;h1 onClick={props.doStuff(a,b)}&gt;Click Me to Do Stuff&lt;/h1&gt;
+    &lt;/div&gt;
+  )
+}</code></pre></div></article></body></html>

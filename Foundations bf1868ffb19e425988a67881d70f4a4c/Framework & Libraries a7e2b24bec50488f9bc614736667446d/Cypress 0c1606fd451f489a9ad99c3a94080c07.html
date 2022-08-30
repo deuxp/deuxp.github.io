@@ -1,0 +1,745 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Cypress</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="0c1606fd-451f-489a-9ad9-9c3a94080c07" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/met_william_morris_1875.jpg" style="object-position:center 0%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="https://user-images.githubusercontent.com/2730609/49487139-07392080-f7f6-11e8-96b1-e19e8be696c4.png"/></div><h1 class="page-title">Cypress</h1></header><div class="page-body"><p id="af39e685-72ee-4b79-a053-afe7f80cf2c5" class="">
+</p><pre id="687e7898-169f-4f52-b8e8-e2b3c554e16d" class="code"><code>$ node_modules/.bin/cypress install
+$ node_modules/.bin/cypress open</code></pre><p id="78c1b495-b0aa-4427-a7ca-dc370f8e1cb4" class="">
+</p><figure id="55af8b8a-7793-4ef9-84fe-df44878745c0"><a href="https://docs.cypress.io/api/table-of-contents" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Table of Contents | Cypress Documentation</div><div class="bookmark-description">Cypress API Documentation Table of Contents</div></div><div class="bookmark-href"><img src="https://docs.cypress.io/img/favicon.ico" class="icon bookmark-icon"/>https://docs.cypress.io/api/table-of-contents</div></div><img src="https://docs.cypress.io/img/real-world-app.png" class="bookmark-image"/></a></figure><p id="8c2f4967-a10c-498f-9fec-15646ff1cd25" class="">
+</p><figure id="50fd71c5-ddf8-42e5-922b-49b8d26bcadd"><a href="https://github.com/WarrenUhrich/lighthouse-labs-end-to-end-testing-with-cypress/tree/2022.03.17-web-flex-oct-18-day-end-to-end-testing-with-cypress" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - WarrenUhrich/lighthouse-labs-end-to-end-testing-with-cypress at 2022.03.17-web-flex-oct-18-day-end-to-end-testing-with-cypress</div><div class="bookmark-description">Git Repository Jest is a CLI approach Jest is intended for unit-testing, integration testing Jest runs very, very fast and is very efficient! Jest is used to test functions, components, more specific focus Wholistic approach to testing (end-to-end testing) Cypress might be used to test core app features (many components working together) Agnostic to the stack used in app development Free!</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/WarrenUhrich/lighthouse-labs-end-to-end-testing-with-cypress/tree/2022.03.17-web-flex-oct-18-day-end-to-end-testing-with-cypress</div></div><img src="https://opengraph.githubassets.com/6b08122395c2e6b277009a24a5f0f81dd619e6a3016f5273c73e941a4bc24cdf/WarrenUhrich/lighthouse-labs-end-to-end-testing-with-cypress" class="bookmark-image"/></a></figure><p id="21cdec7a-f0aa-4d2d-b994-c5dfb7378872" class="">
+</p><nav id="60a4ae4e-137b-4a46-ac7e-74bc83387daf" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#006204e3-597c-4886-8f1a-d546c2d7e684">.intercept()</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#aba2ab23-4904-4d12-8581-aa2dda307780">container</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#34802954-6768-45f5-8f10-d3fcd9d3cb23">Selecting element</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#757aacea-60a9-4801-b7e0-7874c7ddb5cd">Stubbing</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#e1739d1b-12c9-41c9-b931-7090a1ab3649">template</a></div></nav><p id="62e6dff4-f849-409d-b542-f84d1af59acc" class="">
+</p><p id="492674b7-c1da-425c-95b2-ea422979e83a" class="">
+</p><p id="79303431-74f6-4d65-ac96-a742a2067cf7" class="">
+</p><p id="b09ce0b6-1eb1-4784-abc3-cbae61f6c9bc" class="">
+</p><p id="ccecb55d-e808-445a-9b84-7ce5932a7fe9" class="">
+</p><p id="71775496-efa8-4394-9ab8-76a02f22e259" class="">
+</p><p id="8b5e1712-512d-4806-8e0b-6dbb396d6eea" class="">
+</p><p id="453f26e5-c62a-4615-901f-cdc59be69b9e" class="">
+</p><p id="699b2ca5-f9f8-4570-9f4d-ddb41a828723" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="243af7d1-d044-4fa7-8be4-0e3f919c7e1c"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%">every arg in Cypress is surrounded in quotations</div></figure><p id="6c0e6b78-fae2-4441-b1e3-6f6a2b5501b6" class="">
+</p><p id="d9299178-2e38-4ee6-83ca-3388c66e8112" class="">use becforeEach to DRY up code</p><ul id="296e2edf-5c02-43c5-90d8-81b35c218f6e" class="bulleted-list"><li style="list-style-type:disc">when you are targeting an element by html attributes you use the computed value syntax</li></ul><figure id="50ffbeb2-0b9f-44d8-be3a-1f8e70f980f8" class="image"><a href="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled.png"><img style="width:1182px" src="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled.png"/></a></figure><p id="7be8c8fe-ce12-4002-93d6-dfb11e1b1a57" class="">
+</p><p id="cfdad3c0-85bf-430f-a137-d360c65c1957" class="">
+</p><ul id="9c4eb9c0-65cb-4c06-bb6f-029a33171eb4" class="bulleted-list"><li style="list-style-type:disc"> for the args are in the quotes. instead of chaining, like other testing libraries.<ul id="5201be67-d263-4ea0-974b-5f3804792f70" class="bulleted-list"><li style="list-style-type:circle">its wierd like that.</li></ul></li></ul><figure id="b37b72eb-9ecd-46a8-9f67-6e88ff641d9e" class="image"><a href="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%201.png"><img style="width:1115px" src="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%201.png"/></a></figure><p id="6209cf57-246e-4aa2-ac8b-7ea24d86e502" class="">
+</p><p id="440e3f1c-9ea9-4cd8-bdd3-b5349124db2c" class="">xhr is an ajax request</p><p id="8d3771ac-7221-491a-a996-9144284719b1" class="">
+</p><p id="fc44ca03-87e6-4317-9a97-a96618e766e9" class="">
+</p><p id="b2e517a9-e54b-43c4-a444-75cb0adccfa1" class="">alias instead of const variables</p><figure id="a80174ed-a611-4497-bfcd-73e224edeef5" class="image"><a href="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%202.png"><img style="width:767px" src="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%202.png"/></a></figure><ul id="bdcca65d-d755-41d8-a3de-43d8c5ad2ca6" class="bulleted-list"><li style="list-style-type:disc">when calling an alias use ‘@’</li></ul><figure id="09d3c8cf-9d6d-42c3-849c-514855c2696f" class="image"><a href="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%203.png"><img style="width:512px" src="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%203.png"/></a></figure><p id="fe0d8b18-b956-4856-8840-dd86fcb7cb4c" class="">
+</p><p id="82a8242d-70d0-4b90-a0a9-f6302091962d" class="">
+</p><p id="7a56be80-6bf1-47fc-b732-6ed7b345202c" class="">
+</p><p id="9dff132a-cfec-436a-be57-337fbc5c71e3" class="">it even can test for backspace for input</p><figure id="d843879e-aa36-4999-bffa-1688037ac6a9" class="image"><a href="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%204.png"><img style="width:1009px" src="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%204.png"/></a></figure><p id="49db4cc7-013c-45a0-99a1-461aa1a89ac1" class="">
+</p><p id="8bfc4f06-ffc9-47f5-96e0-81d59fccbd68" class="">
+</p><p id="5fab9706-3c06-413c-8595-525652b209f6" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="3cad1cb6-c03e-4ab6-b293-d6e72d84f117"><div style="font-size:1.5em"><span class="icon">✅</span></div><div style="width:100%">Delay as a second arg to see things, like typing. However too many of these will slow down your test suite as a whole</div></figure><p id="b03428c7-2938-4bcd-a118-c618c3687097" class="">
+</p><p id="94ba4a7b-843c-4053-b496-e5a052e94241" class="">
+</p><h1 id="006204e3-597c-4886-8f1a-d546c2d7e684" class="">.intercept()</h1><p id="c1b435ed-0f33-4b73-8ab5-8713c9ad55a9" class="">to use your own reproducable data</p><figure id="8b10dfd0-8181-4e14-9ccc-a23ec5e1b4f0" class="image"><a href="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%205.png"><img style="width:389px" src="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%205.png"/></a></figure><p id="295ef1ae-36d6-4ad9-96c0-ea089468d5c4" class="">the second arg is a very fuzzy match for the WEB ADDRESS</p><p id="ff751f98-9239-4dae-a123-ecf5fef71d8d" class="">the third arg is what you are replacing it with, which is one of the fixture files</p><figure id="0045e343-e15e-4b61-a90b-fab354ac85ec" class="image"><a href="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%206.png"><img style="width:388px" src="Cypress%200c1606fd451f489a9ad99c3a94080c07/Untitled%206.png"/></a></figure><p id="dad75dc8-e207-45f7-b4e0-d6622fca7db7" class="">
+</p><p id="721b3e6b-d89f-4fb4-b0cc-8fe291f8a468" class="">
+</p><p id="4081c4e4-0e19-45c8-9180-82a6e7b4b248" class="">It is promise based (cy) so you can assign an alias to the intercept, get request, and then use cy.wait(’@alias’) then after that run the rest of your checks, (dont need to chain it with .then, just wait for the alias to resolve and then the wait function will take care of the waiting.)</p><p id="f6f38d6a-c232-48d9-8637-a8fa4e1c3b0e" class="">
+</p><h1 id="aba2ab23-4904-4d12-8581-aa2dda307780" class="">container</h1><p id="e509c0da-99e2-423b-a517-e299b8c0e56c" class="">can test with the selector bar on the top right</p><p id="c9e8994a-1b38-48b5-be93-e339664ad220" class="">
+</p><p id="578fdc40-6fe2-4dc8-a6ee-8c69adbca6b3" class="">
+</p><p id="f4761e2f-f92f-409e-a68c-63e20e04dea9" class="">
+</p><h1 id="34802954-6768-45f5-8f10-d3fcd9d3cb23" class="">Selecting element</h1><p id="ef1ef233-9930-49ba-969b-bc0a6238e396" class="">
+</p><pre id="afcdccb5-173a-4654-97bb-708988e01804" class="code"><code>cy.get(&#x27;[data-testid=&quot;day&quot;]&#x27;).contains(/tuesday/i).parent()</code></pre><p id="ca096a88-d743-4d14-92e7-a13b18866c71" class="">almost same as: (almost since parent() is one ascendent and contains looks for all descendants, recursively):</p><pre id="e0253f24-bff7-4acc-8ae7-0accffdf6d02" class="code"><code>cy.contains(&#x27;[data-testid=&quot;day&quot;]&#x27;, /tuesday/i)</code></pre><p id="38b51d19-8817-40ca-bcec-3463969de38d" class="">this is the parent that contains.. thats the difference. works better for when testing <code>‘have.css’</code> as the assertion for <code>should</code></p><p id="b6227b2f-a527-42c6-868d-82a049d2a835" class="">
+</p><p id="588172b3-0754-4fb1-b44a-d978dda30ddf" class="">
+</p><h1 id="757aacea-60a9-4801-b7e0-7874c7ddb5cd" class="">Stubbing</h1><figure id="ceb253ac-8c6a-4aff-9ba4-31a681da9e04"><a href="https://docs.cypress.io/guides/guides/network-requests" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Network Requests | Cypress Documentation</div><div class="bookmark-description">How Cypress enables you to stub out the back end with cy.intercept() What tradeoffs we make when we stub our network requests How Cypress visualizes network management in the Command Log How to use Aliases to refer back to requests and wait on them How to write declarative tests that resist flake Note: If you&#x27;re looking for a resource to make an HTTP request take a look at cy.request() Cypress helps you test the entire lifecycle of HTTP requests within your application.</div></div><div class="bookmark-href"><img src="https://docs.cypress.io/img/favicon.ico" class="icon bookmark-icon"/>https://docs.cypress.io/guides/guides/network-requests</div></div><img src="https://docs.cypress.io/img/real-world-app.png" class="bookmark-image"/></a></figure><figure id="f2b1b5a4-1aed-4512-86a6-0c93be9e02d5"><a href="https://docs.cypress.io/guides/guides/network-requests#Stubbing" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Network Requests | Cypress Documentation</div><div class="bookmark-description">How Cypress enables you to stub out the back end with cy.intercept() What tradeoffs we make when we stub our network requests How Cypress visualizes network management in the Command Log How to use Aliases to refer back to requests and wait on them How to write declarative tests that resist flake Note: If you&#x27;re looking for a resource to make an HTTP request take a look at cy.request() Cypress helps you test the entire lifecycle of HTTP requests within your application.</div></div><div class="bookmark-href"><img src="https://docs.cypress.io/img/favicon.ico" class="icon bookmark-icon"/>https://docs.cypress.io/guides/guides/network-requests#Stubbing</div></div><img src="https://docs.cypress.io/img/real-world-app.png" class="bookmark-image"/></a></figure><p id="99cd55d1-83fa-4b02-b64a-c7880c6f107d" class="">
+</p><p id="443ef372-7d90-4c4c-8ae9-ef1c89611691" class="">This uses the cy.intercept() to mock the response</p><p id="400367fc-6b18-4582-bf8d-390e526c0833" class="">
+</p><p id="b32a0da9-7bb8-4b84-80b4-3fd2d9b607bd" class="">non stubbing is allowing the http requests to hit the server, to test your client-server integration.</p><p id="41e56dac-3bcb-402c-b864-bb044e9b7181" class="">
+</p><p id="55833ca8-94be-450f-8dd7-8c6d8d71fd88" class=""><a href="https://docs.cypress.io/guides/guides/network-requests.html#Stubbing">Stubbing</a>
+ is the term used by Cypress to describe mocking our server responses.</p><p id="04641ff7-cfdf-4715-9cb7-7e37e4e2f9f1" class="">
+</p><p id="a20000ff-c13a-4ec8-bb92-5e9d70560a4b" class="">
+</p><h1 id="e1739d1b-12c9-41c9-b931-7090a1ab3649" class="">template</h1><p id="d2159b2e-0daa-410c-9e5e-12645c8fd6ad" class="">
+</p><pre id="e4075ade-7b94-4b9c-9dfe-fced7aa8ec8c" class="code"><code>describe(&quot;#Appointments&quot;, () =&gt; {
+  beforeEach(() =&gt; {
+    // Visits the root of our web server
+    cy.request(&quot;GET&quot;, &quot;/api/debug/reset&quot;);
+    cy.visit(&quot;/&quot;);
+    cy.contains(&quot;Monday&quot;);
+  });
+
+  it(&quot;should book an appointment&quot;, () =&gt; {
+    cy.get(&#x27;[alt=&quot;Add&quot;]&#x27;).first().click();
+    cy.get(&quot;input&quot;).type(&quot;Lydia Miller-Jones&quot;);
+    cy.get(&#x27;[alt=&quot;Tori Malcolm&quot;]&#x27;).click();
+    cy.contains(&quot;Save&quot;).click();
+    cy.contains(&quot;.appointment__card--show&quot;, &quot;Lydia Miller-Jones&quot;);
+    cy.contains(&quot;.appointment__card--show&quot;, &quot;Sylvia Palmer&quot;);
+  });
+  it(&quot;can edit an existing appointment&quot;, () =&gt; {
+    cy.get(&#x27;[alt=&quot;Edit&quot;]&#x27;).click({ force: true });
+    cy.get(&#x27;[data-testid=&quot;student-name-input&quot;]&#x27;).type(
+      &quot;{selectAll}Friedi Khalo&quot;
+    );
+    cy.get(&#x27;[alt=&quot;Tori Malcolm&quot;]&#x27;).click();
+    cy.contains(&quot;Save&quot;).click();
+    cy.contains(&quot;.appointment__card--show&quot;, &quot;Friedi Khalo&quot;);
+    cy.contains(&quot;.appointment__card--show&quot;, &quot;Tori Malcolm&quot;);
+  });
+  it.only(&quot;should cancel an existing appointment&quot;, () =&gt; {
+    cy.get(&#x27;[alt=&quot;Delete&quot;]&#x27;).click({ force: true });
+    cy.contains(&quot;Confirm&quot;).click();
+    cy.contains(&quot;Deleting&quot;).should(&quot;exist&quot;);
+    cy.contains(&quot;Deleting&quot;).should(&quot;not.exist&quot;);
+  });
+});</code></pre><ul id="1caed325-7f71-4560-a563-57a233dab509" class="bulleted-list"><li style="list-style-type:disc">contains is good for words that you see or css class selectors</li></ul><ul id="f42d884b-d01d-4523-810a-112a16c8f82f" class="bulleted-list"><li style="list-style-type:disc">get is good for computed attributes or testid</li></ul><ul id="3e376307-5457-401e-8751-62db2eca8c66" class="bulleted-list"><li style="list-style-type:disc">use should exist or not exist for confirming changing looks. This takes advantage of Cypress natural async waiting.</li></ul><ul id="33e9e50e-ea6a-406f-9307-97f25b4b757a" class="bulleted-list"><li style="list-style-type:disc">use force:true to click hidden items</li></ul><ul id="061243bb-26a0-4771-9b92-8978b2d611f2" class="bulleted-list"><li style="list-style-type:disc">reset the test db using beforeEach</li></ul></div></article></body></html>

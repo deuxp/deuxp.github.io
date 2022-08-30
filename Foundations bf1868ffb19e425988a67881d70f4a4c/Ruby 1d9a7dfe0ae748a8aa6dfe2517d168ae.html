@@ -1,0 +1,676 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Ruby</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-opaquegray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="1d9a7dfe-0ae7-48a8-aa6d-fe2517d168ae" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/met_william_morris_1878.jpg" style="object-position:center 0%"/><div class="page-header-icon page-header-icon-with-cover"><img class="icon" src="data:image/png;base64,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"/></div><h1 class="page-title">Ruby</h1></header><div class="page-body"><p id="847fbfe3-be9b-4ecd-9e9e-8237e4cdfac1" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="754675d8-8df3-4bd5-8f37-b0c89465a89a"><div style="font-size:1.5em"><span class="icon">💎</span></div><div style="width:100%">REPL for ruby is <code>irb</code></div></figure><p id="9bbcbb3d-2281-4510-927e-ae96f3ea9855" class="">
+</p><nav id="df4b4c2f-94cd-46bb-b01b-638c127b5ba1" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#aa4cae3b-7201-40c7-8587-4f441558bcf5">Version manager</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#92910e2c-ed8a-4443-b804-7481da2e3938">Syntax Speed sheet</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#986e807f-31a9-4d17-8f09-d3da3029c83e">Style guide</a></div></nav><figure id="192fc402-64e9-4766-b8d1-8811bcf96c33" class="link-to-page"><a href="Ruby%201d9a7dfe0ae748a8aa6dfe2517d168ae/Data%20192fc40264e94766b8d18811bcf96c33.html"><span class="icon">💎</span>Data</a></figure><figure id="d65383da-ecab-4ad7-9269-c89dea1df091" class="link-to-page"><a href="Ruby%201d9a7dfe0ae748a8aa6dfe2517d168ae/Gems%20d65383daecab4ad79269c89dea1df091.html"><span class="icon">💎</span>Gems</a></figure><figure id="01747e13-bb0d-417e-8a51-881a5f5adc58" class="link-to-page"><a href="Ruby%201d9a7dfe0ae748a8aa6dfe2517d168ae/OOP%2001747e13bb0d417e8a51881a5f5adc58.html"><span class="icon">💎</span>OOP</a></figure><figure id="1224f39e-a247-492f-8977-1a0eeadbac5a" class="link-to-page"><a href="Ruby%201d9a7dfe0ae748a8aa6dfe2517d168ae/Active%20Record%201224f39ea247492f89771a0eeadbac5a.html"><span class="icon">🔋</span>Active Record</a></figure><figure id="268b8522-2d61-4215-8a64-6686ee04813e" class="link-to-page"><a href="Ruby%201d9a7dfe0ae748a8aa6dfe2517d168ae/useful%20data%20manipulation%20268b85222d6142158a646686ee04813e.html"><span class="icon">🪙</span>useful data manipulation</a></figure><figure id="da0bddd0-287e-42b0-b353-df3bae01e0e5" class="link-to-page"><a href="Ruby%201d9a7dfe0ae748a8aa6dfe2517d168ae/Rails%20da0bddd0287e42b0b353df3bae01e0e5.html"><span class="icon">♨️</span>Rails</a></figure><figure id="0133d8b4-33bc-4c67-9aed-32aebb7330a8" class="link-to-page"><a href="Ruby%201d9a7dfe0ae748a8aa6dfe2517d168ae/Testing%200133d8b433bc4c679aed32aebb7330a8.html"><span class="icon">🏷️</span>Testing</a></figure><p id="a8c0b61f-d647-4248-a7e6-e9bef7a8432c" class="">
+</p><figure id="b3e5a241-f6cd-4ede-8779-b87b75f92990" class="block-color-teal_background link-to-page"><a href="Ruby%201d9a7dfe0ae748a8aa6dfe2517d168ae/Methods%20b3e5a241f6cd4ede8779b87b75f92990.html"><span class="icon">📠</span>Methods</a></figure><p id="a45ce95c-09ce-4ab5-a962-1e9c917a204b" class="">
+</p><ol type="1" id="336286c2-3185-4f7a-980b-f351583df119" class="numbered-list" start="1"><li>Dynamically typed</li></ol><ol type="1" id="d44a1198-00e4-44c1-a8e6-c01aea10f60b" class="numbered-list" start="2"><li>Class-based OOP</li></ol><ol type="1" id="351b5b4b-fd54-4ee5-a16e-5965ef949c1a" class="numbered-list" start="3"><li>Concurrency model is traditional → no event loop, async, callbacks etc</li></ol><ol type="1" id="ac227604-f262-4730-9a1f-309453a6a1df" class="numbered-list" start="4"><li>Prevalent in the Industry</li></ol><p id="4da7c25f-aa07-4b1a-90bd-94a33eb75062" class="">
+</p><figure id="9325503d-c8ee-4fc8-93e7-97130d61d2b3"><a href="https://www.toptal.com/ruby-on-rails/top-10-mistakes-that-rails-programmers-make" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Buggy Rails Code: The 10 Most Common Mistakes That Rails Developers Make</div><div class="bookmark-description">Ruby on Rails (&quot;Rails&quot;) is a popular open source framework, based on the Ruby programming language that strives to simplify and streamline the web application development process. Rails is built on the principle of convention over configuration.</div></div><div class="bookmark-href"><img src="https://bs-assets.toptal.io/blackfish-assets/public/base/images/favicons/toptal-blog-favicon32x32_c2c2ba.png" class="icon bookmark-icon"/>https://www.toptal.com/ruby-on-rails/top-10-mistakes-that-rails-programmers-make</div></div><img src="https://bs-uploads.toptal.io/blackfish-uploads/components/seo/content/og_image_file/og_image/777403/default-social-7-0319260fef7da1523ee2d35691c8fb5e.png" class="bookmark-image"/></a></figure><h1 id="aa4cae3b-7201-40c7-8587-4f441558bcf5" class="">Version manager</h1><hr id="7f03c0f4-3cc6-43b4-8673-7142b3ab700c"/><ul id="d1df68a9-b502-42ee-a382-f7533fa40e6d" class="toggle"><li><details open=""><summary>Version managers:</summary><figure id="c5209a27-1460-4fbd-82fc-9f51862ef0af"><a href="https://rvm.io/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">RVM: Ruby Version Manager - RVM Ruby Version Manager - Documentation</div><div class="bookmark-description">RVM is a command-line tool which allows you to easily install, manage, and work with multiple ruby environments from interpreters to sets of gems. Install GPG keys: gpg2 --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB In case you encounter an issues or want to know more, check security Install RVM: \curl -sSL https://get.rvm.io |</div></div><div class="bookmark-href"><img src="https://rvm.io/favicon.ico" class="icon bookmark-icon"/>https://rvm.io/</div></div><img src="https://rvm.io/images/rvm-logo-all-happy.png" class="bookmark-image"/></a></figure><figure id="66c8c901-b868-4dab-a105-04cc3a2ccb6c"><a href="https://github.com/asdf-vm/asdf" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - asdf-vm/asdf: Extendable version manager with support for Ruby, Node.js, Elixir, Erlang &amp; more</div><div class="bookmark-description">Manage multiple runtime versions with a single CLI tool, extendable via plugins - docs at asdf-vm.com asdf is a CLI tool that can manage multiple language runtime versions on a per-project basis. It is like gvm, nvm, rbenv &amp; pyenv (and more) all in one! Simply install your language&#x27;s plugin!</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/asdf-vm/asdf</div></div><img src="https://opengraph.githubassets.com/a474cfb2acc2331fbc918dcf5d1cf488ac1cc9725a419ab9b838a7bdaa208f46/asdf-vm/asdf" class="bookmark-image"/></a></figure><figure id="e3707026-e73f-443d-8372-6fdbf0a52383"><a href="https://github.com/rbenv/rbenv" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">GitHub - rbenv/rbenv: Manage your app&#x27;s Ruby environment</div><div class="bookmark-description">Use rbenv to pick a Ruby version for your application and guarantee that your development environment matches production. Put rbenv to work with Bundler for painless Ruby upgrades and bulletproof deployments. Powerful in development. Specify your app&#x27;s Ruby version once, in a single file. Keep all your teammates on the same page.</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/rbenv/rbenv</div></div><img src="https://opengraph.githubassets.com/d8d3175f0d2ed7987b648bd5f0f4de97b68de15d9bf738d16ef720004a991064/rbenv/rbenv" class="bookmark-image"/></a></figure></details></li></ul><h1 id="92910e2c-ed8a-4443-b804-7481da2e3938" class="">Syntax Speed sheet</h1><figure id="ad042080-bed2-48e7-be5e-5eeb9c659eb0"><a href="https://learnxinyminutes.com/docs/ruby/" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">Learn X in Y minutes Where X=ruby</div></div><div class="bookmark-href"><img src="https://learnxinyminutes.com/favicon.ico" class="icon bookmark-icon"/>https://learnxinyminutes.com/docs/ruby/</div></div></a></figure><figure id="fa268743-02f4-4517-937c-1b9f1eee0e9b"><div class="source"><a href="https://learnxinyminutes.com/docs/ruby/">https://learnxinyminutes.com/docs/ruby/</a></div></figure><p id="108b8e5f-8af6-42b7-9f9d-5efbbf3b6d8b" class="">
+</p><p id="7015270f-ea66-4680-b009-82889ce109b2" class="">
+</p><h1 id="986e807f-31a9-4d17-8f09-d3da3029c83e" class="">Style guide</h1><hr id="d0825707-fb16-48da-82b6-70adf16537eb"/><p id="8f480744-14c0-4213-8eca-4ae82be3e464" class="">Read in Order:</p><ol type="1" id="f24c6ebd-2f03-4022-a61c-6474a79c92e7" class="numbered-list" start="1"><li><a href="https://rubystyle.guide/#source-code-layout">Source Code Layout</a></li></ol><ol type="1" id="780dd277-bceb-479b-a0bf-5e98d2bdcc5d" class="numbered-list" start="2"><li><a href="https://rubystyle.guide/#naming-conventions">Naming</a></li></ol><ol type="1" id="36343011-9780-4ef1-93e3-754b5d53c5b5" class="numbered-list" start="3"><li><a href="https://rubystyle.guide/#collections">Collections</a></li></ol><ol type="1" id="71fc1106-1d84-432b-aa63-77a3d3fa5476" class="numbered-list" start="4"><li><a href="https://rubystyle.guide/#strings">Strings</a></li></ol><p id="7e311bb5-96b5-4e74-abd3-daaca606f012" class="">This guide is maintained by the <a href="https://rubocop.readthedocs.io/en/stable/">Rubocop</a> folks. Rubocop is a code analyzer that lints and enforces style guides for ruby code. It&#x27;s basically the <a href="https://flex-web.compass.lighthouselabs.ca/1d7a7164-19ef-4e27-92bb-3d5bb7a2b047">eslint</a> equivalent for Ruby!</p></div></article></body></html>
