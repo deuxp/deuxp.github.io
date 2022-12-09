@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  background: rgb(123, 162, 104);
+  background: rgb(95, 95, 204);
   text-align: center;
 }
 
@@ -11,49 +11,12 @@ h3 {
   margin: 0;
 }
 
-.my-name {
-  font-size: 4rem;
+.name {
+  font-size: 6rem;
   margin-top: 2rem;
   margin-bottom: 1rem;
 }
 
 .job-title {
   margin-top: 0;
-}
-
-a {
-  font-size: 1.5rem;
-}
-
-.enter {
-  height: 100%;
-  display: flex;
-  position: absolute;
-  inset: 50vh;
-  justify-content: center;
-  /* align-items: center; */
-}
-
-.enter-a {
-  display: inline;
-  animation: rotate 10s ease-in-out infinite;
-}
-
-@keyframes rotate {
-  0% {
-    opacity: 0.5;
-    transform: rotate(0deg);
-    transform-origin: 50% 0%;
-  }
-
-  50% {
-    opacity: 1;
-    transform: rotate(360deg);
-    transform-origin: 50% 10%;
-  }
-  100% {
-    opacity: 0.5;
-    transform: rotate(0deg);
-    transform-origin: 0% 0%;
-  }
 }

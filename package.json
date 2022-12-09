@@ -1,8 +1,9 @@
 {
   "name": "deuxp.github.io",
-  "version": "1.0.0",
-  "description": "deuxp†qwp™",
-  "main": "index.js",
+  "version": "1.0.1",
+  "description": "Gottfried Kleinberger: Web Developer",
+  "main": "index.html",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,11 +11,19 @@
     "type": "git",
     "url": "git+https://github.com/deuxp/deuxp.github.io.git"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "portfolio"
+  ],
+  "author": "Gottfried Kleinberger",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/deuxp/deuxp.github.io/issues"
   },
-  "homepage": "https://github.com/deuxp/deuxp.github.io#readme"
+  "homepage": "https://github.com/deuxp/deuxp.github.io#readme",
+  "devDependencies": {
+    "prettier": "^2.8.1"
+  },
+  "dependencies": {
+    "gsap": "^3.11.3"
+  }
 }
