@@ -1,0 +1,18 @@
+.outer-container {
+  border: solid rgb(239, 30, 201) 1px;
+  display: flex;
+  margin: auto;
+  /* height: 100%; */
+  width: 80%;
+}
+
+.about {
+  /* background-color: rgba(239, 30, 201, .5); */
+}
+
+
+.about img {
+  height: 400px;
+  mix-blend-mode: luminosity;
+  /* width: 500px; */
+}

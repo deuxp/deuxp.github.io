@@ -1,0 +1,27 @@
+body {
+  margin: 0;
+  background: rgb(95, 95, 204);
+  text-align: center;
+  height: 100%;
+  width: 100%;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Quicksand", light, sans-serif;
+  color: antiquewhite;
+  margin: 0;
+}
+
+.name {
+  font-size: var(--name-size);
+  font-weight: 300;
+  margin-top: 2rem;
+  /* margin-bottom: 1rem; */
+}
+
+.job-title {
+  margin-top: 0;
+  font-size: 3em;
+}
