@@ -1,3 +1,18 @@
 :root {
-  --name-size: 6rem;
+  --min-name-size: 1rem;
+  --max-name-size: 1.5rem;
+  /* minimum */
+  --min-title-size: 10vw;
+  /* max */
+  --max-title-size: 10vw;
 }
+
+
+/* 
+font-family: 'Comfortaa', cursive;
+font-family: 'Monofett', cursive;
+font-family: 'Press Start 2P', cursive;
+font-family: 'Rubik 80s Fade', cursive;
+font-family: 'Share Tech Mono', monospace;
+font-family: 'VT323', monospace; 
+*/
