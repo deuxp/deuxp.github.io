@@ -5,11 +5,16 @@
   --min-title-size: 10vw;
   /* max */
   --max-title-size: 10vw;
+  --pink: rgb(239, 30, 201);
+  --bg-blue: rgb(95, 95, 204);
+  --letter-white: rgb(250, 235, 215);
 }
+
 
 
 /* 
 font-family: 'Comfortaa', cursive;
+font-family: 'Fugaz One', cursive;
 font-family: 'Monofett', cursive;
 font-family: 'Press Start 2P', cursive;
 font-family: 'Rubik 80s Fade', cursive;

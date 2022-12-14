@@ -1,8 +1,7 @@
 body {
   margin: 0;
-  background: rgb(95, 95, 204);
+  background: var(--bg-blue);
   /* text-align: center; */
-
   height: 100%;
   width: 100%;
 }
@@ -10,11 +9,11 @@ body {
 main {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 90%;
   margin: auto;
-  border: orange solid 1px;
+  /* border: orange solid 1px; */
 }
 
 h1,
@@ -23,10 +22,11 @@ h3 {
   font-family: "Comfortaa", 300, cursive;
   color: antiquewhite;
   margin: 0;
+  caret-color: transparent;
 }
 
 .job-title {
-  font-family: "Monofett", cursive;
+  font-family: "Fugaz One", cursive;
   text-shadow: 2px 5px rgb(239, 30, 201);
   margin-top: 15px;
   font-size: var(--min-title-size);
@@ -50,5 +50,7 @@ h3 {
 @media screen and (min-width: 640px) {
   .name {
     font-size: var(--max-name-size);
+    justify-content: center;
+    align-items: center;
   }
 }

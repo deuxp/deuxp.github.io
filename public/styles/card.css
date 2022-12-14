@@ -1,19 +1,48 @@
 .card {
-  border: solid blue 1px;
+  caret-color: transparent;
+  border: solid rgb(61, 61, 213) 2px;
+  position: relative;
   display: flex;
+  flex-direction: column;
+  box-shadow: -3px 9px var(--pink);
+  /* border: solid rgb(239, 30, 201) 5px; */
+  margin: 0.5em;
   width: 100%;
+  justify-content: flex;
+  align-items: flex-start;
+  background-color: var(--letter-white);
+  border-radius: 10px;
+  flex-shrink: 0;
+  height: 400px;
+  width: 275px;
 }
 
-.about {
-  /* background-color: rgba(239, 30, 201, .5); */
+.card-title {
+  margin: 1rem 0 0 1rem;
+  color: var(--bg-blue);
 }
 
+.card-text {
+  font-size: 1rem;
+  color: var(--bg-blue);
+  padding: 1rem;
+  margin: 0;
+}
+
+.img-layer {
+  position: relative;
+  height: 150px;
+  width: 150px;
+  background-color: var(--bg-blue);
+  border: solid black 2px;
+  clip-path: circle(70px at center);
+}
 
 img {
-  height: 200px;
-  width: 200px;
-  object-fit: cover;
-  border-radius: 50%;
+  position: absolute;
+  height: 150px;
+  width: 150px;
   mix-blend-mode: luminosity;
-  /* width: 500px; */
+  /* border-radius: 70%;
+  border: solid 3px var(--bg-blue); */
 }
