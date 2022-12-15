@@ -20,6 +20,7 @@
 .card-title {
   margin: 1rem 0 0 1rem;
   color: var(--bg-blue);
+  font-family: "Comfortaa", 300, cursive;
 }
 
 .card-text {
