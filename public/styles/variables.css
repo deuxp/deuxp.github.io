@@ -1,13 +1,26 @@
 :root {
+  /* Screen sizes */
+  --tablet: 640px;
+  --desktop: 768px;
+
   --min-name-size: 1rem;
   --max-name-size: 1.5rem;
-  /* minimum */
-  --min-title-size: 10vw;
+
+  /* --min-title-size: 10vw; */
+  --min-title-size: 2em;
+  --mid-title-size: 4em;
   /* max */
-  --max-title-size: 10vw;
+  --max-title-size: 5.5em;
   --pink: rgb(239, 30, 201);
   --bg-blue: rgb(95, 95, 204);
   --letter-white: rgb(250, 235, 215);
+
+  /* border options */
+  --b1: solid orange 1px;
+  --b2: solid lime 1px;
+  --b3: solid red 1px;
+  --b4: solid green 1px;
+  --b5: solid blue 1px;
 }
 
 
